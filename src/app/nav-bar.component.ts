@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ListLanguajeService } from './list-languaje.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <div class="container-fluit ps-4 pe-4 pb-4" (mouseenter)="hover = true" (mouseleave)="hover = false" [class]="{'brand-hover':hover}">
       <nav class="navbar navbar-expand-lg bg-body-tertiary row" [class]="{'brand-hover':hover}">
@@ -20,10 +21,10 @@ import { CommonModule } from '@angular/common';
             <div class="container">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="#">Quiero ser socio</a>
+                  <a class="nav-link" aria-current="page" href="/registro-socios">Quiero ser socio</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Ingresar como socio</a>
+                  <a class="nav-link" href="/login-socios">Ingresar como socio</a>
                 </li>
               </ul>
              </div>
@@ -37,7 +38,7 @@ import { CommonModule } from '@angular/common';
                   <li *ngFor="let lang of listLanguajeService.languaje"><a class="dropdown-item lang-li" [class]="{active:lang_selected == lang.nombre_corto}">{{lang.lenguaje}}</a></li>
                 </ul>
               </div>
-              <button (mouseenter)="img_login='./assets/icon/person_white.png'" (mouseleave)="img_login='./assets/icon/person.png'" class="btn btn-outline-primary" type="submit">
+              <button (mouseenter)="img_login='./assets/icon/person_white.png'" (mouseleave)="img_login='./assets/icon/person.png'" class="btn btn-outline-primary" type="submit" routerLink="/login-usuarios">
                 <div class="container-fluit bt-login">
                   <div class="row">
                     <div class="col-6">

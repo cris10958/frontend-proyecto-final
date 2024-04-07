@@ -1,2 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+    --primary_container:#EADDFF;
+}
 
+.footer{
+    background-color: #21005D;
+    color: #D0BCFF;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.fd-color{
+    background-color: #F8F9FA;
+}
+.fd-color.primary_container{
+    background-color: var(--primary_container);
+}
+.fd-color.white{
+    background-color: white;
+}
+h1,h2,h3{
+    color: #21005D;
+}
+.ico-brand-w{
+    width: 8rem;
+}
+.ico-ascesibilidad-w{
+    width: 2rem;
+}
+.h-total{
+    height: 100vh;
+}
+.invalido{
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+}

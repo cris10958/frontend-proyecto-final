@@ -4,5 +4,10 @@ $navbar-light-color: #6C757D;
 $navbar-light-active-color: #5227CC;
 $navbar-light-hover-color: $navbar-light-active-color;
 $dropdown-link-hover-bg: #EADDFF;
+$danger:#DC3545;
+$h1-font-size:1.2rem;
+$headings-font-weight:400;
+$form-label-font-size: 0.9rem;
+$link-decoration:none;
 
 @import "../node_modules/bootstrap/scss/bootstrap";

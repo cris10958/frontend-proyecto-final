@@ -1,0 +1,71 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-login-usuarios',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: `
+    <div class="row justify-content-center p-5 mt-5">
+      <div class="col-4 fd-color p-4 shadow rounded">
+        
+        <div class="row pt-3 justify-content-center pt-5 pb-5">
+          <div class="col-9">
+            <div class="row-col-9 text-start pb-5">
+              <a href="/home">
+                <img src="./assets/icon/Brand.png" class="ico-brand-w" alt="logo">
+              </a>
+            </div>
+            <form class="row g-3" [formGroup]="usuario" (ngSubmit)="login()">
+              <div class="col-md-12">
+                <label for="id-email-usuario" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" (input)="validarEmail()" [class]="{'is-invalid': (usuario.get('email')?.invalid || !emailValid) && (usuario.get('email')?.dirty || usuario.get('email')?.touched)}"  id="id-email-usuario" formControlName="email" [email]="true" required>
+                <div class="invalid-feedback">
+                  Por favor registre el correo electrónico para continuar
+                </div>
+              </div>
+              <div class="col-md-12 pt-2">
+                <label for="id-password-usuario" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="id-password-usuario" formControlName="contrasenia" [class]="{'is-invalid': usuario.get('contrasenia')?.invalid && (usuario.get('contrasenia')?.dirty || usuario.get('contrasenia')?.touched) }" required>
+                <div class="invalid-feedback">
+                  Por favor ingrese la contraseña suministrada en el registro
+                </div>
+              </div>
+              <div class="col-md-12">
+                <a href="/registro-usuarios">Registrarme</a>
+              </div>
+              <div class="col-12 text-center">
+                <button class="btn btn-primary w-100" [disabled]="!usuario.valid && emailValid" type="submit">Iniciar Sesión</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>     
+    </div>
+  `,
+  styles: ``
+})
+export class LoginUsuariosComponent {
+  emailValid: boolean = false;
+
+  usuario = new FormGroup({
+    email: new FormControl('',[Validators.required]),
+    contrasenia: new FormControl('',[Validators.required, Validators.minLength(8)])
+  });
+
+  login(){
+    console.warn(this.usuario.value)
+  }
+  validarEmail():void {
+    this.emailValid = false;
+      'use strict';
+
+      var EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (this.usuario.value.email?.match(EMAIL_REGEX)){
+        this.emailValid = true;
+      }
+  }
+
+}
