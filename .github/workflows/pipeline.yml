@@ -1,0 +1,59 @@
+name: Servicio metricas
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  unit_test:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.13.0
+      - name: install dependencies
+        run: npm install --legacy-peer-deps
+      # - name: run test
+      #   run: npm run test
+      - name: build
+        run: npm run build
+      - name: upload to s3
+        if: contains(github.event.head_commit.message, '#deploy')
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{env.AWS_REGION}}
+      - name: deploy
+        if: contains(github.event.head_commit.message, '#deploy')
+        run: aws s3 sync ./dist/browser s3://pf-front-app
+
+  create_release:
+    needs: unit_test
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    if: contains(github.event.head_commit.message, '#deploy')
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: Generate release tag
+        id: generate_release_tag
+        uses: amitsingh-007/next-release-tag@v5.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_prefix: 'v'
+          tag_template: 'yyyy.mm.dd.i'
+      - name: Create Release
+        id: release_tag
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.generate_release_tag.outputs.next_release_tag }}
+          generateReleaseNotes: true
+          makeLatest: true
