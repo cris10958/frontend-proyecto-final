@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegistroSocioComponent } from './registro-socio.component';
+import { RouterModule } from '@angular/router';
 
 describe('RegistroSocioComponent', () => {
   let component: RegistroSocioComponent;
@@ -8,7 +9,7 @@ describe('RegistroSocioComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RegistroSocioComponent]
+      imports: [RegistroSocioComponent, RouterModule.forRoot([])]
     })
     .compileComponents();
     

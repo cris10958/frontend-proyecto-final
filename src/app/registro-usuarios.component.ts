@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { ListasService } from './listas.service';
+import { ActivatedRoute, Route, RouterModule } from '@angular/router';
+import { Ciudad, ListasService } from './listas.service';
+import { routes } from './app.routes';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-registro-usuarios',
@@ -57,11 +59,8 @@ import { ListasService } from './listas.service';
                 <label for="id-genero-usuario" class="form-label">Genero</label>
                 <div class="row-col-12">
                   <div class="form-check form-check-inline" *ngFor="let genero of listaDocumentoService.listaGenero">
-                    <input class="form-check-input" (click)="usuario.value.genero = genero.key; generoValid = true;" type="radio" name="inlineGenero" [value]="genero.key">
+                    <input class="form-check-input" (click)="usuario.value.genero = genero.key; generoValid = 'ok'" type="radio" name="inlineGenero" [value]="genero.key">
                     <label class="form-check-label" for="inlineRadio1">{{genero.value}}</label>
-                  </div>
-                  <div class="invalido" *ngIf="!generoValid">
-                    Por favor seleccione su genero
                   </div>
                 </div>
               </div>
@@ -89,7 +88,7 @@ import { ListasService } from './listas.service';
               </div>
               <div class="col-md-6">
                 <label for="id-pais-usuario" class="form-label">País de nacimiento</label>
-                <select id="id-pais-usuario" class="form-select fd-color white" formControlName="pais_nacimiento" [class]="{'is-invalid': (usuario.get('pais_nacimiento')?.invalid || usuario.value.pais_nacimiento == '0') && (usuario.get('pais_nacimiento')?.dirty || usuario.get('pais_nacimiento')?.touched)}">
+                <select id="id-pais-usuario" (change)="getCiudadNacimiento(); usuario.value.ciudad_nacimiento = '0'" class="form-select fd-color white" formControlName="pais_nacimiento" [class]="{'is-invalid': (usuario.get('pais_nacimiento')?.invalid || usuario.value.pais_nacimiento == '0') && (usuario.get('pais_nacimiento')?.dirty || usuario.get('pais_nacimiento')?.touched)}">
                   <option value="0" disabled>Seleccione uno</option>
                   <option [value]="pais.key" *ngFor="let pais of listaDocumentoService.listaPais">{{pais.value}}</option>
                 </select>
@@ -101,7 +100,7 @@ import { ListasService } from './listas.service';
                 <label for="id-ciudad-usuario" class="form-label">Ciudad de nacimiento</label>
                 <select id="id-ciudad-usuario" class="form-select fd-color white"  formControlName="ciudad_nacimiento" [class]="{'is-invalid': (usuario.get('ciudad_nacimiento')?.invalid || usuario.value.ciudad_nacimiento == '0') && (usuario.get('ciudad_nacimiento')?.dirty || usuario.get('ciudad_nacimiento')?.touched)}" >
                   <option value="0" disabled>Seleccione uno</option>
-                  <option [value]="ciudad.key" *ngFor="let ciudad of listaDocumentoService.listaCiudad">{{ciudad.value}}</option>
+                  <option [value]="ciudad.key" *ngFor="let ciudad of listaCiudadNacimineto">{{ciudad.value}}</option>
                 </select>
                 <div class="invalid-feedback">
                   Por favor seleccione su ciudad de nacimiento
@@ -109,7 +108,7 @@ import { ListasService } from './listas.service';
               </div>
               <div class="col-md-6">
                 <label for="id-pais-residencia-usuario" class="form-label">País de residencia</label>
-                <select id="id-pais-residencia-usuario" class="form-select fd-color white" formControlName="pais_residencia" [class]="{'is-invalid': (usuario.get('pais_residencia')?.invalid || usuario.value.pais_residencia == '0') && (usuario.get('pais_residencia')?.dirty || usuario.get('pais_residencia')?.touched)}" required>
+                <select id="id-pais-residencia-usuario" (change)="getCiudadResidencia(); usuario.value.ciudad_residencia = '0'" class="form-select fd-color white" formControlName="pais_residencia" [class]="{'is-invalid': (usuario.get('pais_residencia')?.invalid || usuario.value.pais_residencia == '0') && (usuario.get('pais_residencia')?.dirty || usuario.get('pais_residencia')?.touched)}" required>
                   <option value="0" disabled>Seleccione uno</option>
                   <option [value]="pais.key" *ngFor="let pais of listaDocumentoService.listaPais">{{pais.value}}</option>
                 </select>
@@ -121,7 +120,7 @@ import { ListasService } from './listas.service';
                 <label for="id-ciudad-residencia-usuario" class="form-label">Ciudad de residencia</label>
                 <select id="id-ciudad-residencia-usuario" class="form-select fd-color white" formControlName="ciudad_residencia" [class]="{'is-invalid': (usuario.get('ciudad_residencia')?.invalid || usuario.value.ciudad_residencia == '0' ) && (usuario.get('ciudad_residencia')?.dirty || usuario.get('ciudad_residencia')?.touched)}" required>
                   <option value="0" disabled>Seleccione uno</option>
-                  <option [value]="ciudad.key"  *ngFor="let ciudad of listaDocumentoService.listaCiudad">{{ciudad.value}}</option>
+                  <option [value]="ciudad.key"  *ngFor="let ciudad of listaCiudadResidencia">{{ciudad.value}}</option>
                 </select>
                 <div class="invalid-feedback">
                   Por favor seleccione su ciudad de residencia
@@ -171,7 +170,7 @@ import { ListasService } from './listas.service';
                   <button class="btn btn-secondary" routerLink="/home" type="submit">Cancelar</button>
                 </div>
                 <div class="col-md-6 text-start ps-4">
-                  <button class="btn btn-primary" routerLink="/planes-subscripcion" type="submit" [disabled]="!usuario.valid || !emailValid || usuario.value.tipo_identificacion == '0' || usuario.value.pais_nacimiento == '0' || usuario.value.ciudad_nacimiento == '0' || usuario.value.pais_residencia == '0' || usuario.value.ciudad_residencia == '0' || usuario.value.altura == '0' || usuario.value.peso == '0' || usuario.value.tiempo_residencia == '0'" >Registrar</button>
+                  <button class="btn btn-primary" routerLink="/planes-subscripcion" type="submit" [disabled]="!usuario.valid || !emailValid || usuario.value.tipo_identificacion == '0' || usuario.value.pais_nacimiento == '0' || usuario.value.ciudad_nacimiento == '0' || usuario.value.pais_residencia == '0' || usuario.value.ciudad_residencia == '0' || usuario.value.altura == '0' || usuario.value.peso == '0' || usuario.value.tiempo_residencia == '0' || generoValid == ''" >Registrar</button>
                 </div>
               </div>
             </form>
@@ -182,13 +181,15 @@ import { ListasService } from './listas.service';
   `,
   styles: ``
 })
-export class RegistroUsuariosComponent {
+export class RegistroUsuariosComponent implements OnInit {
+  constructor(readonly listaDocumentoService: ListasService){}
+
   emailValid: boolean = false;
   deporteValid: boolean = false;
-  generoValid: boolean = true;
+  generoValid: string = "";
+  listaCiudadNacimineto: Ciudad[] =[];
+  listaCiudadResidencia: Ciudad[] =[];
   
-
-
   usuario = new FormGroup({
     nombre: new FormControl('',[Validators.required, Validators.maxLength(50)]),
     apellido: new FormControl('',[Validators.required, Validators.maxLength(50)]),
@@ -202,7 +203,6 @@ export class RegistroUsuariosComponent {
     ciudad_nacimiento: new FormControl('0',[Validators.required]),
     pais_residencia: new FormControl('0',[Validators.required]),
     ciudad_residencia: new FormControl('0',[Validators.required]),
-    deporte_practica: new FormControl('',[Validators.required]),
     tiempo_residencia: new FormControl('',[Validators.required]),
     email: new FormControl('',[Validators.required]),
     contrasenia: new FormControl('',[Validators.required, Validators.minLength(8)]),
@@ -213,12 +213,16 @@ export class RegistroUsuariosComponent {
   
 
   registro(){
-    if(this.usuario.value.genero == ''){
-      this.generoValid = false;
-      return
-    }
     console.warn(this.usuario.value)
   }
+  getCiudadNacimiento(){
+    this.listaCiudadNacimineto = this.listaDocumentoService.listaCiudad.filter(x=>x.pais == this.usuario.value.pais_nacimiento);
+  }
+
+  getCiudadResidencia(){
+    this.listaCiudadResidencia = this.listaDocumentoService.listaCiudad.filter(x=>x.pais == this.usuario.value.pais_residencia);
+  }
+
   validarEmail():void {
     this.emailValid = false;
       'use strict';
@@ -230,7 +234,8 @@ export class RegistroUsuariosComponent {
       }
   }
 
-  constructor(readonly listaDocumentoService: ListasService){}
-
+  ngOnInit(): void {
+      
+  }
  
 }

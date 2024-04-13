@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LoginUsuario, UsuarioService } from './usuario.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login-usuarios',
@@ -9,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   template: `
     <div class="row justify-content-center p-5 mt-5">
       <div class="col-4 fd-color p-4 shadow rounded">
-        
+
         <div class="row pt-3 justify-content-center pt-5 pb-5">
           <div class="col-9">
             <div class="row-col-9 text-start pb-5">
@@ -17,7 +19,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
                 <img src="./assets/icon/Brand.png" class="ico-brand-w" alt="logo">
               </a>
             </div>
-            <form class="row g-3" [formGroup]="usuario" (ngSubmit)="login()">
+            <form class="row g-3" [formGroup]="usuario" (ngSubmit)="login()" >
               <div class="col-md-12">
                 <label for="id-email-usuario" class="form-label">Correo Electrónico</label>
                 <input type="email" class="form-control" (input)="validarEmail()" [class]="{'is-invalid': (usuario.get('email')?.invalid || !emailValid) && (usuario.get('email')?.dirty || usuario.get('email')?.touched)}"  id="id-email-usuario" formControlName="email" [email]="true" required>
@@ -27,7 +29,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
               </div>
               <div class="col-md-12 pt-2">
                 <label for="id-password-usuario" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="id-password-usuario" formControlName="contrasenia" [class]="{'is-invalid': usuario.get('contrasenia')?.invalid && (usuario.get('contrasenia')?.dirty || usuario.get('contrasenia')?.touched) }" required>
+                <input type="password" class="form-control" id="id-password-usuario" formControlName="contrasena" [class]="{'is-invalid': usuario.get('contrasena')?.invalid && (usuario.get('contrasena')?.dirty || usuario.get('contrasena')?.touched) }" required>
                 <div class="invalid-feedback">
                   Por favor ingrese la contraseña suministrada en el registro
                 </div>
@@ -36,12 +38,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
                 <a href="/registro-usuarios">Registrarme</a>
               </div>
               <div class="col-12 text-center">
-                <button class="btn btn-primary w-100" [disabled]="!usuario.valid && emailValid" type="submit">Iniciar Sesión</button>
+                <button class="btn btn-primary w-100" [disabled]="!usuario.valid || !emailValid" type="submit">Iniciar Sesión</button>
               </div>
             </form>
           </div>
         </div>
-      </div>     
+      </div>
     </div>
   `,
   styles: ``
@@ -51,11 +53,20 @@ export class LoginUsuariosComponent {
 
   usuario = new FormGroup({
     email: new FormControl('',[Validators.required]),
-    contrasenia: new FormControl('',[Validators.required, Validators.minLength(8)])
+    contrasena: new FormControl('',[Validators.required, Validators.minLength(8)])
   });
 
   login(){
-    console.warn(this.usuario.value)
+    if(this.usuario.valid && this.emailValid){
+      const loginUsuario: LoginUsuario = this.usuario.value;
+      console.log(loginUsuario.contrasena)
+      console.log(loginUsuario.email)
+
+      this.loginUsuarioServie.loginUsuarios(loginUsuario)
+      .subscribe(resp => console.log(resp));
+
+
+    }
   }
   validarEmail():void {
     this.emailValid = false;
@@ -66,6 +77,9 @@ export class LoginUsuariosComponent {
       if (this.usuario.value.email?.match(EMAIL_REGEX)){
         this.emailValid = true;
       }
+  }
+  constructor(private loginUsuarioServie: UsuarioService){
+
   }
 
 }

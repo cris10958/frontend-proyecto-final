@@ -27,38 +27,41 @@ import { ListasService } from './listas.service';
         </div>
         <div class="row pt-3 justify-content-center pt-5 pb-5">
           <div class="col-9">
-            <form class="row g-3" [formGroup]="socio" (ngSubmit)="login()">
+            <form class="row g-3" [formGroup]="socio" (ngSubmit)="registro()">
               <div class="col-md-12">
                 <label for="id-name-socio" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="id-name-socio" formControlName="name" [class]="{'is-invalid': socio.get('nombre')?.invalid && (socio.get('nombre')?.dirty || socio.get('nombre')?.touched)}"  id="id-nombre-usuario" formControlName="nombre" required>
+                <input type="text" class="form-control fd-color white" id="id-name-socio" formControlName="nombre" [class]="{'is-invalid': socio.get('nombre')?.invalid && (socio.get('nombre')?.dirty || socio.get('nombre')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor registre su nombre para continuar
                 </div>
               </div>
               <div class="col-md-6 pe-2">
                 <label for="id-tp-doc-socio" class="form-label">Tipo  de documento</label>
-                <input type="text" class="form-control" id="id-tp-doc-socio" formControlName="tipo_documento" required>
+                <select id="id-tp-doc-socio"  class="form-select fd-color white" formControlName="tipo_documento" [class]="{'is-invalid': (socio.get('tipo_documento')?.invalid || socio.value.tipo_documento == '0') && (socio.get('tipo_documento')?.dirty || socio.get('tipo_documento')?.touched)}"  required>
+                  <option value="0" disabled>Seleccione uno</option>
+                  <option *ngFor="let tipo of listaDocumentoService.listaTipoDocumento" [value]="tipo.key">{{tipo.value}}</option>
+                </select>
                 <div class="invalid-feedback">
-                  Por favor seleccione su tipo de identificación
+                  Por favor seleccione el tipo de documento de identificación
                 </div>
               </div>
               <div class="col-md-6 ps-2">
                 <label for="id-num-doc-socio" class="form-label">Número de documento</label>
-                <input type="text" class="form-control" id="id-num-doc-socio" formControlName="numero_documento" required>
+                <input type="text" class="form-control fd-color white" id="id-num-doc-socio" formControlName="numero_documento" formControlName="numero_documento" [class]="{'is-invalid': socio.get('numero_documento')?.invalid && (socio.get('numero_documento')?.dirty || socio.get('numero_documento')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese su número de identificación
                 </div>
               </div>
               <div class="col-md-6">
                 <label for="id-email-socio" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control" (input)="validarEmail()" id="id-email-socio" formControlName="email" [email]="true" required>
+                <input type="email" class="form-control fd-color white" (input)="validarEmail()" id="id-email-socio" formControlName="email" [email]="true" [class]="{'is-invalid': (socio.get('email')?.invalid || !emailValid) && (socio.get('email')?.dirty || socio.get('email')?.touched)}"  id="id-email-usuario" formControlName="email" required>
                 <div class="invalid-feedback">
                   Por favor ingrese su correo electrónico
                 </div>
               </div>
               <div class="col-md-6">
                 <label for="id-password-socio" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="id-password-socio" formControlName="password" required>
+                <input type="password" class="form-control fd-color white" id="id-password-socio" formControlName="password" [class]="{'is-invalid': socio.get('password')?.invalid && (socio.get('password')?.dirty || socio.get('password')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese una contraseña con la que ingresara al sistema
                 </div>
@@ -68,7 +71,7 @@ import { ListasService } from './listas.service';
                   <button class="btn btn-secondary" routerLink="/home" type="submit">Cancelar</button>
                 </div>
                 <div class="col-md-6 text-start ps-4">
-                  <button class="btn btn-primary" routerLink="/list-productos-servicios" type="submit">Registrar</button>
+                  <button class="btn btn-primary" routerLink="/list-productos-servicios" type="submit" [disabled]="!socio.valid || !emailValid" >Registrar</button>
                 </div>
               </div>
             </form>
@@ -86,13 +89,13 @@ export class RegistroSocioComponent {
 
   socio = new FormGroup({
     nombre: new FormControl('',[Validators.required]),
-    tipo_documento: new FormControl('',Validators.required),
+    tipo_documento: new FormControl('0',Validators.required),
     numero_documento: new FormControl('',[Validators.required]),
     email: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
 
-  login(){
+  registro(){
     console.warn(this.socio.value)
   }
   validarEmail():void {

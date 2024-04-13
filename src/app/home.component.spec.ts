@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
+import { RouterModule } from '@angular/router';
+
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -8,7 +10,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeComponent]
+      imports: [HomeComponent, RouterModule.forRoot([])]
     })
     .compileComponents();
     
@@ -20,4 +22,21 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render div with class container-fluid p-0 brand-hover', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('div')?.className).toContain('container-fluid p-0 brand-hover');
+  });
+
+  it('should render div with class container-fluid p-0 brand-hover', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('div')?.className).toContain('container-fluid p-0 brand-hover');
+  });
+
+  
+  
 });

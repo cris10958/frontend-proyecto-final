@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
         <div class="col-1 text-end">
           <img src="./assets/icon/Copyright.png" alt="Imagen Copyright">
         </div>
-        <div class="col-11 text-start ps-0 small pt-1">
+        <div id="id-text" class="col-11 text-start ps-0 small pt-1">
           LAAD.exe 2024
         </div>
       </div>
