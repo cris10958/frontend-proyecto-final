@@ -37,6 +37,11 @@ import { Observable } from 'rxjs';
               <div class="col-md-12">
                 <a href="/registro-usuarios">Registrarme</a>
               </div>
+              <div class="col-md-12 pt-2">
+                <div class="invalido" *ngIf="isError">
+                  {{error}}
+                </div>
+              </div>
               <div class="col-12 text-center">
                 <button class="btn btn-primary w-100" [disabled]="!usuario.valid || !emailValid" type="submit">Iniciar Sesión</button>
               </div>
@@ -50,6 +55,8 @@ import { Observable } from 'rxjs';
 })
 export class LoginUsuariosComponent {
   emailValid: boolean = false;
+  isError:boolean = false;
+  error:string ="";
 
   usuario = new FormGroup({
     email: new FormControl('',[Validators.required]),
@@ -59,13 +66,16 @@ export class LoginUsuariosComponent {
   login(){
     if(this.usuario.valid && this.emailValid){
       const loginUsuario: LoginUsuario = this.usuario.value;
-      console.log(loginUsuario.contrasena)
-      console.log(loginUsuario.email)
-
+      loginUsuario.contrasena = btoa(this.usuario.value.contrasena!); 
       this.loginUsuarioServie.loginUsuarios(loginUsuario)
-      .subscribe(resp => console.log(resp));
+      .subscribe(resp => {
+        this.clearForm(loginUsuario.email!,undefined);
+      }, err => {
+        this.isError = true;
+        this.error = err.message;
+        this.clearForm(loginUsuario.email!,undefined);
 
-
+    });
     }
   }
   validarEmail():void {
@@ -77,6 +87,18 @@ export class LoginUsuariosComponent {
       if (this.usuario.value.email?.match(EMAIL_REGEX)){
         this.emailValid = true;
       }
+  }
+  clearForm(emailPers:string |undefined, contrasena:string |undefined):void{
+    if(emailPers){
+      this.usuario.setValue(
+        {
+          email: emailPers!,
+          contrasena: ''
+        }
+      );
+      return
+    }
+    this.usuario.reset();
   }
   constructor(private loginUsuarioServie: UsuarioService){
 
