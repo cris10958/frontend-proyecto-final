@@ -33,7 +33,7 @@ jobs:
           aws-region: ${{env.AWS_REGION}}
       - name: deploy
         if: contains(github.event.head_commit.message, '#deploy')
-        run: aws s3 sync ./dist/browser s3://pf-front-app
+        run: aws s3 sync ./dist/sport-app/browser s3://pf-front-app
 
   create_release:
     needs: unit_test
