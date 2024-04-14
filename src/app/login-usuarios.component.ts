@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginUsuario, UsuarioService } from './usuario.service';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-usuarios',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ReactiveFormsModule],
   template: `
     <div class="row justify-content-center p-5 mt-5">
       <div class="col-4 fd-color p-4 shadow rounded">
@@ -43,7 +43,7 @@ import { Observable } from 'rxjs';
                 </div>
               </div>
               <div class="col-12 text-center">
-                <button class="btn btn-primary w-100" [disabled]="!usuario.valid || !emailValid" type="submit">Iniciar Sesión</button>
+                <button class="btn btn-primary w-100" [disabled]="!usuario.valid || !emailValid" routerLink="/home-usuario" type="submit">Iniciar Sesión</button>
               </div>
             </form>
           </div>
@@ -70,6 +70,7 @@ export class LoginUsuariosComponent {
       this.loginUsuarioServie.loginUsuarios(loginUsuario)
       .subscribe(resp => {
         this.clearForm(loginUsuario.email!,undefined);
+        this.router.navigate(['/home-usuario']);
       }, err => {
         this.isError = true;
         this.error = err.message;
@@ -100,7 +101,7 @@ export class LoginUsuariosComponent {
     }
     this.usuario.reset();
   }
-  constructor(private loginUsuarioServie: UsuarioService){
+  constructor(private loginUsuarioServie: UsuarioService, private router: Router){
 
   }
 

@@ -6,6 +6,7 @@ import { ListProductosServiciosComponent } from './list-productos-servicios.comp
 import { LoginUsuariosComponent } from './login-usuarios.component';
 import { RegistroUsuariosComponent } from './registro-usuarios.component';
 import { PlanesSubscriptionComponent } from './planes-subscription.component';
+import { HomeUsuarioComponent } from './home-usuario.component';
 
 export const routes: Routes = [
     {path:'', pathMatch:'full', redirectTo:'home'},
@@ -16,5 +17,6 @@ export const routes: Routes = [
     {path:'login-usuarios', component: LoginUsuariosComponent},
     {path:'registro-usuarios', component: RegistroUsuariosComponent},
     {path:'planes-subscripcion', component: PlanesSubscriptionComponent},
+    {path:'home-usuario', component: HomeUsuarioComponent},
     
 ];

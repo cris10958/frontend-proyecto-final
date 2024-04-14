@@ -43,7 +43,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
                 <a href="/registro-socios">Registrarme como socio</a>
               </div>
               <div class="col-12 text-center">
-                <button class="btn btn-primary w-100" type="submit" [disabled]="!socio.valid && emailValid">Iniciar Sesión</button>
+                <button class="btn btn-primary w-100" routerLink="/list-productos-servicios" type="submit" [disabled]="!socio.valid && emailValid">Iniciar Sesión</button>
               </div>
             </form>
           </div>
