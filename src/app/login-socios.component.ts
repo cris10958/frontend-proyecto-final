@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LoginSocio, SociosService } from './socios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-socios',
@@ -24,7 +26,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
         </div>
         <div class="row pt-3 justify-content-center pt-5 pb-5">
           <div class="col-9">
-            <form class="row g-3" [formGroup]="socio" (ngSubmit)="saveSocio()">
+            <form class="row g-3" [formGroup]="socio" (ngSubmit)="login()">
               <div class="col-md-12">
                 <label for="id-email-socio" class="form-label">Correo Electrónico</label>
                 <input type="email" class="form-control" id="id-email-socio" (input)="validarEmail()" formControlName="email" [class]="{'is-invalid': (socio.get('email')?.invalid || !emailValid) && (socio.get('email')?.dirty || socio.get('email')?.touched)}" [email]="true" required>
@@ -34,36 +36,56 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
               </div>
               <div class="col-md-12 pt-2">
                 <label for="id-password-socio" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="id-password-socio" formControlName="contrasenia" [class]="{'is-invalid': socio.get('contrasenia')?.invalid && (socio.get('contrasenia')?.dirty || socio.get('contrasenia')?.touched) }" required>
+                <input type="password" class="form-control" id="id-password-socio" formControlName="contrasena" [class]="{'is-invalid': socio.get('contrasena')?.invalid && (socio.get('contrasena')?.dirty || socio.get('contrasena')?.touched) }" required>
                 <div class="invalid-feedback">
                   Por favor ingrese la contraseña suministrada en el registro
+                </div>
+              </div>
+              <div class="col-md-12 pt-2">
+                <div class="invalido" *ngIf="isError">
+                  {{error}}
                 </div>
               </div>
               <div class="col-md-12">
                 <a href="/registro-socios">Registrarme como socio</a>
               </div>
               <div class="col-12 text-center">
-                <button class="btn btn-primary w-100" routerLink="/list-productos-servicios" type="submit" [disabled]="!socio.valid && emailValid">Iniciar Sesión</button>
+                <button class="btn btn-primary w-100" type="submit" [disabled]="!socio.valid || !emailValid">Iniciar Sesión</button>
               </div>
             </form>
           </div>
         </div>
-      </div>     
+      </div>
     </div>
   `,
   styles: ``
 })
 export class LoginSociosComponent {
   emailValid: boolean = false;
+  isError:boolean = false;
+  error:string ="";
 
   socio = new FormGroup({
     email: new FormControl ('',[Validators .required]),
-    contrasenia: new FormControl('',[Validators.required, Validators.minLength(8)])
+    contrasena: new FormControl('',[Validators.required, Validators.minLength(8)])
   });
 
-  saveSocio(){
-    console.warn(this.socio.value)
+  login(){
+    if(this.socio.valid && this.emailValid){
+      const loginSocio: LoginSocio = this.socio.value;
+      loginSocio.contrasena = btoa(this.socio.value.contrasena!);
+      this.loginSocioServie.loginSocio(loginSocio)
+      .subscribe(resp => {
+        this.router.navigate(['/list-productos-servicios']);
+        this.clearForm(loginSocio.email!,undefined);
+      }, err => {
+        this.isError = true;
+        this.error = err.message;
+        this.clearForm(loginSocio.email!,undefined);
+    });
+    }
   }
+
   validarEmail():void {
     this.emailValid = false;
       'use strict';
@@ -73,6 +95,23 @@ export class LoginSociosComponent {
       if (this.socio.value.email?.match(EMAIL_REGEX)){
         this.emailValid = true;
       }
-  }  
+  }
+
+  clearForm(emailPers:string |undefined, contrasena:string |undefined):void{
+    if(emailPers){
+      this.socio.setValue(
+        {
+          email: emailPers!,
+          contrasena: ''
+        }
+      );
+      return
+    }
+    this.socio.reset();
+  }
+
+
+  constructor(private loginSocioServie: SociosService, private router:Router){
+  }
 
 }
