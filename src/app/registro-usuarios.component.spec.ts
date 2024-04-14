@@ -275,7 +275,7 @@ describe('RegistroUsuariosComponent', () => {
     expect(compiled.querySelector('button')?.className).toContain('btn btn-secondary');
   });
 
-  it('should render button with class btn btn-secondary', () => {
+  it('should render button with class btn btn-primary', () => {
     const fixture = TestBed.createComponent(RegistroUsuariosComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;

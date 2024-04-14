@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
         </div>
         <div class="row-col-12 text-start pt-3">
           <a href="">
-            <img src="./assets/icon/ascesibilidad.png"  class="ico-ascesibilidad-w" alt="icono-accesibilidad">
+            <img id="img-acc" src="./assets/icon/ascesibilidad.png"  class="ico-ascesibilidad-w" alt="icono-accesibilidad">
           </a>
         </div>
         <div class="row-col-12 text-center pt-3">
@@ -37,7 +37,7 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6 pe-2">
-                <label for="id-tp-doc-socio" class="form-label">Tipo  de documento</label>
+                <label id="id-lb-tp-doc-socio" for="id-tp-doc-socio" class="form-label">Tipo de documento</label>
                 <select id="id-tp-doc-socio"  class="form-select fd-color white" formControlName="tipo_identificacion" [class]="{'is-invalid': (socio.get('tipo_identificacion')?.invalid || socio.value.tipo_identificacion == '0') && (socio.get('tipo_identificacion')?.dirty || socio.get('tipo_identificacion')?.touched)}"  required>
                   <option value="0" disabled>Seleccione uno</option>
                   <option *ngFor="let tipo of listaDocumentoService.listaTipoDocumento" [value]="tipo.key">{{tipo.value}}</option>
@@ -47,21 +47,21 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6 ps-2">
-                <label for="id-num-doc-socio" class="form-label">Número de documento</label>
+                <label id="id-lb-num-doc-socio" for="id-num-doc-socio" class="form-label">Número de documento</label>
                 <input type="text" class="form-control fd-color white" id="id-num-doc-socio" formControlName="numero_identificacion" formControlName="numero_identificacion" [class]="{'is-invalid': socio.get('numero_identificacion')?.invalid && (socio.get('numero_identificacion')?.dirty || socio.get('numero_identificacion')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese su número de identificación
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-email-socio" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control fd-color white" (input)="validarEmail()" id="id-email-socio" formControlName="email" [email]="true" [class]="{'is-invalid': (socio.get('email')?.invalid || !emailValid) && (socio.get('email')?.dirty || socio.get('email')?.touched)}"  id="id-email-usuario" formControlName="email" required>
+                <label id="id-lb-email-socio" for="id-email-socio" class="form-label">Correo electrónico</label>
+                <input type="email" id="id-email-socio" class="form-control fd-color white" (input)="validarEmail()"  formControlName="email" [email]="true" [class]="{'is-invalid': (socio.get('email')?.invalid || !emailValid) && (socio.get('email')?.dirty || socio.get('email')?.touched)}"  formControlName="email" required>
                 <div class="invalid-feedback">
                   Por favor ingrese su correo electrónico
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-contrasena-socio" class="form-label">Contraseña</label>
+                <label id="id-lb-contrasena-socio" for="id-contrasena-socio" class="form-label">Contraseña</label>
                 <input type="password" class="form-control fd-color white" id="id-contrasena-socio" formControlName="contrasena" [class]="{'is-invalid': socio.get('contrasena')?.invalid && (socio.get('contrasena')?.dirty || socio.get('contrasena')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese una contraseña con la que ingresara al sistema
@@ -77,7 +77,7 @@ import { Router } from '@angular/router';
                   <button class="btn btn-secondary" routerLink="/home" type="submit">Cancelar</button>
                 </div>
                 <div class="col-md-6 text-start ps-4">
-                  <button class="btn btn-primary"  type="submit" [disabled]="!socio.valid || !emailValid" >Registrar</button>
+                  <button id="id-bt" class="btn btn-primary"  type="submit" [disabled]="!socio.valid || !emailValid" >Registrar</button>
                 </div>
               </div>
             </form>
