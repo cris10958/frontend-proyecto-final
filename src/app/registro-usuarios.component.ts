@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, RouterModule } from '@angular/router';
 import { Ciudad, ListasService } from './listas.service';
-import { routes } from './app.routes';
-import { filter } from 'rxjs';
+import { Usuario, UsuarioService } from './usuario.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-registro-usuarios',
@@ -50,7 +51,7 @@ import { filter } from 'rxjs';
               </div>
               <div class="col-md-6 ps-2">
                 <label for="id-num-doc-usuario" class="form-label">Número de identificación</label>
-                <input type="number" class="form-control fd-color white" id="id-num-doc-usuario" formControlName="numero_idenficacion" [class]="{'is-invalid': usuario.get('numero_idenficacion')?.invalid && (usuario.get('numero_idenficacion')?.dirty || usuario.get('numero_idenficacion')?.touched)}" required>
+                <input type="number" class="form-control fd-color white" id="id-num-doc-usuario" formControlName="numero_identificacion" [class]="{'is-invalid': usuario.get('numero_identificacion')?.invalid && (usuario.get('numero_identificacion')?.dirty || usuario.get('numero_identificacion')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese su número de identificación
                 </div>
@@ -59,7 +60,7 @@ import { filter } from 'rxjs';
                 <label for="id-genero-usuario" class="form-label">Genero</label>
                 <div class="row-col-12">
                   <div class="form-check form-check-inline" *ngFor="let genero of listaDocumentoService.listaGenero">
-                    <input class="form-check-input" (click)="usuario.value.genero = genero.key; generoValid = 'ok'" type="radio" name="inlineGenero" [value]="genero.key">
+                    <input class="form-check-input" (click)="setGenero(genero.key);" type="radio" name="inlineGenero" [value]="genero.key">
                     <label class="form-check-label" for="inlineRadio1">{{genero.value}}</label>
                   </div>
                 </div>
@@ -146,7 +147,7 @@ import { filter } from 'rxjs';
               </div>
               <div class="col-md-6">
                 <label for="id-tiempo-residencia-usuario" class="form-label">¿Hace cuánto tiempo reside en esta ciudad?</label>
-                <input type="number" class="form-control fd-color white" id="id-tiempo-residencia-usuario" placeholder="Tiempo en meses" formControlName="tiempo_residencia" [class]="{'is-invalid': usuario.get('tiempo_residencia')?.invalid && (usuario.get('tiempo_residencia')?.dirty || usuario.get('tiempo_residencia')?.touched)}" required>
+                <input type="number" class="form-control fd-color white" id="id-tiempo-residencia-usuario" placeholder="Tiempo en meses" formControlName="antiguedad_residencia" [class]="{'is-invalid': usuario.get('antiguedad_residencia')?.invalid && (usuario.get('antiguedad_residencia')?.dirty || usuario.get('antiguedad_residencia')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese el tiempo de residencia en la ciudad ingresada anterioremente
                 </div>
@@ -160,18 +161,25 @@ import { filter } from 'rxjs';
               </div>
               <div class="col-md-6">
                 <label for="id-password-usuario" class="form-label">Contraseña</label>
-                <input type="password" class="form-control fd-color white" id="id-password-usuario" formControlName="contrasenia" [class]="{'is-invalid': usuario.get('contrasenia')?.invalid && (usuario.get('contrasenia')?.dirty || usuario.get('contrasenia')?.touched)}" required>
+                <input type="password" class="form-control fd-color white" id="id-password-usuario" formControlName="contrasena" [class]="{'is-invalid': usuario.get('contrasena')?.invalid && (usuario.get('contrasena')?.dirty || usuario.get('contrasena')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese una contraseña con la que ingresara al sistema
                 </div>
               </div>
-              <div class="row pt-5 p-0"> 
+              <div class="col-md-12 pt-5 pb-2 text-center">
+                <div class="invalido" *ngIf="isError">
+                  {{error}}
+                </div>
+              </div>
+              <div class="row p-0"> 
                 <div class="col-md-6 text-end pe-0">
                   <button class="btn btn-secondary" routerLink="/home" type="submit">Cancelar</button>
                 </div>
                 <div class="col-md-6 text-start ps-4">
-                  <button class="btn btn-primary" routerLink="/planes-subscripcion" type="submit" [disabled]="!usuario.valid || !emailValid || usuario.value.tipo_identificacion == '0' || usuario.value.pais_nacimiento == '0' || usuario.value.ciudad_nacimiento == '0' || usuario.value.pais_residencia == '0' || usuario.value.ciudad_residencia == '0' || usuario.value.altura == '0' || usuario.value.peso == '0' || usuario.value.tiempo_residencia == '0' || generoValid == ''" >Registrar</button>
+                <!-- routerLink="/planes-subscripcion" -->
+                  <button class="btn btn-primary"  type="submit" [disabled]="!usuario.valid || !emailValid || usuario.value.tipo_identificacion == '0' || usuario.value.pais_nacimiento == '0' || usuario.value.ciudad_nacimiento == '0' || usuario.value.pais_residencia == '0' || usuario.value.ciudad_residencia == '0' || usuario.value.altura == '0' || usuario.value.peso == '0' || usuario.value.antiguedad_residencia == '0' || generoValid == ''"  >Registrar</button>
                 </div>
+                <!-- (click)="registro()" -->
               </div>
             </form>
           </div>
@@ -182,19 +190,23 @@ import { filter } from 'rxjs';
   styles: ``
 })
 export class RegistroUsuariosComponent implements OnInit {
-  constructor(readonly listaDocumentoService: ListasService){}
+  constructor(readonly listaDocumentoService: ListasService, private usuarioService:UsuarioService, private router:Router){}
 
   emailValid: boolean = false;
   deporteValid: boolean = false;
   generoValid: string = "";
+  generoSelected: string = "";
   listaCiudadNacimineto: Ciudad[] =[];
   listaCiudadResidencia: Ciudad[] =[];
+  isError: boolean = false;
+  error: string = "";
   
   usuario = new FormGroup({
     nombre: new FormControl('',[Validators.required, Validators.maxLength(50)]),
     apellido: new FormControl('',[Validators.required, Validators.maxLength(50)]),
     tipo_identificacion: new FormControl('0',[Validators.required]),
-    numero_idenficacion: new FormControl('',[Validators.required, Validators.maxLength(15)]),
+    numero_identificacion: new FormControl('',[Validators.required, Validators.maxLength(15)]),
+    email: new FormControl('',[Validators.required]),
     genero: new FormControl(''),
     edad: new FormControl('',[Validators.required, Validators.max(999)]),
     peso: new FormControl('',[Validators.required, Validators.max(999)]),
@@ -203,17 +215,52 @@ export class RegistroUsuariosComponent implements OnInit {
     ciudad_nacimiento: new FormControl('0',[Validators.required]),
     pais_residencia: new FormControl('0',[Validators.required]),
     ciudad_residencia: new FormControl('0',[Validators.required]),
-    tiempo_residencia: new FormControl('',[Validators.required]),
-    email: new FormControl('',[Validators.required]),
-    contrasenia: new FormControl('',[Validators.required, Validators.minLength(8)]),
+    antiguedad_residencia: new FormControl('',[Validators.required]),
+    contrasena: new FormControl('',[Validators.required, Validators.minLength(8)]),
     atletismo: new FormControl(''),
     ciclismo: new FormControl(''),
   });
 
-  
 
   registro(){
-    console.warn(this.usuario.value)
+    if(this.usuario.valid || this.emailValid || this.usuario.value.tipo_identificacion == '0' || this.usuario.value.pais_nacimiento == '0' || this.usuario.value.ciudad_nacimiento == '0' || this.usuario.value.pais_residencia == '0' || this.usuario.value.ciudad_residencia == '0' || this.usuario.value.altura == '0' || this.usuario.value.peso == '0' || this.usuario.value.antiguedad_residencia == '0' || this.generoValid == ''){
+      const usuarioRegistro: Usuario = {
+        nombre:                this.usuario.value.nombre!,
+        apellido:              this.usuario.value.apellido!,
+        tipo_identificacion:   this.usuario.value.tipo_identificacion!,
+        numero_identificacion: this.usuario.value.numero_identificacion!,
+        email:                 this.usuario.value.email!,
+        genero:                this.generoSelected!,
+        edad:                  this.usuario.value.edad!,
+        peso:                  this.usuario.value.peso!,
+        altura:                this.usuario.value.altura!,
+        pais_nacimiento:       this.usuario.value.pais_nacimiento!,
+        ciudad_nacimiento:     this.usuario.value.ciudad_nacimiento!,
+        pais_residencia:       this.usuario.value.pais_residencia!,
+        ciudad_residencia:     this.usuario.value.ciudad_residencia!,
+        antiguedad_residencia: this.usuario.value.antiguedad_residencia!,
+        contrasena:            this.usuario.value.contrasena!,
+      }
+      
+      usuarioRegistro.contrasena = btoa(this.usuario.value.contrasena!); 
+      this.usuarioService.addUsuario(usuarioRegistro)
+      .subscribe(resp => {
+        // this.clearForm(usuarioRegistro.email!,undefined);
+        console.log(resp);
+        this.router.navigate(['/home-usuario']);
+        // this.router.navigate(['/planes-subscripcion']);
+      }, err => {
+        this.isError = true;
+        this.error = err.message;
+        // this.clearForm(loginUsuario.email!,undefined);
+
+    });
+    }
+  }
+  setGenero(value:string){
+    this.generoSelected = value;
+    this.generoValid = 'ok'
+
   }
   getCiudadNacimiento(){
     this.listaCiudadNacimineto = this.listaDocumentoService.listaCiudad.filter(x=>x.pais == this.usuario.value.pais_nacimiento);
