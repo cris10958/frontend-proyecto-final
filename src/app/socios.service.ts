@@ -8,10 +8,14 @@ export interface LoginSocio{
   contrasena?: string | null;
 }
 
-export interface Socio{
-  email: string;
-  contrasena: string;
+export interface SocioRegistro {
+  nombre?:                string | null;
+  tipo_identificacion?:   string | null;
+  numero_identificacion?: string | null;
+  email?:                 string | null;
+  contrasena?:            string | null;
 }
+
 
 
 @Injectable({
@@ -20,7 +24,8 @@ export interface Socio{
 
 export class SociosService {
   URL_PRINCIPAL: string = environment.baseUrlRegistro;
-  registro_socios_url: string = this.URL_PRINCIPAL + "/login/socio-negocio";
+  registro_socios_url: string = this.URL_PRINCIPAL + "/registro/socios";
+  login_socios_url: string = this.URL_PRINCIPAL + "/login/socio-negocio";
 
   private handleError(error: HttpErrorResponse){
     let msg = ""
@@ -31,7 +36,10 @@ export class SociosService {
         msg = "Usuario o contraseña incorrecto";
       }
       else if(error.status == 404){
-        msg = "El email ingresado no corresponde a algun socio registrado";
+        msg = "El email ingresado no corresponde a algun usuario registrado";
+      }
+      else if(error.status == 432){
+        msg = "El email ingresado ya se encuentra registrado";
       }
       else {
         msg = "Algo salio mal, intenta mas tarde";
@@ -40,11 +48,18 @@ export class SociosService {
     }
     return throwError(()=> new Error(msg))
   }
-  addSocio(socio: Socio){
-    return this.http.post<Socio>(this.registro_socios_url,socio);
+  addSocio(socio: SocioRegistro){
+    return this.http.post<SocioRegistro>(this.registro_socios_url,socio,{
+      headers : new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    })
+    .pipe(
+      catchError(this.handleError)
+    )
   }
   loginSocio(login: LoginSocio){
-    return this.http.post<LoginSocio>(this.registro_socios_url, login, {
+    return this.http.post<LoginSocio>(this.login_socios_url, login, {
       headers : new HttpHeaders({
         'Content-Type': 'application/json'
       })
