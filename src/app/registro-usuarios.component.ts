@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   template: `
      <div class="fd-color h-total w-100 row justify-content-center pb-5">
-    <div class="col-8 fd-color white p-4 shadow rounded pt-5 mt-5">
-        <div class="row pt-3 justify-content-center pt-2 pb-5">
+      <div id="contenedor-1" class="col-8 fd-color white p-4 shadow rounded pt-5 mt-5">
+        <div id="contenedor-2" class="row pt-3 justify-content-center pt-2 pb-5">
           <div class="col-10">
             <div class="row-col-12 text-start">
               <a href="/home">
@@ -26,21 +26,21 @@ import { Router } from '@angular/router';
             </div>
             <form class="row g-3" [formGroup]="usuario" (ngSubmit)="registro()">
               <div class="col-md-6">
-                <label for="id-name-usuario" class="form-label">Nombre</label>
-                <input type="text" class="form-control fd-color white" id="id-name-usuario" formControlName="nombre" [class]="{'is-invalid': usuario.get('nombre')?.invalid && (usuario.get('nombre')?.dirty || usuario.get('nombre')?.touched)}"  id="id-nombre-usuario" required>
+                <label for="id-nombre-usuario" class="form-label">Nombre</label>
+                <input type="text" class="form-control fd-color white" id="id-nombre-usuario" formControlName="nombre" [class]="{'is-invalid': usuario.get('nombre')?.invalid && (usuario.get('nombre')?.dirty || usuario.get('nombre')?.touched)}"  id="id-nombre-usuario" required>
                 <div class="invalid-feedback">
                   Por favor registre su nombre para continuar
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-name-apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control fd-color white" id="id-name-apellido" formControlName="apellido" [class]="{'is-invalid': usuario.get('apellido')?.invalid && (usuario.get('apellido')?.dirty || usuario.get('apellido')?.touched)}"  required>
+                <label id="id-label-apellido" for="id-apellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control fd-color white" id="id-apellido" formControlName="apellido" [class]="{'is-invalid': usuario.get('apellido')?.invalid && (usuario.get('apellido')?.dirty || usuario.get('apellido')?.touched)}"  required>
                 <div class="invalid-feedback">
                   Por favor registre su apellido para continuar
                 </div>
               </div>
               <div class="col-md-6 pe-2">
-                <label for="id-tp-doc-usuario" class="form-label">Tipo de identificación</label>
+                <label id="id-label-tp-doc" for="id-tp-doc-usuario" class="form-label">Tipo de identificación</label>
                 <select id="id-tp-doc-usuario"  class="form-select fd-color white" formControlName="tipo_identificacion" [class]="{'is-invalid': (usuario.get('tipo_identificacion')?.invalid || usuario.value.tipo_identificacion == '0') && (usuario.get('tipo_identificacion')?.dirty || usuario.get('tipo_identificacion')?.touched)}"  required>
                   <option value="0" disabled>Seleccione uno</option>
                   <option *ngFor="let tipo of listaDocumentoService.listaTipoDocumento" [value]="tipo.key">{{tipo.value}}</option>
@@ -50,14 +50,14 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6 ps-2">
-                <label for="id-num-doc-usuario" class="form-label">Número de identificación</label>
+                <label id="id-label-num-doc" for="id-num-doc-usuario" class="form-label">Número de identificación</label>
                 <input type="number" class="form-control fd-color white" id="id-num-doc-usuario" formControlName="numero_identificacion" [class]="{'is-invalid': usuario.get('numero_identificacion')?.invalid && (usuario.get('numero_identificacion')?.dirty || usuario.get('numero_identificacion')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese su número de identificación
                 </div>
               </div>
               <div class="col-md-6 ps-2">
-                <label for="id-genero-usuario" class="form-label">Genero</label>
+                <label id="id-label-genero" for="id-genero-usuario" class="form-label">Genero</label>
                 <div class="row-col-12">
                   <div class="form-check form-check-inline" *ngFor="let genero of listaDocumentoService.listaGenero">
                     <input class="form-check-input" (click)="setGenero(genero.key);" type="radio" name="inlineGenero" [value]="genero.key">
@@ -66,7 +66,7 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-edad-usuario" class="form-label">Edad</label>
+                <label id="id-label-edad" for="id-edad-usuario" class="form-label">Edad</label>
                 <input type="number" class="form-control fd-color white" id="id-edad-usuario"  formControlName="edad" [class]="{'is-invalid': (usuario.get('edad')?.invalid || usuario.value.edad == '0') && (usuario.get('edad')?.dirty || usuario.get('edad')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese su edad
@@ -80,7 +80,7 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-altura-usuario" class="form-label">Altura</label>
+                <label id="id-label-altura" for="id-altura-usuario" class="form-label">Altura</label>
                 <input type="number" class="form-control fd-color white" id="id-altura-usuario" formControlName="altura" [class]="{'is-invalid': (usuario.get('altura')?.invalid 
                 || usuario.value.altura == '0') && (usuario.get('altura')?.dirty || usuario.get('altura')?.touched)}" placeholder="Altura en centimetros (cm)" required>
                 <div class="invalid-feedback">
@@ -88,7 +88,7 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-pais-usuario" class="form-label">País de nacimiento</label>
+                <label id="id-label-pais" for="id-pais-usuario" class="form-label">País de nacimiento</label>
                 <select id="id-pais-usuario" (change)="getCiudadNacimiento(); usuario.value.ciudad_nacimiento = '0'" class="form-select fd-color white" formControlName="pais_nacimiento" [class]="{'is-invalid': (usuario.get('pais_nacimiento')?.invalid || usuario.value.pais_nacimiento == '0') && (usuario.get('pais_nacimiento')?.dirty || usuario.get('pais_nacimiento')?.touched)}">
                   <option value="0" disabled>Seleccione uno</option>
                   <option [value]="pais.key" *ngFor="let pais of listaDocumentoService.listaPais">{{pais.value}}</option>
@@ -98,7 +98,7 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-ciudad-usuario" class="form-label">Ciudad de nacimiento</label>
+                <label id="id-label-ciudad" for="id-ciudad-usuario" class="form-label">Ciudad de nacimiento</label>
                 <select id="id-ciudad-usuario" class="form-select fd-color white"  formControlName="ciudad_nacimiento" [class]="{'is-invalid': (usuario.get('ciudad_nacimiento')?.invalid || usuario.value.ciudad_nacimiento == '0') && (usuario.get('ciudad_nacimiento')?.dirty || usuario.get('ciudad_nacimiento')?.touched)}" >
                   <option value="0" disabled>Seleccione uno</option>
                   <option [value]="ciudad.key" *ngFor="let ciudad of listaCiudadNacimineto">{{ciudad.value}}</option>
@@ -108,7 +108,7 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-pais-residencia-usuario" class="form-label">País de residencia</label>
+                <label id="id-label-pais-residencia" for="id-pais-residencia-usuario" class="form-label">País de residencia</label>
                 <select id="id-pais-residencia-usuario" (change)="getCiudadResidencia(); usuario.value.ciudad_residencia = '0'" class="form-select fd-color white" formControlName="pais_residencia" [class]="{'is-invalid': (usuario.get('pais_residencia')?.invalid || usuario.value.pais_residencia == '0') && (usuario.get('pais_residencia')?.dirty || usuario.get('pais_residencia')?.touched)}" required>
                   <option value="0" disabled>Seleccione uno</option>
                   <option [value]="pais.key" *ngFor="let pais of listaDocumentoService.listaPais">{{pais.value}}</option>
@@ -118,7 +118,7 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-ciudad-residencia-usuario" class="form-label">Ciudad de residencia</label>
+                <label id="id-label-ciudad-residencia" for="id-ciudad-residencia-usuario" class="form-label">Ciudad de residencia</label>
                 <select id="id-ciudad-residencia-usuario" class="form-select fd-color white" formControlName="ciudad_residencia" [class]="{'is-invalid': (usuario.get('ciudad_residencia')?.invalid || usuario.value.ciudad_residencia == '0' ) && (usuario.get('ciudad_residencia')?.dirty || usuario.get('ciudad_residencia')?.touched)}" required>
                   <option value="0" disabled>Seleccione uno</option>
                   <option [value]="ciudad.key"  *ngFor="let ciudad of listaCiudadResidencia">{{ciudad.value}}</option>
@@ -128,7 +128,7 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-deporte-usuario" class="form-label">¿Cuál de los siguientes deportes practica o desea practicar?</label>
+                <label id="id-label-deporte" for="id-deporte-usuario" class="form-label">¿Cuál de los siguientes deportes practica o desea practicar?</label>
                 <div id="id-deporte-usuario" class="form-check" >
                   <input class="form-check-input" type="checkbox" formControlName="atletismo" id="id-op-atletismo">
                   <label class="form-check-label" for="id-op-atletismo">
@@ -146,21 +146,21 @@ import { Router } from '@angular/router';
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-tiempo-residencia-usuario" class="form-label">¿Hace cuánto tiempo reside en esta ciudad?</label>
+                <label id="id-label-tiempo-residencia" for="id-tiempo-residencia-usuario" class="form-label">¿Hace cuánto tiempo reside en esta ciudad?</label>
                 <input type="number" class="form-control fd-color white" id="id-tiempo-residencia-usuario" placeholder="Tiempo en meses" formControlName="antiguedad_residencia" [class]="{'is-invalid': usuario.get('antiguedad_residencia')?.invalid && (usuario.get('antiguedad_residencia')?.dirty || usuario.get('antiguedad_residencia')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese el tiempo de residencia en la ciudad ingresada anterioremente
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-email-usuario" class="form-label">Correo electrónico</label>
+                <label id="id-label-email" for="id-email-usuario" class="form-label">Correo electrónico</label>
                 <input type="text" class="form-control fd-color white" (input)="validarEmail()" id="id-email-usuario" [class]="{'is-invalid': (usuario.get('email')?.invalid || !emailValid) && (usuario.get('email')?.dirty || usuario.get('email')?.touched)}"  id="id-email-usuario" formControlName="email" [email]="true" required>
                 <div class="invalid-feedback">
                   Por favor ingrese su correo electrónico
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="id-password-usuario" class="form-label">Contraseña</label>
+                <label id="id-label-password" for="id-password-usuario" class="form-label">Contraseña</label>
                 <input type="password" class="form-control fd-color white" id="id-password-usuario" formControlName="contrasena" [class]="{'is-invalid': usuario.get('contrasena')?.invalid && (usuario.get('contrasena')?.dirty || usuario.get('contrasena')?.touched)}" required>
                 <div class="invalid-feedback">
                   Por favor ingrese una contraseña con la que ingresara al sistema
@@ -176,10 +176,8 @@ import { Router } from '@angular/router';
                   <button class="btn btn-secondary" routerLink="/home" type="submit">Cancelar</button>
                 </div>
                 <div class="col-md-6 text-start ps-4">
-                <!-- routerLink="/planes-subscripcion" -->
-                  <button class="btn btn-primary"  type="submit" [disabled]="!usuario.valid || !emailValid || usuario.value.tipo_identificacion == '0' || usuario.value.pais_nacimiento == '0' || usuario.value.ciudad_nacimiento == '0' || usuario.value.pais_residencia == '0' || usuario.value.ciudad_residencia == '0' || usuario.value.altura == '0' || usuario.value.peso == '0' || usuario.value.antiguedad_residencia == '0' || generoValid == ''"  >Registrar</button>
+                  <button id="id-bt" class="btn btn-primary"  type="submit" [disabled]="!usuario.valid || !emailValid || usuario.value.tipo_identificacion == '0' || usuario.value.pais_nacimiento == '0' || usuario.value.ciudad_nacimiento == '0' || usuario.value.pais_residencia == '0' || usuario.value.ciudad_residencia == '0' || usuario.value.altura == '0' || usuario.value.peso == '0' || usuario.value.antiguedad_residencia == '0' || generoValid == ''"  >Registrar</button>
                 </div>
-                <!-- (click)="registro()" -->
               </div>
             </form>
           </div>
