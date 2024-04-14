@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import { catchError, throwError } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface LoginUsuario{
   email?: string | null;
@@ -29,9 +30,10 @@ export interface Usuario {
   providedIn: 'root'
 })
 export class UsuarioService {
-  REGISTRO_USUARIOS_URL: string = "https://3001-abenitezm20-registrousu-lgd8q05juco.ws-us110.gitpod.io/registro-usuarios";
-  registro_usuarios_url: string = this.REGISTRO_USUARIOS_URL + "/registro/deportistas";
-  login_usuarios_url: string = this.REGISTRO_USUARIOS_URL + "/login/deportista";
+  //REGISTRO_USUARIOS_URL: string = "https://3001-abenitezm20-registrousu-lgd8q05juco.ws-us110.gitpod.io/registro-usuarios";
+  URL_PRINCIPAL: string = environment.baseUrlRegistro;
+  registro_usuarios_url: string = this.URL_PRINCIPAL + "/registro/deportistas";
+  login_usuarios_url: string = this.URL_PRINCIPAL + "/login/deportista";
 
   private handleError(error: HttpErrorResponse){
     let msg = ""
@@ -59,7 +61,7 @@ export class UsuarioService {
     return this.http.post<Usuario>(this.registro_usuarios_url,usuario,{
       headers : new HttpHeaders({
         'Content-Type': 'application/json'
-      }) 
+      })
     })
     .pipe(
       catchError(this.handleError)
@@ -70,16 +72,16 @@ export class UsuarioService {
     return this.http.post<LoginUsuario>(this.login_usuarios_url, login, {
       headers : new HttpHeaders({
         'Content-Type': 'application/json'
-      }) 
+      })
     })
     .pipe(
       catchError(this.handleError)
     )
     ;
-     
+
   }
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
 
   }
 }
