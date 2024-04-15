@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
       <nav class="navbar navbar-expand-lg bg-body-tertiary row" [class]="{'brand-hover':hover}">
         <div class="container-fluid">
            <a class="navbar-brand" href="#">
-              <img src="./assets/icon/Brand.png" alt="SportApp" class="d-inline-block align-text-top brand">
+              <img src="./assets/icon/Brand.png" alt="Logo SportApp" class="d-inline-block align-text-top brand">
            </a>
            <button class="navbar-toggler" type="button" data-bs-toggle="collapse    " data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
@@ -21,10 +21,10 @@ import { RouterModule } from '@angular/router';
             <div class="container">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/registro-socios">Quiero ser socio</a>
+                  <a i18n class="nav-link" aria-current="page" href="/registro-socios">Quiero ser socio</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/login-socios">Ingresar como socio</a>
+                  <a i18n class="nav-link" href="/login-socios">Ingresar como socio</a>
                 </li>
               </ul>
              </div>
@@ -34,18 +34,18 @@ import { RouterModule } from '@angular/router';
                   {{lang_selected}}
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item disabled">SELECCIONE UNO</a></li>
+                  <li><a i18n class="dropdown-item disabled">SELECCIONE UNO</a></li>
                   <li *ngFor="let lang of listLanguajeService.languaje"><a class="dropdown-item lang-li" [class]="{active:lang_selected == lang.nombre_corto}">{{lang.lenguaje}}</a></li>
                 </ul>
               </div>
               <button (mouseenter)="img_login='./assets/icon/person_white.png'" (mouseleave)="img_login='./assets/icon/person.png'" class="btn btn-outline-primary" type="submit" routerLink="/login-usuarios">
                 <div class="container-fluit bt-login">
                   <div class="row">
-                    <div class="col-6">
-                      Login
+                    <div i18n class="col-6">
+                      Ingresar
                     </div>
                     <div class="col-6">
-                      <img [src]="img_login" alt="person">
+                      <img i18n-[alt]="persona" [src]="img_login" alt="persona">
                     </div>
                   </div>
                 </div>  
