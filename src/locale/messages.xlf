@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es-419" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="253165569116138580" datatype="html">
+        <source>Quiero ser socio</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/nav-bar.component.ts</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2343091951092241920" datatype="html">
+        <source>Ingresar como socio</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/nav-bar.component.ts</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7641028203875624609" datatype="html">
+        <source>SELECCIONE UNO</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/nav-bar.component.ts</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7904313455104046575" datatype="html">
+        <source> Ingresar </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/nav-bar.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
