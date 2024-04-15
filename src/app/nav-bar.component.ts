@@ -24,7 +24,7 @@ import { RouterModule } from '@angular/router';
                   <a i18n class="nav-link" aria-current="page" href="/registro-socios">Quiero ser socio</a>
                 </li>
                 <li class="nav-item">
-                  <a i18n class="nav-link" href="/login-socios">Ingresar como socio</a>
+                  <a i18n id="id-ingresar-socio" class="nav-link" href="/login-socios">Ingresar como socio</a>
                 </li>
               </ul>
              </div>
