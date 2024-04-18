@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-  <div class="d-flex align-items-start row ps-2">
+  <div class="d-flex align-items-start row ps-2 min-vh-100">
     <div class="nav flex-column nav-pills me-3 col-12 col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <button class="nav-link active text-start" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Información basica</button>
       <button class="nav-link text-start" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Información alimenticia</button>
