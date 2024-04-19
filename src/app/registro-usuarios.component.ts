@@ -245,13 +245,10 @@ export class RegistroUsuariosComponent implements OnInit {
       .subscribe(resp => {
         // this.clearForm(usuarioRegistro.email!,undefined);
         console.log(resp);
-        this.router.navigate(['/home-usuario']);
-        // this.router.navigate(['/planes-subscripcion']);
+        this.router.navigate(['/planes-subscripcion']);
       }, err => {
         this.isError = true;
         this.error = err.message;
-        // this.clearForm(loginUsuario.email!,undefined);
-
     });
     }
   }
