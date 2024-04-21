@@ -5,6 +5,9 @@
     --text_on_primary_fixed_variant: #D0BCFF;
     --text_primary: #FFFFFF;
     --on_primary_container: #21005D;
+    --color-negro: #49454F;
+    --color-lila: #E8DEF8;
+    --color-negro-oscuro: #1D192B;
 }
 
 .footer{
@@ -58,4 +61,26 @@ h1,h2,h3{
 }
 li{
     color: #6C757D;
+}
+.text-nav{
+    color: var(--color-negro) !important;
+    font-size: 15px;
+}
+.text-nav.mini{
+    font-size: 15px;
+}
+.text-nav.md{
+    font-size: 16px;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: var(--color-negro-oscuro) !important;
+    background-color: var(--color-lila) !important;
+}
+.nav-link:hover, .nav-link:focus {
+    color: var(--color-negro-oscuro) !important;
+}
+.nav-link.disabled, .nav-link:disabled {
+    color: var(--color-negro) !important;
+    pointer-events: none;
+    cursor: default;
 }

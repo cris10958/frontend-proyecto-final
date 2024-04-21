@@ -7,6 +7,7 @@ import { LoginUsuariosComponent } from './login-usuarios.component';
 import { RegistroUsuariosComponent } from './registro-usuarios.component';
 import { PlanesSubscriptionComponent } from './planes-subscription.component';
 import { HomeUsuarioComponent } from './home-usuario.component';
+import { MenuComponent } from './menu.component';
 
 export const routes: Routes = [
     {path:'', pathMatch:'full', redirectTo:'home'},
@@ -18,5 +19,6 @@ export const routes: Routes = [
     {path:'registro-usuarios', component: RegistroUsuariosComponent},
     {path:'planes-subscripcion', component: PlanesSubscriptionComponent},
     {path:'home-usuario', component: HomeUsuarioComponent},
+    {path:'menu', component: MenuComponent},
     
 ];
