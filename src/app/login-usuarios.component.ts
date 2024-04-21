@@ -70,7 +70,7 @@ export class LoginUsuariosComponent {
       this.loginUsuarioServie.loginUsuarios(loginUsuario)
       .subscribe(resp => {
         this.clearForm(loginUsuario.email!,undefined);
-        this.router.navigate(['/home-usuario']);
+        this.router.navigate(['/panel-usuarios']);
       }, err => {
         this.isError = true;
         this.error = err.message;

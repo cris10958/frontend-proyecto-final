@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, input } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import { PlanSubscripcion } from './planes-subscripcion.service';
 import { Route } from '@angular/router';
 
@@ -68,11 +68,11 @@ import { Route } from '@angular/router';
 })
 export class CardPlanSubscripcionComponent implements OnInit {
   @Input() plan!: PlanSubscripcion;
+  @Output() registrarPlan = new EventEmitter<string>();
 
   ngOnInit(): void {}
 
   registrar_subscripcion(id: string) {
-    alert('Reportar');
-    return 'OK'
+    this.registrarPlan.emit(id);
   }
 }

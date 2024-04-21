@@ -8,6 +8,7 @@ import { RegistroUsuariosComponent } from './registro-usuarios.component';
 import { PlanesSubscriptionComponent } from './planes-subscription.component';
 import { HomeUsuarioComponent } from './home-usuario.component';
 import { MenuComponent } from './menu.component';
+import { PanelUsuarioComponent } from './panel-usuario.component';
 
 export const routes: Routes = [
     {path:'', pathMatch:'full', redirectTo:'home'},
@@ -19,6 +20,6 @@ export const routes: Routes = [
     {path:'registro-usuarios', component: RegistroUsuariosComponent},
     {path:'planes-subscripcion', component: PlanesSubscriptionComponent},
     {path:'home-usuario', component: HomeUsuarioComponent},
-    {path:'menu', component: MenuComponent},
+    {path:'panel-usuarios', component: PanelUsuarioComponent},
     
 ];
