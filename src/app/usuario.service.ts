@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import { catchError, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 export interface LoginUsuario{
   email?: string | null;
@@ -24,7 +26,14 @@ export interface Usuario {
   ciudad_residencia:     string;
   antiguedad_residencia: string;
   contrasena:            string;
+  deportes:              Deporte[];
 }
+
+export interface Deporte {
+  atletismo?: string | null;
+  ciclismo?:  string | null;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +43,8 @@ export class UsuarioService {
   URL_PRINCIPAL: string = environment.baseUrlRegistro;
   registro_usuarios_url: string = this.URL_PRINCIPAL + "/registro/deportistas";
   login_usuarios_url: string = this.URL_PRINCIPAL + "/login/deportista";
+  helper = new JwtHelperService();
+
 
   private handleError(error: HttpErrorResponse){
     let msg = ""
@@ -54,11 +65,12 @@ export class UsuarioService {
       }
       console.log(`Error desde el backend con status ${error.status}, con el siguiente error ${error.error}`);
     }
-    return throwError(()=> new Error(msg))
+    const errorObject = { message: msg, code: error.status };
+    return throwError(() => errorObject);
   }
 
   addUsuario(usuario: Usuario){
-    return this.http.post<Usuario>(this.registro_usuarios_url,usuario,{
+    return this.http.post<any>(this.registro_usuarios_url,usuario,{
       headers : new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -69,7 +81,7 @@ export class UsuarioService {
   }
 
   loginUsuarios(login: LoginUsuario){
-    return this.http.post<LoginUsuario>(this.login_usuarios_url, login, {
+    return this.http.post<any>(this.login_usuarios_url, login, {
       headers : new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -80,6 +92,7 @@ export class UsuarioService {
     ;
 
   }
+  
 
   constructor(private http: HttpClient) {
 
