@@ -46,7 +46,8 @@ export class SociosService {
       }
       console.log(`Error desde el backend con status ${error.status}, con el siguiente error ${error.error}`);
     }
-    return throwError(()=> new Error(msg))
+    const errorObject = { message: msg, code: error.status };
+    return throwError(() => errorObject)
   }
   addSocio(socio: SocioRegistro){
     return this.http.post<SocioRegistro>(this.registro_socios_url,socio,{

@@ -1,86 +1,129 @@
 /* You can add global styles to this file, and also import other style files */
-:root{
-    --primary_container:#EADDFF;
-    --on_primary_fixed_variant:#4F378B;
-    --text_on_primary_fixed_variant: #D0BCFF;
-    --text_primary: #FFFFFF;
-    --on_primary_container: #21005D;
-    --color-negro: #49454F;
-    --color-lila: #E8DEF8;
-    --color-negro-oscuro: #1D192B;
+@import "ngx-toastr/toastr";
+
+/* @import 'ngx-toastr/toastr-bs5-alert'; */
+
+:root {
+  --primary_container: #eaddff;
+  --on_primary_fixed_variant: #4f378b;
+  --text_on_primary_fixed_variant: #d0bcff;
+  --text_primary: #ffffff;
+  --on_primary_container: #21005d;
+  --color-negro: #49454f;
+  --color-lila: #e8def8;
+  --color-negro-oscuro: #1d192b;
+  --color_fondo: #f8f9fa
 }
 
-.footer{
-    background-color: #21005D;
-    color: #D0BCFF;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+.footer {
+  background-color: #21005d;
+  color: #d0bcff;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
-.fd-color{
-    background-color: #F8F9FA;
+.fd-color {
+  background-color: var(--color_fondo);
 }
-.fd-color.primary_container{
-    background-color: var(--primary_container);
+.fd-color.primary_container {
+  background-color: var(--primary_container);
 }
-.fd-color.on_primary_fixed_variant{
-    background-color: var(--on_primary_fixed_variant);
+.fd-color.on_primary_fixed_variant {
+  background-color: var(--on_primary_fixed_variant);
 }
-.fd-color.on_primary_fixed_variant > h1{
-    color: var(--text_on_primary_fixed_variant);
+.fd-color.on_primary_fixed_variant > h1 {
+  color: var(--text_on_primary_fixed_variant);
 }
-.fd-color.on_primary_container{
-    background-color: var(--on_primary_container);
+.fd-color.on_primary_container {
+  background-color: var(--on_primary_container);
 }
-.fd-color.on_primary_container > h1{
-    color: var(--text_primary);
+.fd-color.on_primary_container > h1 {
+  color: var(--text_primary);
 }
-.fd-color.white{
-    background-color: white;
+.fd-color.white {
+  background-color: white;
 }
-h1,h2,h3{
-    color: #21005D;
+h1,
+h2,
+h3 {
+  color: #21005d;
 }
-.ico-brand-w{
-    width: 8rem;
+.ico-brand-w {
+  width: 8rem;
 }
-.ico-ascesibilidad-w{
-    width: 2rem;
+.ico-ascesibilidad-w {
+  width: 2rem;
 }
-.h-total{
-    height: 100vh;
+.h-total {
+  height: 100vh;
 }
-.invalido{
-    width: 100%;
-    margin-top: 0.25rem;
-    font-size: 0.875em;
-    color: #dc3545;
+.invalido {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #dc3545;
 }
-.tx-justify{
-    text-align: justify;
+.tx-justify {
+  text-align: justify;
 }
-li{
-    color: #6C757D;
+li {
+  color: #6c757d;
 }
-.text-nav{
-    color: var(--color-negro) !important;
-    font-size: 15px;
+.text-nav {
+  color: var(--color-negro) !important;
+  font-size: 15px;
 }
-.text-nav.mini{
-    font-size: 15px;
+.text-nav.mini {
+  font-size: 15px;
 }
-.text-nav.md{
-    font-size: 16px;
+.text-nav.md {
+  font-size: 16px;
 }
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: var(--color-negro-oscuro) !important;
-    background-color: var(--color-lila) !important;
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: var(--color-negro-oscuro) !important;
+  background-color: var(--color-lila) !important;
 }
-.nav-link:hover, .nav-link:focus {
-    color: var(--color-negro-oscuro) !important;
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--color-negro-oscuro) !important;
 }
-.nav-link.disabled, .nav-link:disabled {
-    color: var(--color-negro) !important;
-    pointer-events: none;
-    cursor: default;
+.nav-link.disabled,
+.nav-link:disabled {
+  color: var(--color-negro) !important;
+  pointer-events: none;
+  cursor: default;
 }
+
+.toast-success {
+  background-color: var(--color_fondo) !important;
+  font-size: 0.9rem;
+  background-image:none !important;
+}
+
+.toast-title {
+  color: var(--on_primary_fixed_variant) !important;
+}
+
+.toast-message {
+  color: var(--color-negro-oscuro) !important;
+}
+
+.toast-container .ngx-toastr:hover {
+    box-shadow: 0 0 12px #876ecd !important;
+    opacity: 1;
+    cursor: pointer;
+}
+/* 
+.toast-success {
+    background-color: #51A351;
+  }
+  .toast-error {
+    background-color: #BD362F;
+  }
+  .toast-info {
+    background-color: #2F96B4;
+  }
+  .toast-warning {
+    background-color: #F89406;
+  } */

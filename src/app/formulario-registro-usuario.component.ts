@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Ciudad, ListasService } from './listas.service';
-import { Deporte, LoginUsuario, Usuario, UsuarioService } from './usuario.service';
+import {
+  Deporte,
+  LoginUsuario,
+  Usuario,
+  UsuarioService,
+} from './usuario.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -449,7 +454,7 @@ import {
               usuario.value.peso == '0' ||
               usuario.value.antiguedad_residencia == '0' ||
               generoValid == '' ||
-              (!usuario.value.atletismo &&  !usuario.value.ciclismo)
+              (!usuario.value.atletismo && !usuario.value.ciclismo)
             "
           >
             Registrar
@@ -522,7 +527,7 @@ export class FormularioRegistroUsuarioComponent {
       this.usuario.value.peso != '0' &&
       this.usuario.value.antiguedad_residencia != '0' &&
       this.generoValid != '' &&
-      (this.usuario.value.atletismo ||  this.usuario.value.ciclismo)
+      (this.usuario.value.atletismo || this.usuario.value.ciclismo)
     ) {
       this.deportes[0].atletismo = this.usuario.value.atletismo ? '1' : '0';
       this.deportes[1].ciclismo = this.usuario.value.ciclismo ? '1' : '0';
@@ -560,19 +565,19 @@ export class FormularioRegistroUsuarioComponent {
     }
   }
 
-  login(email:string, contrasena:string) {
-    if (email!=null && contrasena!=null) {
+  login(email: string, contrasena: string) {
+    if (email != null && contrasena != null) {
       const loginUsuario: LoginUsuario = {
-        "email": email,
-        "contrasena": contrasena
-      }
+        email: email,
+        contrasena: contrasena,
+      };
       this.usuarioService.loginUsuarios(loginUsuario).subscribe(
         (resp) => {
-          if(resp.token == ''){
+          if (resp.token == '') {
             this.router.navigate(['/login-usuarios']);
-            return
+            return;
           }
-          localStorage.setItem('token', resp.token);
+          this.usuarioService.registrarToken(resp.token);
           this.router.navigate(['/planes-subscripcion']);
         },
         (err) => {
@@ -580,9 +585,9 @@ export class FormularioRegistroUsuarioComponent {
           this.error = err.message;
         }
       );
-    }else{
+    } else {
       this.router.navigate(['/login-usuarios']);
-      return
+      return;
     }
   }
   setGenero(value: string) {
@@ -620,5 +625,7 @@ export class FormularioRegistroUsuarioComponent {
       this.emailValid = true;
     }
   }
-  
+
+  ngOnInit(): void {
+  }
 }

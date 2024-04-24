@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormularioRegistroUsuarioComponent } from './formulario-registro-usuario.component';
 import { FormularioInformacionAlimenticiaComponent } from './formulario-informacion-alimenticia.component';
 import { FormularioInformacionDeportivaComponent } from './formulario-informacion-deportiva.component';
+import { UsuarioService } from './usuario.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-menu',
@@ -225,4 +227,19 @@ import { FormularioInformacionDeportivaComponent } from './formulario-informacio
     `,
   ],
 })
-export class MenuComponent {}
+export class MenuComponent implements OnInit {
+  validarToken(){
+    if(!this.usuarioService.loggedIn()){
+      this.toastr.success('No cuenta con los permisos requeridos para esta acción', 'Sin autorizaciôn');
+      this.usuarioService.logout()
+      return
+    }
+  }
+
+  ngOnInit(): void {
+    this.validarToken();
+  }
+
+  constructor(private usuarioService: UsuarioService, private toastr: ToastrService){}
+
+}

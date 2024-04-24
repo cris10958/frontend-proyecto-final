@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { UsuarioService } from './usuario.service';
 
 @Component({
   selector: 'app-formulario-informacion-alimenticia',
@@ -176,7 +177,11 @@ export class FormularioInformacionAlimenticiaComponent implements OnInit {
     }
   }
 
+  
   ngOnInit(): void {
     this.informacion_alimenticia.get('detalle_alergia')?.disable();
   }
+
+  constructor(private usuarioService: UsuarioService){}
+
 }

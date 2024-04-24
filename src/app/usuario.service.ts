@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import { catchError, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 
 export interface LoginUsuario{
@@ -44,6 +46,7 @@ export class UsuarioService {
   registro_usuarios_url: string = this.URL_PRINCIPAL + "/registro/deportistas";
   login_usuarios_url: string = this.URL_PRINCIPAL + "/login/deportista";
   helper = new JwtHelperService();
+  localStorage = this.document.defaultView?.localStorage;
 
 
   private handleError(error: HttpErrorResponse){
@@ -93,9 +96,30 @@ export class UsuarioService {
 
   }
   
-
-  constructor(private http: HttpClient) {
-
+  logout(){
+    this.localStorage?.removeItem('token');
+    this.router.navigate(['/login-usuarios']);
   }
+
+  getToken(){
+    return this.localStorage?.getItem('token');
+  }
+
+  loggedIn(){
+    if(this.localStorage?.getItem('token')){
+      return true;
+    }
+    return false;
+  }
+
+  registrarToken(token:string | undefined){
+    if(token){
+      this.localStorage?.setItem('token',token);
+    }
+  }
+
+
+
+  constructor(private http: HttpClient, private router:Router, @Inject(DOCUMENT) private document: Document ) {}
 }
 

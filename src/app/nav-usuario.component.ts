@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { UsuarioService } from './usuario.service';
 
 @Component({
   selector: 'app-nav-usuario',
@@ -34,7 +35,7 @@ import { RouterModule } from '@angular/router';
               </ul>
              </div>
              <form class="d-flex col-2" role="search">
-              <button (mouseenter)="img_login='./assets/icon/power-hover.png'" (mouseleave)="img_login='./assets/icon/power.png'" class="btn btn-outline-primary" type="submit" routerLink="/home">
+              <button (mouseenter)="img_login='./assets/icon/power-hover.png'" (mouseleave)="img_login='./assets/icon/power.png'" class="btn btn-outline-primary" type="submit" (click)="logout()">
                 <div class="container-fluit bt-login">
                   <div class="row">
                     <div i18n class="col-6">
@@ -75,5 +76,9 @@ export class NavUsuarioComponent {
   hover:boolean = false;
   selected:string = 'mi-perfil';
 
+  logout(){
+    this.usuarioService.logout();
+  }
 
+  constructor(readonly usuarioService: UsuarioService, private router: Router){}
 }

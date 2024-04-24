@@ -10,6 +10,8 @@ import { LoginUsuario, UsuarioService } from './usuario.service';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-login-usuarios',
   standalone: true,
@@ -120,8 +122,9 @@ export class LoginUsuariosComponent implements OnInit {
       this.loginUsuarioServie.loginUsuarios(loginUsuario).subscribe(
         (resp) => {
           this.clearForm(loginUsuario.email!, undefined);
-          localStorage.setItem('token', resp.token);
+          this.loginUsuarioServie.registrarToken(resp.token);
           this.router.navigate(['/panel-usuarios']);
+          this.toastr.success('Que gusto verte de regreso', 'Bienvenido');
         },
         (err) => {
           this.isError = true;
@@ -157,10 +160,11 @@ export class LoginUsuariosComponent implements OnInit {
   }
   constructor(
     private loginUsuarioServie: UsuarioService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
+    
   ) {}
   ngOnInit() {
     this.usuario.reset();
   }
-  
 }

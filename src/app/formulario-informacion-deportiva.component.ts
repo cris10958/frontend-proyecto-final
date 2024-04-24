@@ -7,6 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { __values } from 'tslib';
+import { UsuarioService } from './usuario.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-formulario-informacion-deportiva',
@@ -229,4 +231,5 @@ export class FormularioInformacionDeportivaComponent implements OnInit{
   ngOnInit(): void {
     this.informacion_deportistas.get('detalle_lesion')?.disable();
   }
+
 }
