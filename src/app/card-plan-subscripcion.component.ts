@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import { PlanSubscripcion } from './planes-subscripcion.service';
 import { Route } from '@angular/router';
+import { UsuarioService } from './usuario.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-card-plan-subscripcion',
@@ -10,9 +12,9 @@ import { Route } from '@angular/router';
   template: `
     <div id="id-inicial-div" class="col-12">
       <div class="fd-color white p-0 shadow rounded">
-        <div [id]="'id-plan-'+plan.id_plan_subscripcion"
+        <div [id]="'id-plan-'+plan.nombre"
           class="fd-color rounded-top p-3 text-center"
-          [class]="{'primary_container': plan.id_plan_subscripcion == '1', 'on_primary_fixed_variant': plan.id_plan_subscripcion == '2', 'on_primary_container': plan.id_plan_subscripcion == '3', }"
+          [class]="{'primary_container': plan.nombre == 'Gratis', 'on_primary_fixed_variant': plan.nombre == 'Intermedio', 'on_primary_container': plan.nombre == 'Premium', }"
         >
           <h1>{{ plan.nombre }}</h1>
         </div>
@@ -25,7 +27,7 @@ import { Route } from '@angular/router';
             </ul>
           </div>
           <div
-            *ngIf="plan.id_plan_subscripcion == '1'"
+            *ngIf="plan.nombre == 'Gratis'"
             class="col-12 text-center ps-4 pt-5"
           >
             <button
@@ -39,13 +41,13 @@ import { Route } from '@angular/router';
           </div>
           <div
             *ngIf="
-              plan.id_plan_subscripcion == '2' ||
-              plan.id_plan_subscripcion == '3'
+              plan.nombre == 'Intermedio' ||
+              plan.nombre == 'Premium'
             "
             class="col-12 text-center ps-4 pt-5"
           >
             <button
-            [id]="'id-bt-'+plan.id_plan_subscripcion"
+            [id]="'id-bt-'+plan.nombre"
               class="btn btn-primary"
               type="submit"
               (click)="registrar_subscripcion(plan.id_plan_subscripcion)"
@@ -70,9 +72,22 @@ export class CardPlanSubscripcionComponent implements OnInit {
   @Input() plan!: PlanSubscripcion;
   @Output() registrarPlan = new EventEmitter<string>();
 
-  ngOnInit(): void {}
+  validarToken(){
+    if(!this.usuarioService.loggedIn()){
+      this.toastr.success('No cuenta con los permisos requeridos para esta acción', 'Sin autorizaciôn');
+      this.usuarioService.logout()
+      return
+    }
+  }
+
+  ngOnInit(): void {
+    // this.validarToken();
+  }
 
   registrar_subscripcion(id: string) {
     this.registrarPlan.emit(id);
   }
+
+  constructor(private usuarioService: UsuarioService, private toastr: ToastrService){}
+
 }

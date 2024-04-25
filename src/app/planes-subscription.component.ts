@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { PlanesSubscripcionService } from './planes-subscripcion.service';
+import { Component, OnInit } from '@angular/core';
+import { BeneficioPlanSubscripcion, PlanSubscripcion, PlanesSubscripcionService } from './planes-subscripcion.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CardPlanSubscripcionComponent } from './card-plan-subscripcion.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-planes-subscription',
@@ -20,7 +21,7 @@ import { CardPlanSubscripcionComponent } from './card-plan-subscripcion.componen
           <h1>Planes de subscripción</h1>
         </div>
         <div class="row justify-content-center pt-3 pb-3">
-          <app-card-plan-subscripcion *ngFor="let plan of planSubscripcion.planSubscripcion" [plan] = "plan" (registrarPlan)="registrar_subscripcion($event);" class="col-4">
+          <app-card-plan-subscripcion *ngFor="let plan of listPlanSubscripcion" [plan] = "plan" (registrarPlan)="registrar_subscripcion($event);" class="col-4">
           </app-card-plan-subscripcion>
         </div>
       </div>
@@ -35,7 +36,23 @@ import { CardPlanSubscripcionComponent } from './card-plan-subscripcion.componen
     `,
   ],
 })
-export class PlanesSubscriptionComponent {
+export class PlanesSubscriptionComponent implements OnInit{
+  listPlanSubscripcion: Array<PlanSubscripcion> = [];
+
+  cargarPlanes() {
+    this.planSubscripcionService.getPlanes().subscribe((listPlanSubscripcion) => {
+      this.listPlanSubscripcion = listPlanSubscripcion;
+    },
+    error => {
+      if (error.code === 401) {
+        this.toastr.success("Error","Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+      }
+      else {
+        this.toastr.success("Error","Ha ocurrido un error. " + error.message)
+      }
+    });
+  }
+
   registrar_subscripcion(id: string) {
     if (id == '1') {
       this.router.navigate(['/panel-usuarios']);
@@ -48,8 +65,13 @@ export class PlanesSubscriptionComponent {
     }
   }
 
+  ngOnInit(): void {
+    this.cargarPlanes();
+  }
+
   constructor(
-    readonly planSubscripcion: PlanesSubscripcionService,
-    private router: Router
+    readonly planSubscripcionService: PlanesSubscripcionService,
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 }
