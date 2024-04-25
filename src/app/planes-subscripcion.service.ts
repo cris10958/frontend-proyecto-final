@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable, catchError, throwError } from 'rxjs';
@@ -56,6 +56,14 @@ export class PlanesSubscripcionService {
     }).pipe(
       catchError(this.handleError)
     );
+  }
+
+  actualizarPlan(plan:string):Observable<any>{
+    const header = new HttpHeaders({
+      'Authorization':`Bearer ${this.usuarioService.getToken()}`
+    })
+    const params = {'plan_subscripcion': plan};
+    return this.http.put<any>(this.registro_usuarios_url+'deportistaupgrade', params, {headers:header})
   }
 
 

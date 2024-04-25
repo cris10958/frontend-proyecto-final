@@ -34,7 +34,7 @@ import { ToastrService } from 'ngx-toastr';
               [id]="'id-bt-'+plan.id_plan_subscripcion"
               class="btn btn-primary"
               type="submit"
-              (click)="registrar_subscripcion(plan.id_plan_subscripcion)"
+              (click)="registrar_subscripcion(plan.nombre)"
             >
               Continuar gratis
             </button>
@@ -50,7 +50,7 @@ import { ToastrService } from 'ngx-toastr';
             [id]="'id-bt-'+plan.nombre"
               class="btn btn-primary"
               type="submit"
-              (click)="registrar_subscripcion(plan.id_plan_subscripcion)"
+              (click)="registrar_subscripcion(plan.nombre)"
             >
               Subscribirme
             </button>
@@ -72,20 +72,11 @@ export class CardPlanSubscripcionComponent implements OnInit {
   @Input() plan!: PlanSubscripcion;
   @Output() registrarPlan = new EventEmitter<string>();
 
-  validarToken(){
-    if(!this.usuarioService.loggedIn()){
-      this.toastr.success('No cuenta con los permisos requeridos para esta acción', 'Sin autorizaciôn');
-      this.usuarioService.logout()
-      return
-    }
-  }
-
   ngOnInit(): void {
-    // this.validarToken();
   }
 
-  registrar_subscripcion(id: string) {
-    this.registrarPlan.emit(id);
+  registrar_subscripcion(plan: string) {
+    this.registrarPlan.emit(plan);
   }
 
   constructor(private usuarioService: UsuarioService, private toastr: ToastrService){}
