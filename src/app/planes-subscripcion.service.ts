@@ -66,6 +66,27 @@ export class PlanesSubscripcionService {
     return this.http.put<any>(this.registro_usuarios_url+'deportistaupgrade', params, {headers:header})
   }
 
+  getPlanActual(): Observable<PlanSubscripcion[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.usuarioService.getToken()}`,
+    });
+    return this.http.get<PlanSubscripcion[]>(this.registro_usuarios_url+'obtener_planes_subscripion/actual', {
+      headers: headers,
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getPlanDisponibles(): Observable<PlanSubscripcion[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.usuarioService.getToken()}`,
+    });
+    return this.http.get<PlanSubscripcion[]>(this.registro_usuarios_url+'obtener_planes_subscripion/disponible', {
+      headers: headers,
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   constructor(private http: HttpClient, private usuarioService: UsuarioService) { }
 }

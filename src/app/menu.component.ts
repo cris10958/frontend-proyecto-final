@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, viewChild } from '@angular/core';
 import { FormularioRegistroUsuarioComponent } from './formulario-registro-usuario.component';
 import { FormularioInformacionAlimenticiaComponent } from './formulario-informacion-alimenticia.component';
 import { FormularioInformacionDeportivaComponent } from './formulario-informacion-deportiva.component';
 import { UsuarioService } from './usuario.service';
-import { ToastrService } from 'ngx-toastr';
+import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.component';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [FormularioRegistroUsuarioComponent, FormularioInformacionAlimenticiaComponent, FormularioInformacionDeportivaComponent],
+  imports: [
+    FormularioRegistroUsuarioComponent,
+    FormularioInformacionAlimenticiaComponent,
+    FormularioInformacionDeportivaComponent,
+    PlanSubscripcionActualComponent,
+  ],
   template: `
     <div class="d-flex align-items-start row ps-2 fd-color text-nav">
       <div
@@ -69,6 +74,7 @@ import { ToastrService } from 'ngx-toastr';
           role="tab"
           aria-controls="v-pills-settings"
           aria-selected="false"
+          (click)="cargarPlanes()"
         >
           Mi plan
         </button>
@@ -170,13 +176,12 @@ import { ToastrService } from 'ngx-toastr';
           aria-labelledby="v-pills-inf-depor-tab"
           tabindex="0"
         >
-          
           <div class="row-col-12 ps-5">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Mi perfil</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
-                Información deportiva
+                  Información deportiva
                 </li>
               </ol>
             </nav>
@@ -197,7 +202,21 @@ import { ToastrService } from 'ngx-toastr';
           aria-labelledby="v-pills-settings-tab"
           tabindex="0"
         >
-          Mi plan
+          <div class="row-col-12 ps-5">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Mi perfil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Mi plan
+                </li>
+              </ol>
+            </nav>
+          </div>
+          <div class="row pt-3 justify-content-center">
+            <div class="col-10 pb-5">
+              <app-plan-subscripcion-actual></app-plan-subscripcion-actual>
+            </div>
+          </div>
         </div>
         <div
           class="tab-pane fade"
@@ -228,18 +247,13 @@ import { ToastrService } from 'ngx-toastr';
   ],
 })
 export class MenuComponent implements OnInit {
-  validarToken(){
-    if(!this.usuarioService.loggedIn()){
-      this.toastr.success('No cuenta con los permisos requeridos para esta acción', 'Sin autorizaciôn');
-      this.usuarioService.logout()
-      return
-    }
+  ngOnInit(): void {}
+
+  @ViewChild(PlanSubscripcionActualComponent) childComponent!: PlanSubscripcionActualComponent;
+
+  cargarPlanes(){
+    this.childComponent.cargarPlanesActual();
   }
 
-  ngOnInit(): void {
-    this.validarToken();
-  }
-
-  constructor(private usuarioService: UsuarioService, private toastr: ToastrService){}
-
+  constructor(private usuarioService: UsuarioService) {}
 }

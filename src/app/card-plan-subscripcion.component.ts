@@ -3,7 +3,6 @@ import { Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import { PlanSubscripcion } from './planes-subscripcion.service';
 import { Route } from '@angular/router';
 import { UsuarioService } from './usuario.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-card-plan-subscripcion',
@@ -35,8 +34,18 @@ import { ToastrService } from 'ngx-toastr';
               class="btn btn-primary"
               type="submit"
               (click)="registrar_subscripcion(plan.nombre)"
+              *ngIf="tipo == 'inicio'"
             >
               Continuar gratis
+            </button>
+            <button
+              [id]="'id-bt-'+plan.id_plan_subscripcion"
+              class="btn btn-primary"
+              type="submit"
+              (click)="actualizar_subscripcion(plan.nombre)"
+              *ngIf="tipo == 'actualizacion'"
+            >
+              Bajar de nivel
             </button>
           </div>
           <div
@@ -51,6 +60,16 @@ import { ToastrService } from 'ngx-toastr';
               class="btn btn-primary"
               type="submit"
               (click)="registrar_subscripcion(plan.nombre)"
+              *ngIf="tipo == 'inicio'"
+            >
+              Subscribirme
+            </button>
+            <button
+            [id]="'id-bt-'+plan.nombre"
+              class="btn btn-primary"
+              type="submit"
+              (click)="actualizar_subscripcion(plan.nombre)"
+              *ngIf="tipo == 'actualizacion'"
             >
               Subscribirme
             </button>
@@ -71,6 +90,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CardPlanSubscripcionComponent implements OnInit {
   @Input() plan!: PlanSubscripcion;
   @Output() registrarPlan = new EventEmitter<string>();
+  @Input() tipo: string = '';
 
   ngOnInit(): void {
   }
@@ -79,6 +99,10 @@ export class CardPlanSubscripcionComponent implements OnInit {
     this.registrarPlan.emit(plan);
   }
 
-  constructor(private usuarioService: UsuarioService, private toastr: ToastrService){}
+  actualizar_subscripcion(plan: string) {
+    this.registrarPlan.emit(plan);
+  }
+
+  constructor(private usuarioService: UsuarioService){}
 
 }

@@ -7,8 +7,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { __values } from 'tslib';
-import { UsuarioService } from './usuario.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-formulario-informacion-deportiva',
