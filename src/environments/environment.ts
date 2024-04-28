@@ -2,11 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 //const baseUrlRegistro = 'https://3001-abenitezm20-registrousu-lgd8q05juco.ws-us110.gitpod.io/registro-usuarios';
-const baseUrlRegistro = 'https://3001-abenitezm20-registrousu-1tkt3g73lxs.ws-us110.gitpod.io/registro-usuarios';
-
+const baseUrlRegistro = 'http://127.0.0.1:3001/registro-usuarios';
+const baseUrlGestorUsuarios = 'http://127.0.0.1:3002/gestor-usuarios';
 export const environment = {
   production: false,
   baseUrlRegistro,
+  baseUrlGestorUsuarios
 };
 
 /*

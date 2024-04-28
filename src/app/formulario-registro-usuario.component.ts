@@ -14,6 +14,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { flip } from '@popperjs/core';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'app-formulario-registro-usuario',
@@ -126,6 +128,7 @@ import {
               type="radio"
               name="inlineGenero"
               [value]="genero.key"
+              [checked]="genero.key == this.generoSelected"
             />
             <label class="form-check-label" for="inlineRadio1">{{
               genero.value
@@ -481,6 +484,8 @@ export class FormularioRegistroUsuarioComponent {
   isError: boolean = false;
   error: string = '';
   deportes: Deporte[] = [{ atletismo: '0' }, { ciclismo: '0' }];
+  edicion: boolean = false;
+  // usuario : any= null;
 
   usuario = new FormGroup({
     nombre: new FormControl('', [
@@ -625,7 +630,76 @@ export class FormularioRegistroUsuarioComponent {
       this.emailValid = true;
     }
   }
+  getInfoBasica() {
+    this.usuarioService.getInfoBasicaUsuario().subscribe((info) => {
+      console.log(info);
+      let infoBasica = info;
+      this.usuario = new FormGroup({
+        nombre: new FormControl(infoBasica.nombre, [
+          Validators.required,
+          Validators.maxLength(50),
+        ]),
+        apellido: new FormControl(infoBasica.apellido, [
+          Validators.required,
+          Validators.maxLength(50),
+        ]),
+        tipo_identificacion: new FormControl(infoBasica.tipo_identificacion, [
+          Validators.required,
+        ]),
+        numero_identificacion: new FormControl(
+          infoBasica.numero_identificacion,
+          [Validators.required, Validators.maxLength(15)]
+        ),
+        email: new FormControl(infoBasica.email, [Validators.required]),
+        genero: new FormControl(),
+        edad: new FormControl(infoBasica.edad, [
+          Validators.required,
+          Validators.max(999),
+        ]),
+        peso: new FormControl(infoBasica.peso, [
+          Validators.required,
+          Validators.max(999),
+        ]),
+        altura: new FormControl(infoBasica.altura, [
+          Validators.required,
+          Validators.max(999),
+        ]),
+        pais_nacimiento: new FormControl(infoBasica.pais_nacimiento, [
+          Validators.required,
+        ]),
+        ciudad_nacimiento: new FormControl(infoBasica.ciudad_nacimiento, [
+          Validators.required,
+        ]),
+        pais_residencia: new FormControl(infoBasica.pais_residencia, [
+          Validators.required,
+        ]),
+        ciudad_residencia: new FormControl(infoBasica.ciudad_residencia, [
+          Validators.required,
+        ]),
+        antiguedad_residencia: new FormControl(
+          infoBasica.antiguedad_residencia,
+          [Validators.required]
+        ),
+        contrasena: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+        atletismo: new FormControl(),
+        ciclismo: new FormControl(),
+      });
+      this.setGenero(infoBasica.genero);
+      this.getCiudadNacimiento();
+      this.getCiudadResidencia();
+    },
+    (err) => {
+      if (err.code != 400) {
+        this.isError = true;
+        this.error = err.message;
+      }
+    });
+  }
 
   ngOnInit(): void {
+    this.getInfoBasica();
   }
 }
