@@ -48,6 +48,12 @@ h2,
 h3 {
   color: #21005d;
 }
+.color-letra-gray-600{
+  color: #6c757d;
+}
+.color-letra-gray-800{
+  color: #343a40;
+}
 .ico-brand-w {
   width: 8rem;
 }
@@ -113,6 +119,12 @@ li {
     box-shadow: 0 0 12px #876ecd !important;
     opacity: 1;
     cursor: pointer;
+}
+
+.listo-paginador {
+  position: absolute;
+  bottom: 5vh;
+  left: 70vh;
 }
 /* 
 .toast-success {

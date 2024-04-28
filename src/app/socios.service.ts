@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import { catchError, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
+import { DOCUMENT } from '@angular/common';
+import { Router } from '@angular/router';
 
 export interface LoginSocio{
   email?: string | null;
@@ -26,6 +28,8 @@ export class SociosService {
   URL_PRINCIPAL: string = environment.baseUrlRegistro;
   registro_socios_url: string = this.URL_PRINCIPAL + "/registro/socios";
   login_socios_url: string = this.URL_PRINCIPAL + "/login/socio-negocio";
+  localStorage = this.document.defaultView?.localStorage;
+
 
   private handleError(error: HttpErrorResponse){
     let msg = ""
@@ -50,7 +54,7 @@ export class SociosService {
     return throwError(() => errorObject)
   }
   addSocio(socio: SocioRegistro){
-    return this.http.post<SocioRegistro>(this.registro_socios_url,socio,{
+    return this.http.post<any>(this.registro_socios_url,socio,{
       headers : new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -60,7 +64,7 @@ export class SociosService {
     )
   }
   loginSocio(login: LoginSocio){
-    return this.http.post<LoginSocio>(this.login_socios_url, login, {
+    return this.http.post<any>(this.login_socios_url, login, {
       headers : new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -70,5 +74,29 @@ export class SociosService {
     )
     ;
   }
-  constructor(private http: HttpClient) { }
+
+  getToken(){
+    return this.localStorage?.getItem('token-socio');
+  }
+
+  loggedIn(){
+    if(this.localStorage?.getItem('token-socio')){
+      return true;
+    }
+    return false;
+  }
+
+  registrarToken(token:string | undefined){
+    if(token){
+      this.localStorage?.setItem('token-socio',token);
+    }
+  }
+
+  logout(){
+    this.localStorage?.removeItem('token-socio');
+    this.router.navigate(['/login-socios']);
+  }
+
+  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document, private router: Router) { }
 }
+ 

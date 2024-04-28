@@ -76,6 +76,11 @@ export class LoginSociosComponent {
       loginSocio.contrasena = btoa(this.socio.value.contrasena!);
       this.loginSocioServie.loginSocio(loginSocio)
       .subscribe(resp => {
+        if (resp.token == '') {
+          this.router.navigate(['/login-socios']);
+          return;
+        }
+        this.loginSocioServie.registrarToken(resp.token);
         this.router.navigate(['/list-productos-servicios']);
         this.clearForm(loginSocio.email!,undefined);
       }, err => {

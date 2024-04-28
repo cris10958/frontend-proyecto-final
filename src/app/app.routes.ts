@@ -9,6 +9,8 @@ import { PlanesSubscriptionComponent } from './planes-subscription.component';
 import { HomeUsuarioComponent } from './home-usuario.component';
 import { MenuComponent } from './menu.component';
 import { PanelUsuarioComponent } from './panel-usuario.component';
+import { CardProductosServiciosComponent } from './card-productos-servicios.component';
+import { FormularioRegistroProductoServicioComponent } from './formulario-registro-producto-servicio.component';
 
 export const routes: Routes = [
     {path:'', pathMatch:'full', redirectTo:'home'},
@@ -21,5 +23,6 @@ export const routes: Routes = [
     {path:'planes-subscripcion', component: PlanesSubscriptionComponent},
     {path:'home-usuario', component: HomeUsuarioComponent},
     {path:'panel-usuarios', component: PanelUsuarioComponent},
+    {path:'registrar-productos-servicios', component: FormularioRegistroProductoServicioComponent}
     
 ];
