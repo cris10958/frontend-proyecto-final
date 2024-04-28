@@ -42,7 +42,7 @@ export class PerfilamientoService {
 
   getInfoAlimentcia(token:string): Observable<any> {
     let token_obtenido = this.usuarioService.getToken();
-    let token_postman = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF4ZWxiZW55MTZAZ21haWwuY29tIn0.1froxeGGGpSDTkRHqMzp4yi338BSMkd71DYIo_AM-J8'
+    let token_postman = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF4ZWxiZW55MThAZ21haWwuY29tIiwic3Vic2NyaXBjaW9uIjoiNTg1MDUwM2QtOWNlMy00ZjE3LTg4NzgtMjA4ZDcyOGJkZDczIiwidGlwb191c3VhcmlvIjoiZGVwb3J0aXN0YSJ9.CIa9IysBxjFrx6Fw-5HE-9DCbjdHbWpa5kV4Rh3yfIc'
     console.log("token_obtenido", token_obtenido);
     console.log("token_postman", token_postman);
     if(token_obtenido == token_postman){
@@ -50,10 +50,17 @@ export class PerfilamientoService {
     }
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.usuarioService.getToken()}`,
+      'Authorization': `Bearer ${this.usuarioService.getToken()}`,
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     });
+
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF4ZWxiZW55MThAZ21haWwuY29tIiwic3Vic2NyaXBjaW9uIjoiNTg1MDUwM2QtOWNlMy00ZjE3LTg4NzgtMjA4ZDcyOGJkZDczIiwidGlwb191c3VhcmlvIjoiZGVwb3J0aXN0YSJ9.CIa9IysBxjFrx6Fw-5HE-9DCbjdHbWpa5kV4Rh3yfIc`,
+    //   'Content-Type': 'application/json',
+    //   'Access-Control-Allow-Origin': '*'
+    // });
+
     console.log("headers alimen",headers);
     return this.http.get<any>(
       this.URL_PRINCIPAL + '/perfil-alimenticio/consultar',
