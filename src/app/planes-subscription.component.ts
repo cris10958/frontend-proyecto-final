@@ -30,17 +30,13 @@ import { UsuarioService } from './usuario.service';
             *ngFor="let plan of listPlanSubscripcion"
             [plan]="plan"
             (registrarPlan)="registrar_subscripcion($event)"
-            [tipo] = "'inicio'"
+            [tipo]="'inicio'"
             class="col-4"
           >
           </app-card-plan-subscripcion>
         </div>
       </div>
     </div>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
   `,
   styles: [
     `
@@ -61,7 +57,7 @@ export class PlanesSubscriptionComponent implements OnInit {
       },
       (error) => {
         if (error.code === 401) {
-          this.usuarioService.logout()
+          this.usuarioService.logout();
           this.toastr.success(
             'Error',
             'Su sesión ha caducado, por favor vuelva a iniciar sesión.'
@@ -83,10 +79,7 @@ export class PlanesSubscriptionComponent implements OnInit {
       this.actualizarPlan(plan);
       this.router.navigate(['/panel-usuarios']);
     } else {
-      this.toastr.success(
-        'Error',
-        'Selección invalida'
-      );
+      this.toastr.success('Error', 'Selección invalida');
       return;
     }
   }

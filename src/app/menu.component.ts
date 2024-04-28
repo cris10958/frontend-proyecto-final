@@ -38,6 +38,7 @@ import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.comp
           role="tab"
           aria-controls="v-pills-inf-bs"
           aria-selected="true"
+          (click)="cargarInformacionBasica()"
         >
           Información basica
         </button>
@@ -50,6 +51,7 @@ import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.comp
           role="tab"
           aria-controls="v-pills-inf-alm"
           aria-selected="false"
+          (click)="cargarInformacinAlimenticia()"
         >
           Información alimenticia
         </button>
@@ -62,6 +64,7 @@ import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.comp
           role="tab"
           aria-controls="v-pills-inf-depor"
           aria-selected="false"
+          (click)="cargarInformacionDeportiva()"
         >
           Información deportiva
         </button>
@@ -139,7 +142,7 @@ import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.comp
           </div>
           <div class="row pt-3 justify-content-center">
             <div class="col-10 pb-5">
-              <app-formulario-registro-usuario></app-formulario-registro-usuario>
+              <app-formulario-registro-usuario [actualizacion]="true"></app-formulario-registro-usuario>
             </div>
           </div>
         </div>
@@ -241,18 +244,31 @@ import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.comp
   `,
   styles: [
     `
-      .titulos-menu {
-      }
     `,
   ],
 })
 export class MenuComponent implements OnInit {
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   @ViewChild(PlanSubscripcionActualComponent) childComponent!: PlanSubscripcionActualComponent;
+  @ViewChild(FormularioInformacionAlimenticiaComponent) childFormPerfilAlimenticio!: FormularioInformacionAlimenticiaComponent;
+  @ViewChild(FormularioInformacionDeportivaComponent) childFormPerfilDeportivo!: FormularioInformacionDeportivaComponent;
+  @ViewChild(FormularioRegistroUsuarioComponent) childFormInfBasica!: FormularioRegistroUsuarioComponent;
 
   cargarPlanes(){
     this.childComponent.cargarPlanesActual();
+  }
+  cargarInformacinAlimenticia(){
+    this.childFormPerfilAlimenticio.getInfoAlimenticia();
+  }
+
+  cargarInformacionDeportiva(){
+    this.childFormPerfilDeportivo.getInfoDeportiva();
+  }
+
+  cargarInformacionBasica(){
+    this.childFormInfBasica.getInfoBasica();
   }
 
   constructor(private usuarioService: UsuarioService) {}

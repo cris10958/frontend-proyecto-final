@@ -5,6 +5,7 @@ import {
   LoginUsuario,
   Usuario,
   UsuarioService,
+  UsuarioUpd,
 } from './usuario.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -16,6 +17,7 @@ import {
 } from '@angular/forms';
 import { flip } from '@popperjs/core';
 import { noop } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-formulario-registro-usuario',
@@ -23,7 +25,7 @@ import { noop } from 'rxjs';
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   template: `
     <form class="row g-3" [formGroup]="usuario" (ngSubmit)="registro()">
-      <div class="col-md-6">
+      <div class="col-6">
         <label for="id-nombre-usuario" class="form-label">Nombre</label>
         <input
           type="text"
@@ -42,7 +44,7 @@ import { noop } from 'rxjs';
           Por favor registre su nombre para continuar
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label id="id-label-apellido" for="id-apellido" class="form-label"
           >Apellido</label
         >
@@ -63,7 +65,7 @@ import { noop } from 'rxjs';
           Por favor registre su apellido para continuar
         </div>
       </div>
-      <div class="col-md-6 pe-2">
+      <div class="col-6 pe-2">
         <label id="id-label-tp-doc" for="id-tp-doc-usuario" class="form-label"
           >Tipo de identificación</label
         >
@@ -92,7 +94,7 @@ import { noop } from 'rxjs';
           Por favor seleccione su tipo de identificación
         </div>
       </div>
-      <div class="col-md-6 ps-2">
+      <div class="col-6 ps-2">
         <label id="id-label-num-doc" for="id-num-doc-usuario" class="form-label"
           >Número de identificación</label
         >
@@ -113,7 +115,7 @@ import { noop } from 'rxjs';
           Por favor ingrese su número de identificación
         </div>
       </div>
-      <div class="col-md-6 ps-2">
+      <div class="col-6 ps-2">
         <label id="id-label-genero" for="id-genero-usuario" class="form-label"
           >Genero</label
         >
@@ -136,7 +138,7 @@ import { noop } from 'rxjs';
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label id="id-label-edad" for="id-edad-usuario" class="form-label"
           >Edad</label
         >
@@ -154,7 +156,7 @@ import { noop } from 'rxjs';
         />
         <div class="invalid-feedback">Por favor ingrese su edad</div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label for="id-peso-usuario" class="form-label">Peso</label>
         <input
           type="number"
@@ -171,7 +173,7 @@ import { noop } from 'rxjs';
         />
         <div class="invalid-feedback">Por favor ingrese su peso</div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label id="id-label-altura" for="id-altura-usuario" class="form-label"
           >Altura</label
         >
@@ -190,7 +192,7 @@ import { noop } from 'rxjs';
         />
         <div class="invalid-feedback">Por favor ingrese su altura</div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label id="id-label-pais" for="id-pais-usuario" class="form-label"
           >País de nacimiento</label
         >
@@ -221,7 +223,7 @@ import { noop } from 'rxjs';
           Por favor seleccione su país de nacimiento
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label id="id-label-ciudad" for="id-ciudad-usuario" class="form-label"
           >Ciudad de nacimiento</label
         >
@@ -249,7 +251,7 @@ import { noop } from 'rxjs';
           Por favor seleccione su ciudad de nacimiento
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label
           id="id-label-pais-residencia"
           for="id-pais-residencia-usuario"
@@ -284,7 +286,7 @@ import { noop } from 'rxjs';
           Por favor seleccione su país de residencia
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label
           id="id-label-ciudad-residencia"
           for="id-ciudad-residencia-usuario"
@@ -316,7 +318,7 @@ import { noop } from 'rxjs';
           Por favor seleccione su ciudad de residencia
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label id="id-label-deporte" for="id-deporte-usuario" class="form-label"
           >¿Cuál de los siguientes deportes practica o desea practicar?</label
         >
@@ -356,7 +358,7 @@ import { noop } from 'rxjs';
           Por favor seleccione el deporte que practica o desea practicar
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6">
         <label
           id="id-label-tiempo-residencia"
           for="id-tiempo-residencia-usuario"
@@ -382,7 +384,7 @@ import { noop } from 'rxjs';
           anterioremente
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6" *ngIf="!actualizacion">
         <label id="id-label-email" for="id-email-usuario" class="form-label"
           >Correo electrónico</label
         >
@@ -405,7 +407,7 @@ import { noop } from 'rxjs';
           Por favor ingrese su correo electrónico
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-6" *ngIf="!actualizacion">
         <label
           id="id-label-password"
           for="id-password-usuario"
@@ -435,14 +437,17 @@ import { noop } from 'rxjs';
         </div>
       </div>
       <div class="row p-0">
-        <div class="col-md-6 text-end pe-0">
-          <button class="btn btn-secondary" routerLink="/home" type="submit">
+        <div class="col-6 text-end pe-0">
+          <button *ngIf="!actualizacion" class="btn btn-secondary" routerLink="/home" type="submit">
+            Cancelar
+          </button>
+          <button *ngIf="actualizacion" class="btn btn-secondary" (click)="cancelar= true; getInfoBasica();" type="submit">
             Cancelar
           </button>
         </div>
-        <div class="col-md-6 text-start ps-4">
-          <button
-            id="id-bt"
+        <div class="col-6 text-start ps-4">
+          <button *ngIf="!actualizacion"
+            id="id-bt-registro-user"
             class="btn btn-primary"
             type="submit"
             [disabled]="
@@ -459,8 +464,31 @@ import { noop } from 'rxjs';
               generoValid == '' ||
               (!usuario.value.atletismo && !usuario.value.ciclismo)
             "
+            (click)="cancelar= false; registro()"
           >
             Registrar
+          </button>
+          <button *ngIf="actualizacion"
+            id="id-bt-registro-user"
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="
+              !usuario.valid ||
+              usuario.value.tipo_identificacion == '0' ||
+              usuario.value.pais_nacimiento == '0' ||
+              usuario.value.ciudad_nacimiento == '0' ||
+              usuario.value.pais_residencia == '0' ||
+              usuario.value.ciudad_residencia == '0' ||
+              usuario.value.altura == '0' ||
+              usuario.value.peso == '0' ||
+              usuario.value.antiguedad_residencia == '0' ||
+              generoValid == '' ||
+              (!usuario.value.atletismo && !usuario.value.ciclismo)
+            "
+            (click)="cancelar= true; actualizar()"
+
+          >
+            Actualizar
           </button>
         </div>
       </div>
@@ -472,8 +500,11 @@ export class FormularioRegistroUsuarioComponent {
   constructor(
     readonly listaDocumentoService: ListasService,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
+
+  @Input() actualizacion!: boolean;
 
   emailValid: boolean = false;
   deporteValid: boolean = false;
@@ -485,6 +516,7 @@ export class FormularioRegistroUsuarioComponent {
   error: string = '';
   deportes: Deporte[] = [{ atletismo: '0' }, { ciclismo: '0' }];
   edicion: boolean = false;
+  cancelar : boolean = false;
   // usuario : any= null;
 
   usuario = new FormGroup({
@@ -533,6 +565,7 @@ export class FormularioRegistroUsuarioComponent {
       this.usuario.value.antiguedad_residencia != '0' &&
       this.generoValid != '' &&
       (this.usuario.value.atletismo || this.usuario.value.ciclismo)
+      || this.cancelar
     ) {
       this.deportes[0].atletismo = this.usuario.value.atletismo ? '1' : '0';
       this.deportes[1].ciclismo = this.usuario.value.ciclismo ? '1' : '0';
@@ -556,17 +589,70 @@ export class FormularioRegistroUsuarioComponent {
         deportes: this.deportes,
       };
 
-      usuarioRegistro.contrasena = btoa(this.usuario.value.contrasena!);
-      this.usuarioService.addUsuario(usuarioRegistro).subscribe(
-        (resp) => {
-          this.login(usuarioRegistro.email, usuarioRegistro.contrasena);
-          this.clearForm(usuarioRegistro.contrasena!);
-        },
-        (err) => {
-          this.isError = true;
-          this.error = err.message;
-        }
-      );
+      if (!this.actualizacion) {
+        usuarioRegistro.contrasena = btoa(this.usuario.value.contrasena!);
+        this.usuarioService.addUsuario(usuarioRegistro).subscribe(
+          (resp) => {
+            this.login(usuarioRegistro.email, usuarioRegistro.contrasena);
+            this.clearForm(usuarioRegistro.contrasena!);
+            this.isError = false;
+          },
+          (err) => {
+            this.isError = true;
+            this.error = err.message;
+          }
+        );
+      }
+    }
+  }
+
+  actualizar() {
+    if (
+      this.usuario.valid &&
+      this.usuario.value.tipo_identificacion != '0' &&
+      this.usuario.value.pais_nacimiento != '0' &&
+      this.usuario.value.ciudad_nacimiento != '0' &&
+      this.usuario.value.pais_residencia != '0' &&
+      this.usuario.value.ciudad_residencia != '0' &&
+      this.usuario.value.altura != '0' &&
+      this.usuario.value.peso != '0' &&
+      this.usuario.value.antiguedad_residencia != '0' &&
+      this.generoValid != '' &&
+      (this.usuario.value.atletismo || this.usuario.value.ciclismo)
+      || this.cancelar
+    ) {
+      this.deportes[0].atletismo = this.usuario.value.atletismo ? '1' : '0';
+      this.deportes[1].ciclismo = this.usuario.value.ciclismo ? '1' : '0';
+
+      const usuarioRegistroUp: UsuarioUpd = {
+        nombre: this.usuario.value.nombre!,
+        apellido: this.usuario.value.apellido!,
+        tipo_identificacion: this.usuario.value.tipo_identificacion!,
+        numero_identificacion: this.usuario.value.numero_identificacion!,
+        genero: this.generoSelected!,
+        edad: this.usuario.value.edad!,
+        peso: this.usuario.value.peso!,
+        altura: this.usuario.value.altura!,
+        pais_nacimiento: this.usuario.value.pais_nacimiento!,
+        ciudad_nacimiento: this.usuario.value.ciudad_nacimiento!,
+        pais_residencia: this.usuario.value.pais_residencia!,
+        ciudad_residencia: this.usuario.value.ciudad_residencia!,
+        antiguedad_residencia: this.usuario.value.antiguedad_residencia!,
+        deportes: this.deportes,
+      };
+
+      if (this.actualizacion) {
+        this.usuarioService.updInfoBasicaUsuario(usuarioRegistroUp).subscribe(
+          (resp) => {
+            this.toastr.success('Actualización exitosa', 'Cada vez más cerda de tus objetivos');
+            this.isError = false;
+          },
+          (err) => {
+            this.isError = true;
+            this.error = err.message;
+          }
+        );
+      }
     }
   }
 
@@ -584,6 +670,7 @@ export class FormularioRegistroUsuarioComponent {
           }
           this.usuarioService.registrarToken(resp.token);
           this.router.navigate(['/planes-subscripcion']);
+          this.isError = false;
         },
         (err) => {
           this.isError = true;
@@ -631,75 +718,77 @@ export class FormularioRegistroUsuarioComponent {
     }
   }
   getInfoBasica() {
-    this.usuarioService.getInfoBasicaUsuario().subscribe((info) => {
-      console.log(info);
-      let infoBasica = info;
-      this.usuario = new FormGroup({
-        nombre: new FormControl(infoBasica.nombre, [
-          Validators.required,
-          Validators.maxLength(50),
-        ]),
-        apellido: new FormControl(infoBasica.apellido, [
-          Validators.required,
-          Validators.maxLength(50),
-        ]),
-        tipo_identificacion: new FormControl(infoBasica.tipo_identificacion, [
-          Validators.required,
-        ]),
-        numero_identificacion: new FormControl(
-          infoBasica.numero_identificacion,
-          [Validators.required, Validators.maxLength(15)]
-        ),
-        email: new FormControl(infoBasica.email, [Validators.required]),
-        genero: new FormControl(),
-        edad: new FormControl(infoBasica.edad, [
-          Validators.required,
-          Validators.max(999),
-        ]),
-        peso: new FormControl(infoBasica.peso, [
-          Validators.required,
-          Validators.max(999),
-        ]),
-        altura: new FormControl(infoBasica.altura, [
-          Validators.required,
-          Validators.max(999),
-        ]),
-        pais_nacimiento: new FormControl(infoBasica.pais_nacimiento, [
-          Validators.required,
-        ]),
-        ciudad_nacimiento: new FormControl(infoBasica.ciudad_nacimiento, [
-          Validators.required,
-        ]),
-        pais_residencia: new FormControl(infoBasica.pais_residencia, [
-          Validators.required,
-        ]),
-        ciudad_residencia: new FormControl(infoBasica.ciudad_residencia, [
-          Validators.required,
-        ]),
-        antiguedad_residencia: new FormControl(
-          infoBasica.antiguedad_residencia,
-          [Validators.required]
-        ),
-        contrasena: new FormControl('', [
-          Validators.required,
-          Validators.minLength(8),
-        ]),
-        atletismo: new FormControl(),
-        ciclismo: new FormControl(),
-      });
-      this.setGenero(infoBasica.genero);
-      this.getCiudadNacimiento();
-      this.getCiudadResidencia();
-    },
-    (err) => {
-      if (err.code != 400) {
-        this.isError = true;
-        this.error = err.message;
+    this.usuarioService.getInfoBasicaUsuario().subscribe(
+      (info) => {
+        let infoBasica = info;
+        let contrasena =  atob(info.contrasena);
+        this.usuario = new FormGroup({
+          nombre: new FormControl(infoBasica.nombre, [
+            Validators.required,
+            Validators.maxLength(50),
+          ]),
+          apellido: new FormControl(infoBasica.apellido, [
+            Validators.required,
+            Validators.maxLength(50),
+          ]),
+          tipo_identificacion: new FormControl(infoBasica.tipo_identificacion, [
+            Validators.required,
+          ]),
+          numero_identificacion: new FormControl(
+            infoBasica.numero_identificacion,
+            [Validators.required, Validators.maxLength(15)]
+          ),
+          email: new FormControl(infoBasica.email),
+          genero: new FormControl(),
+          edad: new FormControl(infoBasica.edad, [
+            Validators.required,
+            Validators.max(999),
+          ]),
+          peso: new FormControl(infoBasica.peso, [
+            Validators.required,
+            Validators.max(999),
+          ]),
+          altura: new FormControl(infoBasica.altura, [
+            Validators.required,
+            Validators.max(999),
+          ]),
+          pais_nacimiento: new FormControl(infoBasica.pais_nacimiento, [
+            Validators.required,
+          ]),
+          ciudad_nacimiento: new FormControl(infoBasica.ciudad_nacimiento, [
+            Validators.required,
+          ]),
+          pais_residencia: new FormControl(infoBasica.pais_residencia, [
+            Validators.required,
+          ]),
+          ciudad_residencia: new FormControl(infoBasica.ciudad_residencia, [
+            Validators.required,
+          ]),
+          antiguedad_residencia: new FormControl(
+            infoBasica.antiguedad_residencia,
+            [Validators.required]
+          ),
+          contrasena: new FormControl(contrasena),
+          atletismo: new FormControl(),
+          ciclismo: new FormControl(),
+        });
+        this.setGenero(infoBasica.genero);
+        this.getCiudadNacimiento();
+        this.getCiudadResidencia();
+        this.isError = false;
+      },
+      (err) => {
+        if (err.code != 400) {
+          this.isError = true;
+          this.error = err.message;
+        }
       }
-    });
+    );
   }
 
   ngOnInit(): void {
-    this.getInfoBasica();
+    if(this.actualizacion){
+      this.getInfoBasica()
+    }
   }
 }

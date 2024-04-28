@@ -22,7 +22,7 @@ import { FormularioRegistroUsuarioComponent } from './formulario-registro-usuari
             <div class="row-col-12 text-center pt-3 pb-3">
               <h1>Registro Inicial</h1>
             </div>
-            <app-formulario-registro-usuario></app-formulario-registro-usuario>
+            <app-formulario-registro-usuario [actualizacion]="false"></app-formulario-registro-usuario>
           </div>
         </div>
       </div>

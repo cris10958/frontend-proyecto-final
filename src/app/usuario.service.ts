@@ -34,6 +34,23 @@ export interface Usuario {
   deportes: Deporte[];
 }
 
+export interface UsuarioUpd {
+  nombre: string;
+  apellido: string;
+  tipo_identificacion: string;
+  numero_identificacion: string;
+  genero: string;
+  edad: string;
+  peso: string;
+  altura: string;
+  pais_nacimiento: string;
+  ciudad_nacimiento: string;
+  pais_residencia: string;
+  ciudad_residencia: string;
+  antiguedad_residencia: string;
+  deportes: Deporte[];
+}
+
 export interface Deporte {
   atletismo?: string | null;
   ciclismo?: string | null;
@@ -117,17 +134,27 @@ export class UsuarioService {
 
   getInfoBasicaUsuario(): Observable<any> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.getToken()}`,
+      'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     });
-    console.log("headers info",headers)
     return this.http.get<any>(this.usuarios_url + '/deportista', {
       headers: headers,
     });
   }
 
-  
+  updInfoBasicaUsuario(usuario: UsuarioUpd) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    return this.http
+      .put<any>(this.usuarios_url+"/actualizar", usuario, {
+        headers: headers
+      })
+      .pipe(catchError(this.handleError));
+  }
 
   constructor(
     private http: HttpClient,

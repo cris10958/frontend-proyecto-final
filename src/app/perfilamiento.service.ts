@@ -11,12 +11,31 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { UsuarioService } from './usuario.service';
 
+export interface PerfilAlimenticio {
+  intorelancia_alergia:         boolean;
+  detalle_intolerancia_alergia: string;
+  vegano:                       boolean;
+  objetivo_peso:                string;
+}
+
+export interface PerfilDeportivo {
+  FTP_actual:                          string;
+  VO2max_actual:                       string;
+  detalle_lesion_molestia_incapacidad: string;
+  dias_semana_practica:                string;
+  lesion_molestia_incapacidad:         boolean;
+  tiempo_practica:                     string;
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class PerfilamientoService {
   URL_PRINCIPAL: string = environment.baseUrlGestorUsuarios;
   helper = new JwtHelperService();
+  localStorage = this.document.defaultView?.localStorage;
+
 
   private handleError(error: HttpErrorResponse) {
     let msg = '';
@@ -40,31 +59,91 @@ export class PerfilamientoService {
     return throwError(() => errorObject);
   }
 
-  getInfoAlimentcia(token:string): Observable<any> {
-    let token_obtenido = this.usuarioService.getToken();
-    let token_postman = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF4ZWxiZW55MTZAZ21haWwuY29tIn0.1froxeGGGpSDTkRHqMzp4yi338BSMkd71DYIo_AM-J8'
-    console.log("token_obtenido", token_obtenido);
-    console.log("token_postman", token_postman);
-    if(token_obtenido == token_postman){
-      console.log("HOLIS");
-    }
-
+  getInfoAlimentcia(): Observable<any> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.usuarioService.getToken()}`,
+      'Authorization': `Bearer ${this.usuarioService.getToken()}`,
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     });
-    console.log("headers alimen",headers);
     return this.http.get<any>(
       this.URL_PRINCIPAL + '/perfil-alimenticio/consultar',
       { headers: headers }
-    );
+    )
+    .pipe(catchError(this.handleError));
+    ;
+  }
+
+  addPerfilAlimenticion(perfilAlimenticio: PerfilAlimenticio) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.usuarioService.getToken()}`,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    return this.http
+      .post<any>(this.URL_PRINCIPAL+'/perfil-alimenticio/agregar', perfilAlimenticio, {
+        headers: headers
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  updPerfilAlimenticion(perfilAlimenticio: PerfilAlimenticio) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.usuarioService.getToken()}`,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    return this.http
+      .put<any>(this.URL_PRINCIPAL+'/perfil-alimenticio/actualizar', perfilAlimenticio, {
+        headers: headers
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getInfoDeportiva(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.usuarioService.getToken()}`,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    return this.http.get<any>(
+      this.URL_PRINCIPAL + '/perfil-deportivo/consultar',
+      { headers: headers }
+    )
+    .pipe(catchError(this.handleError));
+    ;
+  }
+
+  addPerfilDeportivo(perfilDeportivo: PerfilDeportivo) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.usuarioService.getToken()}`,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    return this.http
+      .post<any>(this.URL_PRINCIPAL+'/perfil-deportivo/agregar', perfilDeportivo, {
+        headers: headers
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  updPerfilDeportivo(perfilDeportivo: PerfilDeportivo) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.usuarioService.getToken()}`,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    return this.http
+      .put<any>(this.URL_PRINCIPAL+'/perfil-deportivo/actualizar', perfilDeportivo, {
+        headers: headers
+      })
+      .pipe(catchError(this.handleError));
   }
 
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 }
