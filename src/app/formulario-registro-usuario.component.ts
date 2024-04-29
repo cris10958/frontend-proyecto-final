@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   template: `
-    <form class="row g-3" [formGroup]="usuario" (ngSubmit)="registro()">
+    <form class="row g-3" [formGroup]="usuario">
       <div class="col-6">
         <label for="id-nombre-usuario" class="form-label">Nombre</label>
         <input
