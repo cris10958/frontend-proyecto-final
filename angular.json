@@ -4,10 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "sport-app": {
-      "i18n": {
-        "sourceLocale": "es-419",
-        "locales": {"en-US":"src/locale/messages.en.xlf"}
-      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -22,7 +18,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize":["es-419"],
             "outputPath": "dist/sport-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
