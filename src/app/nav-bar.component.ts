@@ -28,9 +28,9 @@ import { RouterModule } from '@angular/router';
                 </li>
               </ul>
              </div>
-             <form class="d-flex" role="search">
-             <div class="dropdown">
-                <button class="btn dropdown-toggle ps-3 pe-5 me-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <form class="d-flex row" role="search">
+             <div class="dropdown col-5">
+                <button class="btn dropdown-toggle ps-3 me-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   {{lang_selected}}
                 </button>
                 <ul class="dropdown-menu">
@@ -38,7 +38,7 @@ import { RouterModule } from '@angular/router';
                   <li *ngFor="let lang of listLanguajeService.languaje"><a class="dropdown-item lang-li" [class]="{active:lang_selected == lang.nombre_corto}">{{lang.lenguaje}}</a></li>
                 </ul>
               </div>
-              <button (mouseenter)="img_login='./assets/icon/person_white.png'" (mouseleave)="img_login='./assets/icon/person.png'" class="btn btn-outline-primary" type="submit" routerLink="/login-usuarios">
+              <button (mouseenter)="img_login='./assets/icon/person_white.png'" (mouseleave)="img_login='./assets/icon/person.png'" class="btn btn-outline-primary col-7" type="submit" routerLink="/login-usuarios">
                 <div class="container-fluit bt-login">
                   <div class="row">
                     <div i18n class="col-6">

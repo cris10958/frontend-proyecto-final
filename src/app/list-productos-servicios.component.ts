@@ -1,16 +1,124 @@
 import { Component } from '@angular/core';
+import { NavSociosComponent } from './nav-socios.component';
+import { FooterComponent } from './footer.component';
+import { CardProductosServiciosComponent } from './card-productos-servicios.component';
+import { Router } from '@angular/router';
+import { SociosService } from './socios.service';
 
 @Component({
   selector: 'app-list-productos-servicios',
   standalone: true,
-  imports: [],
+  imports: [
+    NavSociosComponent,
+    FooterComponent,
+    CardProductosServiciosComponent,
+  ],
   template: `
-    <p>
-      list-productos-servicios works!
-    </p>
+    <div class="container-fluid p-0 brand-hover">
+      <app-nav-socios></app-nav-socios>
+    </div>
+    <div id="id-base-socio" class="container-fluit"></div>
+    <div class="ps-4 pe-4 pt-3">
+      <div class="row-col-12 text-start">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
+        >
+          Todo
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
+        >
+          Productos
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
+        >
+          Servicios
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
+        >
+          Pedidos
+        </button>
+      </div>
+      <div class="row-col-12 text-end">
+        <button
+          class="btn btn-sm btn-primary"
+          (click)="openRegistrar()"
+          type="submit"
+        >
+          Registrar nuevo
+        </button>
+      </div>
+      <div class="row-col-12">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Productos y servicios</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Sin filtro
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div
+      id="contenido-panel"
+      class="cuerpo pt-3 h-75 ps-4 pe-4"
+      style="overflow: auto; max-height:53vh;"
+    >
+      <app-card-productos-servicios></app-card-productos-servicios>
+      <div class="row-col-12 text-center listo-paginador">
+        <nav aria-label="paginador">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <app-footer></app-footer>
   `,
-  styles: ``
+  styles: [
+    `
+      .cuerpo {
+        background-color: transparent;
+      }
+
+      .fondo-btn-fild {
+        background-color: #ebe5fc;
+        border: 0px;
+      }
+      .fondo-btn-fild:hover {
+        background-color: #7749f8;
+      }
+    `,
+  ],
 })
 export class ListProductosServiciosComponent {
+
+  openRegistrar(){
+    if(this.sociosService.loggedIn()){
+      this.router.navigate(['/registrar-productos-servicios'])
+    }
+  }
+
+  constructor(private router: Router, private sociosService: SociosService){}
 
 }

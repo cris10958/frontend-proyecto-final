@@ -21,6 +21,8 @@ import { FooterComponent } from './footer.component';
   styles: [`
     .cuerpo{
       background-color:transparent;
+      max-height: 69vh;
+      overflow: auto;
     }
   `]
 })

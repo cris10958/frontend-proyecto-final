@@ -1,42 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  BeneficioPlanSubscripcion,
-  PlanSubscripcion,
-  PlanesSubscripcionService,
-} from './planes-subscripcion.service';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { CardPlanSubscripcionComponent } from './card-plan-subscripcion.component';
+import { PlanSubscripcion, PlanesSubscripcionService } from './planes-subscripcion.service';
+import { Router } from 'express';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { CardPlanSubscripcionComponent } from './card-plan-subscripcion.component';
 import { UsuarioService } from './usuario.service';
 
 @Component({
-  selector: 'app-planes-subscription',
+  selector: 'app-plan-subscripcion-actual',
   standalone: true,
   imports: [CommonModule, CardPlanSubscripcionComponent],
   template: `
     <div class="fd-color h-total w-100 row justify-content-center pb-5">
-      <div class="col-10 pt-5">
-        <div class="row-col-12 text-start">
-          <a href="/home">
-            <img src="./assets/icon/Brand.png" class="ico-brand-w" alt="logo" />
-          </a>
+      <div class="col-12">
+        <div class="row-col-12 text-center pt-3 pb-3">
+          <h1>Plan actual</h1>
+        </div>
+        <div class="row justify-content-center pt-3 pb-3">
+          <app-card-plan-subscripcion
+            *ngFor="let plan of PlanActual"
+            [plan]="plan"
+            (registrarPlan)="actualizar_subscripcion($event)"
+            [tipo] = "'actual'"
+            class="col-6"
+          >
+          </app-card-plan-subscripcion>
         </div>
         <div class="row-col-12 text-center pt-3 pb-3">
-          <h1>Planes de subscripción</h1>
+          <h1>Planes disponibles</h1>
         </div>
         <div class="row justify-content-center pt-3 pb-3">
           <app-card-plan-subscripcion
             *ngFor="let plan of listPlanSubscripcion"
             [plan]="plan"
-            (registrarPlan)="registrar_subscripcion($event)"
-            [tipo]="'inicio'"
-            class="col-4"
+            (registrarPlan)="actualizar_subscripcion($event)"
+            [tipo] = "'actualizacion'"
+            class="col-6"
           >
           </app-card-plan-subscripcion>
         </div>
       </div>
     </div>
+    <h2 class="visually-hidden">Title for screen readers</h2>
+<a class="visually-hidden-focusable" href="#content">Skip to main content</a>
+<div class="visually-hidden-focusable">A container with a <a href="#">focusable element</a>.</div>
   `,
   styles: [
     `
@@ -47,11 +54,12 @@ import { UsuarioService } from './usuario.service';
     `,
   ],
 })
-export class PlanesSubscriptionComponent implements OnInit {
+export class PlanSubscripcionActualComponent implements OnInit{
   listPlanSubscripcion: Array<PlanSubscripcion> = [];
+  PlanActual: Array<PlanSubscripcion> = [];
 
-  cargarPlanes() {
-    this.planSubscripcionService.getPlanes().subscribe(
+  cargarPlanesDiponibles() {
+    this.planSubscripcionService.getPlanDisponibles().subscribe(
       (listPlanSubscripcion) => {
         this.listPlanSubscripcion = listPlanSubscripcion;
       },
@@ -72,22 +80,38 @@ export class PlanesSubscriptionComponent implements OnInit {
     );
   }
 
-  registrar_subscripcion(plan: string) {
-    if (plan == 'Gratis') {
-      this.router.navigate(['/panel-usuarios']);
-    } else if (plan == 'Intermedio' || plan == 'Premium') {
-      this.actualizarPlan(plan);
-      this.router.navigate(['/panel-usuarios']);
-    } else {
-      this.toastr.success('Error', 'Selección invalida');
-      return;
-    }
+  cargarPlanesActual() {
+    this.planSubscripcionService.getPlanActual().subscribe(
+      (PlanActual) => {
+        this.PlanActual = PlanActual;
+        this.cargarPlanesDiponibles();
+      },
+      (error) => {
+        if (error.code === 401) {
+          this.usuarioService.logout();
+          this.toastr.success(
+            'Error',
+            'Su sesión ha caducado, por favor vuelva a iniciar sesión.'
+          );
+        } else {
+          this.toastr.success(
+            'Error',
+            'Ha ocurrido un error. ' + error.message
+          );
+        }
+      }
+    );
+  }
+
+  actualizar_subscripcion(plan: string) {
+    this.actualizarPlan(plan);
   }
 
   actualizarPlan(plan: string) {
     this.planSubscripcionService.actualizarPlan(plan).subscribe(
       (result) => {
         this.toastr.success('En hora buena', 'Plan actualizado con exito');
+        this.cargarPlanesActual();
       },
       (error) => {
         if (error.code === 401) {
@@ -107,13 +131,12 @@ export class PlanesSubscriptionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cargarPlanes();
   }
 
   constructor(
     readonly planSubscripcionService: PlanesSubscripcionService,
-    private router: Router,
     private toastr: ToastrService,
     private usuarioService: UsuarioService
   ) {}
+
 }

@@ -1,39 +1,162 @@
 /* You can add global styles to this file, and also import other style files */
-:root{
-    --primary_container:#EADDFF;
+@import "ngx-toastr/toastr";
+
+/* @import 'ngx-toastr/toastr-bs5-alert'; */
+
+:root {
+  --primary_container: #eaddff;
+  --on_primary_fixed_variant: #4f378b;
+  --text_on_primary_fixed_variant: #d0bcff;
+  --text_primary: #ffffff;
+  --on_primary_container: #21005d;
+  --color-negro: #49454f;
+  --color-lila: #e8def8;
+  --color-negro-oscuro: #1d192b;
+  --color_fondo: #f8f9fa;
 }
 
-.footer{
-    background-color: #21005D;
-    color: #D0BCFF;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+.footer {
+  background-color: #21005d;
+  color: #d0bcff;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
-.fd-color{
-    background-color: #F8F9FA;
+.fd-color {
+  background-color: var(--color_fondo);
 }
-.fd-color.primary_container{
-    background-color: var(--primary_container);
+.fd-color.primary_container {
+  background-color: var(--primary_container);
 }
-.fd-color.white{
-    background-color: white;
+.fd-color.on_primary_fixed_variant {
+  background-color: var(--on_primary_fixed_variant);
 }
-h1,h2,h3{
-    color: #21005D;
+.fd-color.on_primary_fixed_variant > h1 {
+  color: var(--text_on_primary_fixed_variant);
 }
-.ico-brand-w{
-    width: 8rem;
+.fd-color.on_primary_container {
+  background-color: var(--on_primary_container);
 }
-.ico-ascesibilidad-w{
-    width: 2rem;
+.fd-color.on_primary_container > h1 {
+  color: var(--text_primary);
 }
-.h-total{
-    height: 100vh;
+.fd-color.white {
+  background-color: white;
 }
-.invalido{
-    width: 100%;
-    margin-top: 0.25rem;
-    font-size: 0.875em;
-    color: #dc3545;
+h1,
+h2,
+h3 {
+  color: #21005d;
 }
+.color-letra-gray-600 {
+  color: #6c757d;
+}
+.color-letra-gray-800 {
+  color: #343a40;
+}
+.ico-brand-w {
+  width: 8rem;
+}
+.ico-ascesibilidad-w {
+  width: 2rem;
+}
+.h-total {
+  height: 100vh;
+}
+.invalido {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}
+.tx-justify {
+  text-align: justify;
+}
+li {
+  color: #6c757d;
+}
+.text-nav {
+  color: var(--color-negro) !important;
+  font-size: 15px;
+}
+.text-nav.mini {
+  font-size: 15px;
+}
+.text-nav.md {
+  font-size: 16px;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: var(--color-negro-oscuro) !important;
+  background-color: var(--color-lila) !important;
+}
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--color-negro-oscuro) !important;
+}
+.nav-link.disabled,
+.nav-link:disabled {
+  color: var(--color-negro) !important;
+  pointer-events: none;
+  cursor: default;
+}
+
+.toast-success {
+  background-color: var(--color_fondo) !important;
+  font-size: 0.9rem;
+  background-image: none !important;
+}
+
+.toast-title {
+  color: var(--on_primary_fixed_variant) !important;
+}
+
+.toast-message {
+  color: var(--color-negro-oscuro) !important;
+}
+
+.toast-container .ngx-toastr:hover {
+  box-shadow: 0 0 12px #876ecd !important;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.listo-paginador {
+  position: absolute;
+  bottom: 5vh;
+  left: 70vh;
+}
+
+.fondo_calendario {
+  background-color: var(--color-lila);
+}
+.agendada {
+  background-color: var(--on_primary_fixed_variant);
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 30px;
+  cursor:pointer;
+}
+.finalizadad {
+  background-color: var(--on_primary_fixed_variant);
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 30px;
+  cursor:pointer;
+
+}
+/* 
+.toast-success {
+    background-color: #51A351;
+  }
+  .toast-error {
+    background-color: #BD362F;
+  }
+  .toast-info {
+    background-color: #2F96B4;
+  }
+  .toast-warning {
+    background-color: #F89406;
+  } */
