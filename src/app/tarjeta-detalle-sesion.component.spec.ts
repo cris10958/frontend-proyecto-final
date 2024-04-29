@@ -1,20 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavSociosComponent } from './nav-socios.component';
+import { TarjetaDetalleSesionComponent } from './tarjeta-detalle-sesion.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('NavSociosComponent', () => {
-  let component: NavSociosComponent;
-  let fixture: ComponentFixture<NavSociosComponent>;
+describe('TarjetaDetalleSesionComponent', () => {
+  let component: TarjetaDetalleSesionComponent;
+  let fixture: ComponentFixture<TarjetaDetalleSesionComponent>;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavSociosComponent, RouterModule.forRoot([]),HttpClientModule]
+      imports: [TarjetaDetalleSesionComponent, RouterModule.forRoot([]),HttpClientModule]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NavSociosComponent);
+    fixture = TestBed.createComponent(TarjetaDetalleSesionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

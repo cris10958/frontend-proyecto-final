@@ -66,7 +66,10 @@ export class SociosService {
   loginSocio(login: LoginSocio){
     return this.http.post<any>(this.login_socios_url, login, {
       headers : new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
+
       })
     })
     .pipe(

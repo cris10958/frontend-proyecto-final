@@ -4,6 +4,7 @@ import { FormularioInformacionAlimenticiaComponent } from './formulario-informac
 import { FormularioInformacionDeportivaComponent } from './formulario-informacion-deportiva.component';
 import { UsuarioService } from './usuario.service';
 import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.component';
+import { CalendarioComponent } from './calendario.component';
 
 @Component({
   selector: 'app-menu',
@@ -13,9 +14,10 @@ import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.comp
     FormularioInformacionAlimenticiaComponent,
     FormularioInformacionDeportivaComponent,
     PlanSubscripcionActualComponent,
+    CalendarioComponent
   ],
   template: `
-    <div class="d-flex align-items-start row ps-2 fd-color text-nav">
+    <div class="d-flex align-items-start row ps-2 fd-color text-nav" style="height: 75vh;">
       <div
         class="nav flex-column nav-pills col-12 col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 ps-2"
         id="v-pills-tab"
@@ -98,6 +100,7 @@ import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.comp
           role="tab"
           aria-controls="v-pills-calendario"
           aria-selected="false"
+          (click)="cargarCalendario()"
         >
           Calendario
         </button>
@@ -228,7 +231,21 @@ import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.comp
           aria-labelledby="v-pills-calendario-tab"
           tabindex="0"
         >
-          Calendario
+        <div class="row-col-12 ps-5">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Mi perfil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Calendario
+                </li>
+              </ol>
+            </nav>
+          </div>
+          <div class="row pt-3 justify-content-center">
+            <div class="col-10 pb-5">
+              <app-calendario></app-calendario>
+            </div>
+          </div>
         </div>
         <div
           class="tab-pane fade"
@@ -255,6 +272,7 @@ export class MenuComponent implements OnInit {
   @ViewChild(FormularioInformacionAlimenticiaComponent) childFormPerfilAlimenticio!: FormularioInformacionAlimenticiaComponent;
   @ViewChild(FormularioInformacionDeportivaComponent) childFormPerfilDeportivo!: FormularioInformacionDeportivaComponent;
   @ViewChild(FormularioRegistroUsuarioComponent) childFormInfBasica!: FormularioRegistroUsuarioComponent;
+  @ViewChild(CalendarioComponent) childFormCalendario!: CalendarioComponent;
 
   cargarPlanes(){
     this.childComponent.cargarPlanesActual();
@@ -269,6 +287,10 @@ export class MenuComponent implements OnInit {
 
   cargarInformacionBasica(){
     this.childFormInfBasica.getInfoBasica();
+  }
+
+  cargarCalendario(){
+    this.childFormCalendario.getSesionesAgendadas();
   }
 
   constructor(private usuarioService: UsuarioService) {}

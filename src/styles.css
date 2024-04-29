@@ -12,7 +12,7 @@
   --color-negro: #49454f;
   --color-lila: #e8def8;
   --color-negro-oscuro: #1d192b;
-  --color_fondo: #f8f9fa
+  --color_fondo: #f8f9fa;
 }
 
 .footer {
@@ -48,10 +48,10 @@ h2,
 h3 {
   color: #21005d;
 }
-.color-letra-gray-600{
+.color-letra-gray-600 {
   color: #6c757d;
 }
-.color-letra-gray-800{
+.color-letra-gray-800 {
   color: #343a40;
 }
 .ico-brand-w {
@@ -104,7 +104,7 @@ li {
 .toast-success {
   background-color: var(--color_fondo) !important;
   font-size: 0.9rem;
-  background-image:none !important;
+  background-image: none !important;
 }
 
 .toast-title {
@@ -116,15 +116,36 @@ li {
 }
 
 .toast-container .ngx-toastr:hover {
-    box-shadow: 0 0 12px #876ecd !important;
-    opacity: 1;
-    cursor: pointer;
+  box-shadow: 0 0 12px #876ecd !important;
+  opacity: 1;
+  cursor: pointer;
 }
 
 .listo-paginador {
   position: absolute;
   bottom: 5vh;
   left: 70vh;
+}
+
+.fondo_calendario {
+  background-color: var(--color-lila);
+}
+.agendada {
+  background-color: var(--on_primary_fixed_variant);
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 30px;
+  cursor:pointer;
+}
+.finalizadad {
+  background-color: var(--on_primary_fixed_variant);
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 30px;
+  cursor:pointer;
+
 }
 /* 
 .toast-success {

@@ -63,7 +63,8 @@ export class PerfilamientoService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.usuarioService.getToken()}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
     });
     return this.http.get<any>(
       this.URL_PRINCIPAL + '/perfil-alimenticio/consultar',
@@ -77,7 +78,8 @@ export class PerfilamientoService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.usuarioService.getToken()}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
     });
     return this.http
       .post<any>(this.URL_PRINCIPAL+'/perfil-alimenticio/agregar', perfilAlimenticio, {
@@ -90,7 +92,8 @@ export class PerfilamientoService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.usuarioService.getToken()}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
     });
     return this.http
       .put<any>(this.URL_PRINCIPAL+'/perfil-alimenticio/actualizar', perfilAlimenticio, {
@@ -103,7 +106,8 @@ export class PerfilamientoService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.usuarioService.getToken()}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
     });
     return this.http.get<any>(
       this.URL_PRINCIPAL + '/perfil-deportivo/consultar',
@@ -117,7 +121,8 @@ export class PerfilamientoService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.usuarioService.getToken()}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
     });
     return this.http
       .post<any>(this.URL_PRINCIPAL+'/perfil-deportivo/agregar', perfilDeportivo, {
@@ -130,7 +135,8 @@ export class PerfilamientoService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.usuarioService.getToken()}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
     });
     return this.http
       .put<any>(this.URL_PRINCIPAL+'/perfil-deportivo/actualizar', perfilDeportivo, {

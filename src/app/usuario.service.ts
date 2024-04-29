@@ -136,7 +136,8 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
     });
     return this.http.get<any>(this.usuarios_url + '/deportista', {
       headers: headers,
@@ -147,7 +148,9 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
+
     });
     return this.http
       .put<any>(this.usuarios_url+"/actualizar", usuario, {

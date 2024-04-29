@@ -1,17 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PerfilamientoService } from './perfilamiento.service';
+import { SesionService } from './sesion.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('PerfilamientoService', () => {
-  let service: PerfilamientoService;
+describe('SesionService', () => {
+  let service: SesionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule]
     });
-    service = TestBed.inject(PerfilamientoService);
+    service = TestBed.inject(SesionService);
   });
+
 
   it('should be created', () => {
     expect(service).toBeTruthy();

@@ -231,7 +231,7 @@ export class FormularioInformacionDeportivaComponent implements OnInit{
       const perfilDeportivoReg: PerfilDeportivo = {
         FTP_actual: this.informacion_deportistas.value.FTP_value??'0',                          
         VO2max_actual: this.informacion_deportistas.value.VO2max??'0', 
-        detalle_lesion_molestia_incapacidad: this.informacion_deportistas.value.detalle_lesion??'',
+        detalle_lesion_molestia_incapacidad: this.informacion_deportistas.value.detalle_lesion??'NA',
         dias_semana_practica:this.informacion_deportistas.value.dias_semana??'0',
         lesion_molestia_incapacidad:  this.lesion == '1'?true:false,
         tiempo_practica: this.informacion_deportistas.value.tiempo_practica??'0'
@@ -283,6 +283,9 @@ export class FormularioInformacionDeportivaComponent implements OnInit{
       (info) => {
         let infoDeportiva = info;
         this.perfil_registrado = true;
+        if(infoDeportiva.detalle_lesion_molestia_incapacidad == 'NA'){
+          infoDeportiva.detalle_lesion_molestia_incapacidad ='';
+        }
         this.informacion_deportistas = new FormGroup({
           dias_semana: new FormControl(infoDeportiva.dias_semana_practica, [
             Validators.required
