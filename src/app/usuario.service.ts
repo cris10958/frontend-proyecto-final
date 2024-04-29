@@ -95,6 +95,8 @@ export class UsuarioService {
       .post<any>(this.registro_usuarios_url, usuario, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
         }),
       })
       .pipe(catchError(this.handleError));
@@ -105,6 +107,8 @@ export class UsuarioService {
       .post<any>(this.login_usuarios_url, login, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
         }),
       })
       .pipe(catchError(this.handleError));
