@@ -54,6 +54,12 @@ h3 {
 .color-letra-gray-800 {
   color: #343a40;
 }
+.color-letra-gray-900 {
+  color: #ADB5BD;
+}
+.color-letra-on-primary-container {
+  color: var(--on_primary_container);
+}
 .ico-brand-w {
   width: 8rem;
 }
@@ -145,8 +151,33 @@ li {
   margin: 5px;
   border-radius: 30px;
   cursor:pointer;
-
 }
+.caja-dropzone{
+  border: 1px solid #dee2e6 !important;
+  background-image: url(./assets/icon/images.png) !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% 80% !important;
+}
+.caja-imagen{
+  border: 1px solid #dee2e6 !important;
+  height: 14vw;
+  
+}
+.caja-imagen > img{
+  width: 100%;
+}
+
+.caja-imagen:hover, .caja-imagen:focus{
+  outline: 0;
+  background-image: linear-gradient(to top, #e3e3e36e, #e3e3e36e, #e3e3e36e, #e3e3e36e, #e3e3e36e) !important;
+}
+
+
+
+.text-14 {
+  font-size: 14px;
+}
+
 /* 
 .toast-success {
     background-color: #51A351;
