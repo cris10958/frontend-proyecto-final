@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavSociosComponent } from './nav-socios.component';
 import { FooterComponent } from './footer.component';
 import { CardProductosServiciosComponent } from './card-productos-servicios.component';
 import { Router } from '@angular/router';
 import { SociosService } from './socios.service';
+import {
+  ProductoServicio,
+  ProductoServicioLista,
+  ProductosServiciosService,
+} from './productos-servicios.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list-productos-servicios',
@@ -12,6 +18,7 @@ import { SociosService } from './socios.service';
     NavSociosComponent,
     FooterComponent,
     CardProductosServiciosComponent,
+    CommonModule
   ],
   template: `
     <div class="container-fluid p-0 brand-hover">
@@ -72,8 +79,14 @@ import { SociosService } from './socios.service';
       class="cuerpo pt-3 h-75 ps-4 pe-4"
       style="overflow: auto; max-height:53vh;"
     >
-      <app-card-productos-servicios></app-card-productos-servicios>
-      <div class="row-col-12 text-center listo-paginador">
+      <app-card-productos-servicios
+        *ngFor="let datos of listaProductosServicios"
+        [producto_servicio]="datos"
+      ></app-card-productos-servicios>
+      <div class = "row-col-12 text-center pt-5" *ngIf="sinProductoServicios">
+        <span class="color-letra-gray-900 small">Sin productos y servicios registrados</span>
+      </div>
+      <div  *ngIf="!sinProductoServicios" class="row-col-12 text-center listo-paginador">
         <nav aria-label="paginador">
           <ul class="pagination">
             <li class="page-item">
@@ -111,14 +124,48 @@ import { SociosService } from './socios.service';
     `,
   ],
 })
-export class ListProductosServiciosComponent {
+export class ListProductosServiciosComponent implements OnInit {
+  listaProductosServicios: Array<ProductoServicioLista> = [];
+  isError: boolean = false;
+  error: string = '';
+  sinProductoServicios: boolean = false;
 
-  openRegistrar(){
-    if(this.sociosService.loggedIn()){
-      this.router.navigate(['/registrar-productos-servicios'])
+  openRegistrar() {
+    if (this.sociosService.loggedIn()) {
+      this.router.navigate(['/registrar-productos-servicios']);
     }
   }
 
-  constructor(private router: Router, private sociosService: SociosService){}
+  getProductosServicios() {
+    this.sinProductoServicios = false;
+    this.productosServiciosService.getListaProductosServicios().subscribe(
+      (info) => {
+        this.listaProductosServicios = info;
 
+        if(this.listaProductosServicios.length == 0){
+          this.sinProductoServicios = true;
+        }
+
+        console.log(this.listaProductosServicios);
+      },
+      (err) => {
+        if (err.code != 400) {
+          this.isError = true;
+          this.error = err.message;
+        }else{
+          this.sinProductoServicios = true;
+        }
+      }
+    );
+  }
+
+  ngOnInit(): void {
+    this.getProductosServicios();
+  }
+
+  constructor(
+    private router: Router,
+    private sociosService: SociosService,
+    private productosServiciosService: ProductosServiciosService
+  ) {}
 }

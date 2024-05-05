@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {  ProductoServicioLista } from './productos-servicios.service';
 
 @Component({
   selector: 'app-card-productos-servicios',
@@ -13,34 +14,32 @@ import { Component } from '@angular/core';
         <div class="row">
           <div class="col-12">
             <h6 class="color-letra-gray-800">
-              Descripción: This is a wider card with supporting text below as a
-              natural lead-in to additional content. This content is a little
-              bit longer.
+              Descripción: {{producto_servicio.descripcion}}
             </h6>
           </div>
           <div class="col-12">
             <h5 class="color-letra-gray-800">
-                COP 501. 000  
+            {{valorAjustado}}
             </h5>
           </div>
           <div class="col-12">
             <h6 class="small color-letra-gray-600">
-            Lugar disponibilidad: País, Ciudad
+            Lugar disponibilidad: {{producto_servicio.pais}}, {{producto_servicio.ciudad}}
             </h6>
           </div>
           <div class="col-12">
             <h6 class="small color-letra-gray-600">
-            Deporte: Atletismo
+            Deporte: {{producto_servicio.deporte}}
             </h6>
           </div>
           <div class="col-12">
             <h6 class="small color-letra-gray-600">
-            Tipo: Producto
+            Tipo: {{tipo_ajustado}}
             </h6>
           </div>
           <div class="col-12">
             <h6 class="small color-letra-gray-600">
-            Tipo de Producto / Servicio: Acompañamiento Deportivo
+            Tipo de Producto / Servicio: {{producto_servicio.subtipo_servicio_producto}}
             </h6>
           </div>
         </div>
@@ -54,7 +53,33 @@ import { Component } from '@angular/core';
 }
   `],
 })
-export class CardProductosServiciosComponent {
+export class CardProductosServiciosComponent implements OnInit {
   hover:boolean = false;
+  valorAjustado: string= '';
+  tipo_ajustado:string = '';
+
+  @Input() producto_servicio!: ProductoServicioLista;
+
+  formatoValores() {
+    const formatoPesos = new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 2,
+    });
+    const valorFormato = formatoPesos.format(this.producto_servicio.valor ?? 0);
+    this.valorAjustado = valorFormato;
+
+    if(this.producto_servicio.tipo_servicio_producto == "producto"){
+      this.tipo_ajustado = "Producto"
+    }
+    else if(this.producto_servicio.tipo_servicio_producto == "servicio"){
+      this.tipo_ajustado = "Servicio"
+    }
+  }
+
+
+  ngOnInit(): void {
+    this.formatoValores();
+  }
 
 }

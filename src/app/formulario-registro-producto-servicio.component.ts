@@ -643,6 +643,7 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
   error_dropzone: string = '';
   valorFormato: string = '';
   min_fecha_entrega: string = '';
+  tipo: string = '';
 
   detalle_registro = new FormGroup({
     deporte: new FormControl('', [Validators.required]),
@@ -793,7 +794,7 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
       let registro: ProductoServicio = {
         descripcion: this.detalle_registro.value.descripcion ?? '',
         deporte: this.detalle_registro.value.deporte ?? '',
-        subtipo_servicio_producto:
+        subtipo:
           this.detalle_registro.value.subtipo_producto_servicio ?? '',
         pais: this.detalle_registro.value.pais_disponible ?? '',
         ciudad: this.detalle_registro.value.ciudad_disponible ?? '',
@@ -804,6 +805,7 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
         valor:
           this.limpiarFormatoMoneda(this.detalle_registro.value.valor) ?? 0,
         foto: fotos,
+        tipo: this.tipo
       };
 
       this.productosServiciosService.addProductoServicio(registro).subscribe(
@@ -914,6 +916,7 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
   }
 
   filtrarServicios() {
+    this.tipo ="servicio"
     this.detalle_registro.get('subtipo_producto_servicio')?.setValue('');
     this.lista_productos =
       this.listaDocumentoService.listaProductosServicios.filter(
@@ -922,6 +925,7 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
   }
 
   filtrarProductos() {
+    this.tipo ="producto"
     this.detalle_registro.get('subtipo_producto_servicio')?.setValue('');
     this.lista_productos =
       this.listaDocumentoService.listaProductosServicios.filter(

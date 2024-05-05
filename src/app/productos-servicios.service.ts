@@ -20,6 +20,20 @@ export interface VistaEjercicio {
 export interface ProductoServicio {
   descripcion: string | null;
   deporte: string | null;
+  subtipo: string | null,
+  pais: string | null;
+  ciudad: string | null;
+  lugar_entrega_prestacion: string | null;
+  cantidad_disponible: number | null;
+  fecha_entrega_prestacion: string | null;
+  valor: number | null;
+  foto: Fotos[],
+  tipo: string | null;
+}
+
+export interface ProductoServicioLista {
+  descripcion: string | null;
+  deporte: string | null;
   subtipo_servicio_producto: string | null,
   pais: string | null;
   ciudad: string | null;
@@ -27,8 +41,11 @@ export interface ProductoServicio {
   cantidad_disponible: number | null;
   fecha_entrega_prestacion: string | null;
   valor: number | null;
-  foto: Fotos[]
-}
+  fotos: Fotos[],
+  id:string | null;
+  tipo_servicio_producto: string | null;
+
+} 
 
 export interface Fotos {
   foto: string | null;
@@ -99,6 +116,18 @@ export class ProductosServiciosService {
           'Authorization': `Bearer ${this.socioService.getToken()}`,
         }),
       }).pipe(catchError(this.handleError))
+  }
+
+  getListaProductosServicios(){
+    return this.http
+      .get<any>(this.url_gestion_productos_servicios+'/productos-servicios/listar', {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+          'Authorization': `Bearer ${this.socioService.getToken()}`,
+        }),
+      })
   }
 
   constructor(private http: HttpClient, private socioService: SociosService) {}
