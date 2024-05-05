@@ -417,7 +417,13 @@ import { ToastrService } from 'ngx-toastr';
               </form>
             </div>
           </div>
-          <div class="row justify-content-center pb-5">
+          <div
+            *ngIf="
+              detalle_registro.value.subtipo_producto_servicio ==
+              'Sesión personalizada'
+            "
+            class="row justify-content-center pb-5"
+          >
             <div class="col-12">
               <form class="row g-3" [formGroup]="detalle_sesion_deportiva">
                 <div class="col-12">
@@ -581,6 +587,8 @@ import { ToastrService } from 'ngx-toastr';
                 </div>
               </div>
             </div>
+          </div>
+          <div class="pb-5">
             <div class="col-md-12 pt-5 pb-2 text-center">
               <div class="invalido" *ngIf="isError">
                 {{ error }}
@@ -728,6 +736,8 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
       .subscribe(
         (resp) => {
           this.toastr.success('Registro exitoso', 'Hacemos un gran equipo');
+          this.router.navigate(["/list-productos-servicios"])
+
         },
         (err) => {
           this.isError = true;
@@ -735,11 +745,6 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
         }
       );
   }
-
-  // [disabled]="
-  //                   !detalle_registro.valid ||
-  //                   limpiarFormatoMoneda(detalle_registro.value.valor) == 0
-  //                 "
   registro() {
     this.error_dropzone = '';
     this.isError = false;
@@ -777,13 +782,12 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
       this.detalle_registro.valid &&
       this.limpiarFormatoMoneda(this.detalle_registro.value.valor) != 0
     ) {
-
-      const fotos: Fotos[]=[];
-      for(let i = 0; i < this.imgBase64.length; i++){
+      const fotos: Fotos[] = [];
+      for (let i = 0; i < this.imgBase64.length; i++) {
         fotos.push({
           foto: this.imgBase64[i].content,
-          orden: i+1
-        })
+          orden: i + 1,
+        });
       }
 
       let registro: ProductoServicio = {
@@ -799,7 +803,7 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
           this.detalle_registro.value.fecha_entrega ?? '',
         valor:
           this.limpiarFormatoMoneda(this.detalle_registro.value.valor) ?? 0,
-        foto: fotos
+        foto: fotos,
       };
 
       this.productosServiciosService.addProductoServicio(registro).subscribe(
@@ -820,9 +824,9 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
             }
 
             this.registrarSesion(resp.id_servicio_producto);
-            
           } else {
             this.toastr.success('Registro exitoso', 'Hacemos un gran equipo');
+            this.router.navigate(["/list-productos-servicios"])
           }
         },
         (err) => {
@@ -960,8 +964,6 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
       }
     }
   }
-
-
 
   onRemove(index: number) {
     this.error_dropzone = '';
