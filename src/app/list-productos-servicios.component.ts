@@ -39,7 +39,7 @@ import { CommonModule } from '@angular/common';
             Todo
           </button>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 text-center">
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
@@ -49,7 +49,7 @@ import { CommonModule } from '@angular/common';
             Productos
           </button>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 text-center">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 text-start">
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
@@ -59,7 +59,7 @@ import { CommonModule } from '@angular/common';
             Servicios
           </button>
         </div>
-        <div class="dropdown col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0" *ngIf="deporteSelected == ''">
+        <div class="dropdown col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 text-start" *ngIf="deporteSelected == ''">
           <a
             class="btn btn-sm btn-outline-primary dropdown-toggle fondo-btn-fild"
             role="button"
@@ -87,7 +87,7 @@ import { CommonModule } from '@angular/common';
             </li>
           </ul>
         </div>
-        <div class="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2" *ngIf="deporteSelected != ''">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2 text-start" *ngIf="deporteSelected != ''">
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"

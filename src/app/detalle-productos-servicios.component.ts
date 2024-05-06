@@ -81,14 +81,14 @@ import moment from 'moment';
               <img
                 *ngIf="!sinImagen"
                 [src]="'data:image/png;base64,' + foto_seleccionda.foto"
-                style="width: 100%; height: 19.5em;"
+                style="width: 100%; height: 50vh;"
                 alt="Porducto o servicios"
                 class="border"
               />
               <img
                 *ngIf="sinImagen"
                 [src]="foto_seleccionda.foto"
-                style="width: 100%; height: 19.5em;"
+                style="width: 100%; height: 50vh;"
                 alt="Porducto o servicios"
                 class="border"
               />
