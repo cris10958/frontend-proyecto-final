@@ -114,7 +114,7 @@ import { ToastrService } from 'ngx-toastr';
                 <div class="row ps-4 pb-2">
                   <div
                     *ngFor="let img of imgBase64; let i = index"
-                    class="col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2 col-xxl-2 caja-imagen rounded position-relative ms-0 me-4 mt-3"
+                    class="col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2 col-xxl-2 caja-imagen rounded position-relative ms-0 me-4 mt-3 p-0"
                     (mouseover)="img.hover = true"
                     (mouseleave)="img.hover = false"
                   >
@@ -139,6 +139,7 @@ import { ToastrService } from 'ngx-toastr';
                       [src]="'data:image/png;base64,' + img.content"
                       class="ico-brand-w"
                       alt="logo"
+                      style="width: 100%; height: 100%;}"
                     />
                   </div>
                 </div>
