@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output, output } from '@angular/core';
 import { environment } from '../environments/environment';
 import { UsuarioService } from './usuario.service';
 import { catchError, throwError } from 'rxjs';
@@ -27,7 +27,7 @@ export interface ProductoServicio {
   cantidad_disponible: number | null;
   fecha_entrega_prestacion: string | null;
   valor: number | null;
-  foto: Fotos[],
+  fotos: Fotos[],
   tipo: string | null;
 }
 
@@ -118,9 +118,40 @@ export class ProductosServiciosService {
       }).pipe(catchError(this.handleError))
   }
 
-  getListaProductosServicios(){
+  getListaProductosServicios(filtro:string){
+    let url = this.url_gestion_productos_servicios+'/productos-servicios/listar';
+
+    if(filtro != ''){
+      url = this.url_gestion_productos_servicios+'/productos-servicios/listar/'+filtro;
+    }
+
     return this.http
-      .get<any>(this.url_gestion_productos_servicios+'/productos-servicios/listar', {
+      .get<any>(url, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+          'Authorization': `Bearer ${this.socioService.getToken()}`,
+        }),
+      })
+  }
+
+  getSesionDeportiva(id:string){
+    return this.http
+      .get<any>(this.url_gestion_productos_servicios+'/productos-servicios/listar-sesion-personalizada/'+id,{
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+          'Authorization': `Bearer ${this.socioService.getToken()}`,
+        }),
+      })
+  }
+
+  getDetalleProductoServicio(id:string){
+    return this.http
+      .get<any>(this.url_gestion_productos_servicios+'/productos-servicios/listarID/'+id,{
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',

@@ -51,10 +51,10 @@ import { ToastrService } from 'ngx-toastr';
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Productos y servicios</a>
+              <a href="/list-productos-servicios">Productos y servicios</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-              Sin filtro
+              Registro
             </li>
           </ol>
         </nav>
@@ -371,7 +371,7 @@ import { ToastrService } from 'ngx-toastr';
                     >Fecha de entrega o prestación</label
                   >
                   <input
-                    type="date"
+                    type="datetime-local"
                     class="form-control fd-color white"
                     id="id-fecha-entrega"
                     formControlName="fecha_entrega"
@@ -804,7 +804,7 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
           this.detalle_registro.value.fecha_entrega ?? '',
         valor:
           this.limpiarFormatoMoneda(this.detalle_registro.value.valor) ?? 0,
-        foto: fotos,
+        fotos: fotos,
         tipo: this.tipo
       };
 
