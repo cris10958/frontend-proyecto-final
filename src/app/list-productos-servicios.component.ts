@@ -27,10 +27,10 @@ import { CommonModule } from '@angular/common';
     <div id="id-base-socio" class="container-fluit"></div>
     <div class="pe-4 pt-3">
       <div class="row text-start">
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 text-end">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 ps-4 text-end">
           <button
             type="button"
-            class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
+            class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'todo'; filtro('clear')"
             [class]="{
               active: tipoSelected == 'todo' && deporteSelected == ''
@@ -39,29 +39,29 @@ import { CommonModule } from '@angular/common';
             Todo
           </button>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 text-center">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-center">
           <button
             type="button"
-            class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
+            class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'producto'; filtro('')"
             [class]="{ active: tipoSelected == 'producto' }"
           >
             Productos
           </button>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 text-start">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start">
           <button
             type="button"
-            class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
+            class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'servicio'; filtro('')"
             [class]="{ active: tipoSelected == 'servicio' }"
           >
             Servicios
           </button>
         </div>
-        <div class="dropdown col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 text-start" *ngIf="deporteSelected == ''">
+        <div class="dropdown col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-start" *ngIf="deporteSelected == ''">
           <a
-            class="btn btn-sm btn-outline-primary dropdown-toggle fondo-btn-fild"
+            class="btn btn-sm btn-outline-primary dropdown-toggle fondo-btn-fild w-100"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -87,7 +87,7 @@ import { CommonModule } from '@angular/common';
             </li>
           </ul>
         </div>
-        <div class="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2 text-start" *ngIf="deporteSelected != ''">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2 text-start m-1" *ngIf="deporteSelected != ''">
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
