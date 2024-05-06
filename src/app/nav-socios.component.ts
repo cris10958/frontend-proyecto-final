@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
             <div class="container">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
                 <li class="nav-item" >
-                  <a i18n class="nav-link" [class]="{'active': selected == 'productos-servicios'}" (click)="selected = 'productos-servicios';" aria-current="page">Productos y servicios</a>
+                  <a i18n class="nav-link" style="cursor:pointer;" [class]="{'active': selected == 'productos-servicios'}" (click)="irLista()" aria-current="page">Productos y servicios</a>
                 </li>
               </ul>
              </div>
@@ -68,6 +68,11 @@ export class NavSociosComponent {
 
   logout(){
     this.socioService.logout();
+  }
+
+  irLista(){
+    this.selected = 'productos-servicios';
+    this.router.navigate(["/list-productos-servicios"])
   }
 
   constructor(readonly socioService: SociosService, private router: Router){}

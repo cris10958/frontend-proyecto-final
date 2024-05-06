@@ -20,6 +20,12 @@ export interface Ciudad{
   pais:string;
 }
 
+export interface listProductosServivicio{
+  value:string;
+  key:string;
+  tipo: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -93,6 +99,15 @@ export class ListasService {
     { value: "Nicaragua", key: "Honduras"},
     { value: "Panamá", key: "Honduras"},
   ]
-
+  listaProductosServicios:listProductosServivicio[] = [
+    { value: "Deportologo", key: "Deportologo", tipo: "servicio"},
+    { value: "Entrenador Personalizado", key: "Entrenador Personalizado", tipo: "servicio"},
+    { value: "Alimento suplementario", key: "Alimento suplementario", tipo: "producto"},
+    { value: "Bebida energetica", key: "Bebida energetica", tipo: "producto"},
+    { value: "Acompañamiento deportivo", key: "Acompañamiento deportivo", tipo:"servicio"},
+    { value: "Sesión personalizada", key: "Sesión personalizada", tipo:"producto"},
+    { value: "Otro", key: "otro", tipo:"servicio"},
+    { value: "Otro", key: "otro", tipo:"producto"},
+  ]
   
 }
