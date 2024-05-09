@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
       <div class="col-12 col-sm-12 col-md-5 col-lg-3 col-xl-3 col-xxl-3">
         <img
           *ngIf="!sinImagen"
-          [src]="'data:image/png;base64,' +fotoCard.foto"
+          [src]="'data:image/png;base64,' + fotoCard.foto"
           style="width: 15em;"
           alt="Porducto o servicios"
           class="p-3"
@@ -37,7 +37,7 @@ import { CommonModule } from '@angular/common';
       </div>
       <div class="col-12 col-sm-12 col-md-7 col-lg-9 col-xl-9 col-xxl-9 p-4">
         <div class="row">
-          <div class="col-12">  
+          <div class="col-12">
             <h6 class="color-letra-gray-800">
               Descripción: {{ producto_servicio.descripcion }}
             </h6>
@@ -90,9 +90,10 @@ export class CardProductosServiciosComponent implements OnInit {
     foto: '',
     orden: 0,
   };
-  sinImagen:boolean=false;
+  sinImagen: boolean = false;
 
   @Input() producto_servicio!: ProductoServicioLista;
+  @Input() usuario!: boolean;
 
   formatoValores() {
     const formatoPesos = new Intl.NumberFormat('es-CO', {
@@ -114,7 +115,7 @@ export class CardProductosServiciosComponent implements OnInit {
     if (this.fotoCard.length > 0) {
       this.fotoCard = this.fotoCard[0];
       this.sinImagen = false;
-    }else{
+    } else {
       this.sinImagen = true;
       this.fotoCard = {
         foto: './assets/img/prod-serv.png',
@@ -124,9 +125,14 @@ export class CardProductosServiciosComponent implements OnInit {
   }
 
   openDetalle() {
-    this.router.navigate([
-      '/detalle_producto_servicio/' + this.producto_servicio.id,
-    ]);
+    let linkDetalle = '/detalle_producto_servicio/' + this.producto_servicio.id
+    if(this.usuario == true){
+      linkDetalle += '/user'
+    }else{
+      linkDetalle += '/socio'
+    }
+    this.router.navigate([linkDetalle ]
+  );
   }
 
   ngOnInit(): void {

@@ -1,28 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { NavSociosComponent } from './nav-socios.component';
+import { Component } from '@angular/core';
+import { NavUsuarioComponent } from './nav-usuario.component';
 import { FooterComponent } from './footer.component';
-import { CardProductosServiciosComponent } from './card-productos-servicios.component';
-import { Router } from '@angular/router';
+import { ListProductosServiciosComponent } from './list-productos-servicios.component';
 import { SociosService } from './socios.service';
-import {
-  ProductoServicio,
-  ProductoServicioLista,
-  ProductosServiciosService,
-} from './productos-servicios.service';
+import { ProductoServicioLista, ProductosServiciosService } from './productos-servicios.service';
+import { Router } from '@angular/router';
+import { CardProductosServiciosComponent } from './card-productos-servicios.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-list-productos-servicios',
+  selector: 'app-productos-servicios-usuario',
   standalone: true,
-  imports: [
-    NavSociosComponent,
-    FooterComponent,
-    CardProductosServiciosComponent,
-    CommonModule,
-  ],
+  imports: [NavUsuarioComponent, FooterComponent, CardProductosServiciosComponent, CommonModule],
   template: `
     <div class="container-fluid p-0 brand-hover">
-      <app-nav-socios></app-nav-socios>
+      <app-nav-usuario [selected]="'produc-service'"></app-nav-usuario>
     </div>
     <div id="id-base-socio" class="container-fluit"></div>
     <div class="pe-4 pt-3">
@@ -57,6 +49,16 @@ import { CommonModule } from '@angular/common';
             [class]="{ active: tipoSelected == 'servicio' }"
           >
             Servicios
+          </button>
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start">
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
+            (click)="tipoSelected = 'servicio'; filtro('')"
+            [class]="{ active: tipoSelected == 'servicio' }"
+          >
+            Mis pedidos
           </button>
         </div>
         <div class="dropdown col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-start" *ngIf="deporteSelected == ''">
@@ -97,16 +99,7 @@ import { CommonModule } from '@angular/common';
           </button>
         </div>
       </div>
-      <div class="row-col-12 text-end">
-        <button
-          class="btn btn-sm btn-primary"
-          (click)="openRegistrar()"
-          type="submit"
-        >
-          Registrar nuevo
-        </button>
-      </div>
-      <div class="row-col-12 ps-4">
+      <div class="row-col-12 ps-4 pt-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -127,7 +120,7 @@ import { CommonModule } from '@angular/common';
       <app-card-productos-servicios
         *ngFor="let datos of listaProductosServicios"
         [producto_servicio]="datos"
-        [usuario]="false"
+        [usuario]="true"
       ></app-card-productos-servicios>
       <div class="row-col-12 text-center pt-5" *ngIf="sinProductoServicios">
         <span class="color-letra-gray-900 small">{{
@@ -138,7 +131,7 @@ import { CommonModule } from '@angular/common';
     </div>
     <app-footer></app-footer>
   `,
-  styles: [
+  styles:  [
     `
       .cuerpo {
         background-color: transparent;
@@ -157,7 +150,7 @@ import { CommonModule } from '@angular/common';
     `,
   ],
 })
-export class ListProductosServiciosComponent implements OnInit {
+export class ProductosServiciosUsuarioComponent {
   listaProductosServicios: Array<ProductoServicioLista> = [];
   isError: boolean = false;
   error: string = '';

@@ -17,21 +17,35 @@ import {
 } from './productos-servicios.service';
 import { CommonModule } from '@angular/common';
 import moment from 'moment';
+import { NavUsuarioComponent } from './nav-usuario.component';
 
 @Component({
   selector: 'app-detalle-productos-servicios',
   standalone: true,
-  imports: [NavSociosComponent, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [NavSociosComponent, CommonModule, FormsModule, ReactiveFormsModule, NavUsuarioComponent],
   template: `
     <div class="fd-color h-total w-100 row-col-12 justify-content-center pb-5">
-      <div class="container-fluid p-0 brand-hover">
+      <div *ngIf="typeConsulta == 'socio'" class="container-fluid p-0 brand-hover">
         <app-nav-socios></app-nav-socios>
       </div>
-      <div class="row-col-12 ps-4 pb-1">
+      <div *ngIf="typeConsulta == 'user'" class="container-fluid p-0 brand-hover">
+        <app-nav-usuario [selected]="'produc-service'"></app-nav-usuario>
+      </div>
+      <div class="row-col-12 ps-4 pb-1" *ngIf="typeConsulta == 'socio'">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
               <a href="/list-productos-servicios">Productos y servicios</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Detalle</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="row-col-12 ps-4 pb-1" *ngIf="typeConsulta == 'user'">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/productos-servicios-usuario">Productos y servicios</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Detalle</li>
           </ol>
@@ -151,6 +165,11 @@ import moment from 'moment';
                     {{ detalle_sesion_deportiva.value.numero_ejercicios }}
                   </h6>
                 </div>
+                <div *ngIf="typeConsulta == 'user'" class="col-12 text-start pt-3">
+                  <button class="btn btn-primary ps-4 pe-4" type="submit">
+                    Comprar
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -248,6 +267,7 @@ export class DetalleProductosServiciosComponent implements OnInit {
     tipo_servicio_producto: '',
   };
   id_producto_servicio: string = '';
+  typeConsulta: string = '';
   valorAjustado: string = '';
   tipo_ajustado: string = '';
   fecha_ajustada: string = '';
@@ -264,7 +284,11 @@ export class DetalleProductosServiciosComponent implements OnInit {
   });
 
   irAtras() {
-    this.router.navigate(['/list-productos-servicios']);
+    if (this.typeConsulta == 'user') {
+      this.router.navigate(['/productos-servicios-usuario']);
+    } else {
+      this.router.navigate(['/list-productos-servicios']);
+    }
   }
 
   formatoValores() {
@@ -364,6 +388,8 @@ export class DetalleProductosServiciosComponent implements OnInit {
   ngOnInit(): void {
     const id = this.activateRoute.params.subscribe((params) => {
       this.id_producto_servicio = params['id'];
+      this.typeConsulta = params['type'];
+      console.log('type', this.typeConsulta);
       this.getInfoProductoServicio();
     });
   }
