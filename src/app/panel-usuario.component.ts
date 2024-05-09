@@ -12,7 +12,7 @@ import { MenuComponent } from './menu.component';
       <app-nav-usuario></app-nav-usuario>
     </div>
     <div id="id-base" class="container-fluit"></div>
-    <div id="contenido-panel" class="cuerpo pt-3 h-75" style="overflow: auto; max-height:75vh;">
+    <div id="contenido-panel" class="cuerpo h-75" style="overflow: auto; max-height:75vh;">
       <app-menu></app-menu>
     </div>
     <app-footer></app-footer>
