@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CardAplicacionesExternasComponent } from './card-aplicaciones-externas.component';
 import { FormularioApliacionesExternasComponent } from './formulario-apliaciones-externas.component';
 import { CommonModule } from '@angular/common';
+import {
+  AplicacionesExternasService,
+  ListAppExternas,
+} from './aplicaciones-externas.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-aplicaciones-externas',
@@ -10,6 +15,7 @@ import { CommonModule } from '@angular/common';
     CardAplicacionesExternasComponent,
     FormularioApliacionesExternasComponent,
     CommonModule,
+    CardAplicacionesExternasComponent,
   ],
   template: `
     <div
@@ -61,17 +67,89 @@ import { CommonModule } from '@angular/common';
       </div>
       <div class="row pt-3 justify-content-center">
         <div *ngIf="agregarAppExterna" class="col-10 pb-5">
-          <app-formulario-apliaciones-externas></app-formulario-apliaciones-externas>
+          <app-formulario-apliaciones-externas
+            [actualizacion]="actualizacion"
+            [detalle_app]="detalle_app_externa"
+            (cerrarRegistro)="cerrarRegistro($event)"
+          ></app-formulario-apliaciones-externas>
+        </div>
+        <div *ngIf="!agregarAppExterna" class="row pt-3">
+          <div class="col-4 pb-5" *ngFor="let app of list_aplicaciones">
+            <app-card-aplicaciones-externas
+              [detalle_app]="app"
+              (click)="openDetalle(app)"
+            ></app-card-aplicaciones-externas>
+          </div>
+        </div>
+        <div class="row-col-12 text-start pt-1 ng-star-inserted ps-5 ms-4" *ngIf="sin_aplicaciones && !agregarAppExterna">
+          <span class="color-letra-gray-900 small">
+            Sin aplicaciones externas registradas
+          </span>
         </div>
       </div>
     </div>
   `,
   styles: ``,
 })
-export class AplicacionesExternasComponent {
+export class AplicacionesExternasComponent implements OnInit {
   agregarAppExterna: boolean = false;
+  sin_aplicaciones: boolean = false;
+  list_aplicaciones: Array<ListAppExternas> = [];
+  detalle_app_externa_inicial: ListAppExternas = {
+    id: '',
+    nombre: '',
+    descripcion: '',
+    webhook: '',
+    token: '',
+    estado: '',
+    fecha_modificacion: '',
+  };
+  detalle_app_externa = this.detalle_app_externa_inicial;
+  actualizacion: boolean = false;
+
+  @ViewChild(FormularioApliacionesExternasComponent)
+  childDetalleApp!: FormularioApliacionesExternasComponent;
 
   registroAppExterna() {
     this.agregarAppExterna = true;
+    this.detalle_app_externa = this.detalle_app_externa_inicial;
+    this.actualizacion = false;
   }
+
+  cerrarRegistro(valor: string) {
+    this.agregarAppExterna = false;
+    this.getAplicaciones();
+    this.detalle_app_externa = this.detalle_app_externa_inicial;
+  }
+
+  getAplicaciones() {
+    this.sin_aplicaciones = false;
+    this.aplicacionesExternasService.getAppExterna().subscribe(
+      (info) => {
+        if (info) {
+          this.list_aplicaciones = info.result;
+          if (this.list_aplicaciones.length == 0) {
+            this.sin_aplicaciones = true;
+          }
+        } else {
+          this.sin_aplicaciones = true;
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  openDetalle(app: ListAppExternas) {
+    this.detalle_app_externa = app;
+    this.agregarAppExterna = true;
+    this.actualizacion = true;
+  }
+
+  ngOnInit(): void {}
+
+  constructor(
+    private aplicacionesExternasService: AplicacionesExternasService
+  ) {}
 }

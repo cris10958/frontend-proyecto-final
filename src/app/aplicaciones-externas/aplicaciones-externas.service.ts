@@ -15,6 +15,17 @@ export interface RegistroApp {
   token: string | null;
 }
 
+export interface ListAppExternas {
+  descripcion:        string | null;
+  estado:             string | null;
+  fecha_modificacion: string | null;
+  id:                 string | null ;
+  nombre:             string | null;
+  token:              string | null;
+  webhook:            string | null;
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -54,6 +65,18 @@ export class AplicacionesExternasService {
         }),
       })
       .pipe(catchError(this.handleError));
+  }
+
+  getAppExterna(){
+    return this.http.get<any>(this.URL_PRINCIPAL+'/servicios-externo/obtener_apps',{
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${this.usuarioService.getToken()}`,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+      }),
+    })
+    .pipe(catchError(this.handleError));
   }
 
   constructor(

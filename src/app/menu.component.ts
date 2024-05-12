@@ -118,6 +118,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           role="tab"
           aria-controls="v-pills-apss-ext"
           aria-selected="false"
+          (click)="cargarAppExternas()"
         >
           Integració apps externas
         </button>
@@ -286,7 +287,7 @@ export class MenuComponent implements OnInit {
   @ViewChild(FormularioRegistroUsuarioComponent)
   childFormInfBasica!: FormularioRegistroUsuarioComponent;
   @ViewChild(CalendarioComponent) childFormCalendario!: CalendarioComponent;
-
+  @ViewChild(AplicacionesExternasComponent) childAppExternas!: AplicacionesExternasComponent
   cargarPlanes() {
     this.childComponent.cargarPlanesActual();
   }
@@ -304,6 +305,10 @@ export class MenuComponent implements OnInit {
 
   cargarCalendario() {
     this.childFormCalendario.getSesionesAgendadas();
+  }
+
+  cargarAppExternas(){
+    this.childAppExternas.getAplicaciones();
   }
 
 

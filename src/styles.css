@@ -178,6 +178,22 @@ li {
   font-size: 14px;
 }
 
+.badge-custom{
+  background-color: #EBE5FC;
+  color: #5227CC;
+}
+
+.badge-custom.sucess{
+  background-color: #D1E7DD;
+  color: #0A3622;
+}
+
+.badge-custom.danger{
+  background-color: #F8D7DA;
+  color: #58151C;
+}
+
+
 /* 
 .toast-success {
     background-color: #51A351;

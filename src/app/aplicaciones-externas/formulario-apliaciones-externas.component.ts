@@ -1,5 +1,5 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,6 +11,7 @@ import * as bootstrap from 'bootstrap';
 import { AplicacionesExternasComponent } from './aplicaciones-externas.component';
 import {
   AplicacionesExternasService,
+  ListAppExternas,
   RegistroApp,
 } from './aplicaciones-externas.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
@@ -139,9 +140,35 @@ import { Router } from '@angular/router';
                 {{ error }}
               </div>
             </div>
-            <button type="submit" class="btn btn-primary" (click)="guardar()">
-              Guardar
-            </button>
+            <div class="row p-0">
+              <div class="col-6 text-end pe-0" *ngIf="!actualizacion">
+                <button
+                  class="btn btn-secondary"
+                  (click)="cerrar()"
+                  type="submit"
+                >
+                  Cancelar
+                </button>
+              </div>
+              <div class="col-12 text-center pe-0" *ngIf="actualizacion">
+                <button
+                  class="btn btn-secondary"
+                  (click)="cerrar()"
+                  type="submit"
+                >
+                  Cerrar
+                </button>
+              </div>
+              <div class="col-6 text-start ps-4"  *ngIf="!actualizacion">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="guardar()"
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -200,6 +227,15 @@ export class FormularioApliacionesExternasComponent implements OnInit {
   isError: boolean = false;
   error: string = '';
 
+  @Output() cerrarRegistro = new EventEmitter<string>();
+  @Input() detalle_app !: ListAppExternas; 
+  @Input() actualizacion : boolean = false; 
+
+
+  cerrar() {
+    this.cerrarRegistro.emit('');
+  }
+
   registro_app_externa = new FormGroup({
     nombre: new FormControl('', [
       Validators.maxLength(50),
@@ -228,7 +264,7 @@ export class FormularioApliacionesExternasComponent implements OnInit {
         nombre: this.registro_app_externa.value.nombre ?? '',
         descripcion: this.registro_app_externa.value.descripcion ?? '',
         webhook: this.registro_app_externa.value.webhook ?? '',
-        token: this.registro_app_externa.value.token ?? ''
+        token: this.registro_app_externa.value.token ?? '',
       };
 
       this.aplicacionesExternasService.addAppExterna(app_nueva).subscribe(
@@ -236,7 +272,7 @@ export class FormularioApliacionesExternasComponent implements OnInit {
           this.toastr.success(
             "Registro exitoso', 'Cada vez más cerca de tus metas"
           );
-          // this.router.navigate(['']);
+          this.cerrar();
         },
         (err) => {
           this.isError = true;
@@ -276,12 +312,36 @@ export class FormularioApliacionesExternasComponent implements OnInit {
       console.error('Error al copiar: ', err);
     }
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.registro_app_externa = new FormGroup({
+      nombre: new FormControl(this.detalle_app.nombre, [
+        Validators.maxLength(50),
+        Validators.required,
+      ]),
+      descripcion: new FormControl(this.detalle_app.descripcion, [
+        Validators.maxLength(500),
+        Validators.required,
+      ]),
+      webhook: new FormControl(this.detalle_app.webhook, [
+        Validators.maxLength(500),
+        Validators.required,
+      ]),
+      token: new FormControl(this.detalle_app.token, [
+        Validators.maxLength(100),
+        Validators.required,
+      ]),
+    });
+
+    if(this.actualizacion){
+      this.registro_app_externa.disable();
+    }
+
+  }
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private aplicacionesExternasService: AplicacionesExternasService,
-    private toastr: ToastrService,
-    private router: Router
+    private toastr: ToastrService
   ) {}
 }
