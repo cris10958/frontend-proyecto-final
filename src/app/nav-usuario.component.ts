@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UsuarioService } from './usuario.service';
 
@@ -21,16 +21,16 @@ import { UsuarioService } from './usuario.service';
             <div class="container">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
                 <li class="nav-item" >
-                  <a i18n class="nav-link" [class]="{'active': selected == 'home'}" (click)="selected = 'home';" aria-current="page">Home</a>
+                  <a i18n class="nav-link" id="id-nav-home" [class]="{'active': selected == 'home'}" aria-current="page">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a i18n id="id-ingresar-socio" class="nav-link" [class]="{'active': selected == 'mi-perfil'}" (click)="selected = 'mi-perfil';"  href="/login-socios">Mi perfil</a>
+                  <a i18n id="id-nav-mi-perfil" class="nav-link" [class]="{'active': selected == 'mi-perfil'}"  href="/panel-usuarios">Mi perfil</a>
                 </li>
                 <li class="nav-item">
-                  <a i18n id="id-ingresar-socio" class="nav-link" [class]="{'active': selected == 'produc-service'}" (click)="selected = 'produc-service';">Productos y servicios</a>
+                  <a i18n id="id-nav-prod-ser" class="nav-link" [class]="{'active': selected == 'produc-service'}" href="/productos-servicios-usuario">Productos y servicios</a>
                 </li>
                 <li class="nav-item">
-                  <a i18n id="id-ingresar-socio" class="nav-link" [class]="{'active': selected == 'eventos'}" (click)="selected = 'eventos';">Eventos</a>
+                  <a i18n id="id-nav-evento" class="nav-link" [class]="{'active': selected == 'eventos'}" >Eventos</a>
                 </li>
               </ul>
              </div>
@@ -71,13 +71,19 @@ import { UsuarioService } from './usuario.service';
 }
 `]
 })
-export class NavUsuarioComponent {
+export class NavUsuarioComponent implements OnInit{
   img_login: string = "./assets/icon/power.png";
   hover:boolean = false;
-  selected:string = 'mi-perfil';
+
+  @Input() selected!: string; 
+
 
   logout(){
     this.usuarioService.logout();
+  }
+
+  ngOnInit(): void {
+      
   }
 
   constructor(readonly usuarioService: UsuarioService, private router: Router){}
