@@ -1,7 +1,8 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const URL_INGRES = 'http://k8s-ekssport-sportapp-a5d22e537b-1623025658.us-east-1.elb.amazonaws.com'
+
+const URL_INGRES = 'http://k8s-ekssport-sportapp-a5d22e537b-1703746054.us-east-1.elb.amazonaws.com'
 const baseUrlRegistro = URL_INGRES+'/registro-usuarios';
 const baseUrlGestorUsuarios = URL_INGRES+'/gestor-usuarios';
 const baseUrlGestorSesiones = URL_INGRES+'/gestor-sesion-deportiva';
