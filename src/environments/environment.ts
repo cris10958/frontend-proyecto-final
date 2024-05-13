@@ -9,7 +9,7 @@ const baseUrlGestorSesiones = URL_INGRES+'/gestor-sesion-deportiva';
 const baseUrlGestionProductosServicios = URL_INGRES+'/gestor-productos-servicios';
 // const baseUrlRegistro = 'http://127.0.0.1:3001/registro-usuarios';
 // const baseUrlGestorUsuarios = 'http://127.0.0.1:3001/gestor-usuarios';
-// const baseUrlGestorSesiones = 'http://127.0.0.1:3005/gestor-sesion-deportiva';
+// const baseUrlGestorSesiones  = 'http://127.0.0.1:3005/gestor-sesion-deportiva';
 // const baseUrlGestionProductosServicios = 'http://127.0.0.1:3006/gestor-productos-servicios';
 
 export const environment = {
