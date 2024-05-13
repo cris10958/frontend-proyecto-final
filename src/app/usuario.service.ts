@@ -116,6 +116,7 @@ export class UsuarioService {
 
   logout() {
     this.localStorage?.removeItem('token');
+    this.localStorage?.removeItem('filtro');
     this.router.navigate(['/login-usuarios']);
   }
 
@@ -133,6 +134,7 @@ export class UsuarioService {
   registrarToken(token: string | undefined) {
     if (token) {
       this.localStorage?.setItem('token', token);
+      this.localStorage?.setItem('filtro', "");
     }
   }
 

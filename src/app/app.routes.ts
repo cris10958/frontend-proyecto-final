@@ -13,6 +13,7 @@ import { CardProductosServiciosComponent } from './card-productos-servicios.comp
 import { FormularioRegistroProductoServicioComponent } from './formulario-registro-producto-servicio.component';
 import { CalendarioComponent } from './calendario.component';
 import { DetalleProductosServiciosComponent } from './detalle-productos-servicios.component';
+import { ProductosServiciosUsuarioComponent } from './productos-servicios-usuario.component';
 
 export const routes: Routes = [
     {path:'', pathMatch:'full', redirectTo:'home'},
@@ -26,6 +27,7 @@ export const routes: Routes = [
     {path:'home-usuario', component: HomeUsuarioComponent},
     {path:'panel-usuarios', component: PanelUsuarioComponent},
     {path:'registrar-productos-servicios', component: FormularioRegistroProductoServicioComponent},
-    {path:'detalle_producto_servicio/:id', component: DetalleProductosServiciosComponent},
+    {path:'detalle_producto_servicio/:id/:type', component: DetalleProductosServiciosComponent},
+    {path:'productos-servicios-usuario', component: ProductosServiciosUsuarioComponent},
     
 ];

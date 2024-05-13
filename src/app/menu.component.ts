@@ -5,6 +5,7 @@ import { FormularioInformacionDeportivaComponent } from './formulario-informacio
 import { UsuarioService } from './usuario.service';
 import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.component';
 import { CalendarioComponent } from './calendario.component';
+import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicaciones-externas.component';
 
 @Component({
   selector: 'app-menu',
@@ -14,12 +15,16 @@ import { CalendarioComponent } from './calendario.component';
     FormularioInformacionAlimenticiaComponent,
     FormularioInformacionDeportivaComponent,
     PlanSubscripcionActualComponent,
-    CalendarioComponent
+    CalendarioComponent,
+    AplicacionesExternasComponent
   ],
   template: `
-    <div class="d-flex align-items-start row ps-2 fd-color text-nav" style="height: 75vh;">
+    <div
+      class="d-flex align-items-start row ps-2 fd-color text-nav"
+      style="height: 75vh;"
+    >
       <div
-        class="nav flex-column nav-pills col-12 col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 ps-2"
+        class="nav flex-column nav-pills col-12 col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 ps-2 pt-3"
         id="v-pills-tab"
         role="tablist"
         aria-orientation="vertical"
@@ -113,6 +118,7 @@ import { CalendarioComponent } from './calendario.component';
           role="tab"
           aria-controls="v-pills-apss-ext"
           aria-selected="false"
+          (click)="cargarAppExternas()"
         >
           Integració apps externas
         </button>
@@ -129,7 +135,7 @@ import { CalendarioComponent } from './calendario.component';
           aria-labelledby="v-pills-inf-bs-tab"
           tabindex="0"
         >
-          <div class="row-col-12 ps-5">
+          <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Mi perfil</a></li>
@@ -145,7 +151,9 @@ import { CalendarioComponent } from './calendario.component';
           </div>
           <div class="row pt-3 justify-content-center">
             <div class="col-10 pb-5">
-              <app-formulario-registro-usuario [actualizacion]="true"></app-formulario-registro-usuario>
+              <app-formulario-registro-usuario
+                [actualizacion]="true"
+              ></app-formulario-registro-usuario>
             </div>
           </div>
         </div>
@@ -156,7 +164,7 @@ import { CalendarioComponent } from './calendario.component';
           aria-labelledby="v-pills-inf-alm-tab"
           tabindex="0"
         >
-          <div class="row-col-12 ps-5">
+          <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Mi perfil</a></li>
@@ -182,7 +190,7 @@ import { CalendarioComponent } from './calendario.component';
           aria-labelledby="v-pills-inf-depor-tab"
           tabindex="0"
         >
-          <div class="row-col-12 ps-5">
+          <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Mi perfil</a></li>
@@ -208,7 +216,7 @@ import { CalendarioComponent } from './calendario.component';
           aria-labelledby="v-pills-settings-tab"
           tabindex="0"
         >
-          <div class="row-col-12 ps-5">
+          <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Mi perfil</a></li>
@@ -231,7 +239,7 @@ import { CalendarioComponent } from './calendario.component';
           aria-labelledby="v-pills-calendario-tab"
           tabindex="0"
         >
-        <div class="row-col-12 ps-5">
+          <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Mi perfil</a></li>
@@ -254,44 +262,55 @@ import { CalendarioComponent } from './calendario.component';
           aria-labelledby="v-pills-apss-ext-tab"
           tabindex="0"
         >
-          Integració apps externas
+        <div class="row justify-content-center">
+            <div class="col-12 pb-5">
+              <app-aplicaciones-externas></app-aplicaciones-externas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   `,
-  styles: [
-    `
-    `,
-  ],
+  styles: [``],
 })
 export class MenuComponent implements OnInit {
-  ngOnInit(): void {
-  }
 
-  @ViewChild(PlanSubscripcionActualComponent) childComponent!: PlanSubscripcionActualComponent;
-  @ViewChild(FormularioInformacionAlimenticiaComponent) childFormPerfilAlimenticio!: FormularioInformacionAlimenticiaComponent;
-  @ViewChild(FormularioInformacionDeportivaComponent) childFormPerfilDeportivo!: FormularioInformacionDeportivaComponent;
-  @ViewChild(FormularioRegistroUsuarioComponent) childFormInfBasica!: FormularioRegistroUsuarioComponent;
+  ngOnInit(): void {}
+
+
+  @ViewChild(PlanSubscripcionActualComponent)
+  childComponent!: PlanSubscripcionActualComponent;
+  @ViewChild(FormularioInformacionAlimenticiaComponent)
+  childFormPerfilAlimenticio!: FormularioInformacionAlimenticiaComponent;
+  @ViewChild(FormularioInformacionDeportivaComponent)
+  childFormPerfilDeportivo!: FormularioInformacionDeportivaComponent;
+  @ViewChild(FormularioRegistroUsuarioComponent)
+  childFormInfBasica!: FormularioRegistroUsuarioComponent;
   @ViewChild(CalendarioComponent) childFormCalendario!: CalendarioComponent;
-
-  cargarPlanes(){
+  @ViewChild(AplicacionesExternasComponent) childAppExternas!: AplicacionesExternasComponent
+  cargarPlanes() {
     this.childComponent.cargarPlanesActual();
   }
-  cargarInformacinAlimenticia(){
+  cargarInformacinAlimenticia() {
     this.childFormPerfilAlimenticio.getInfoAlimenticia();
   }
 
-  cargarInformacionDeportiva(){
+  cargarInformacionDeportiva() {
     this.childFormPerfilDeportivo.getInfoDeportiva();
   }
 
-  cargarInformacionBasica(){
+  cargarInformacionBasica() {
     this.childFormInfBasica.getInfoBasica();
   }
 
-  cargarCalendario(){
+  cargarCalendario() {
     this.childFormCalendario.getSesionesAgendadas();
   }
+
+  cargarAppExternas(){
+    this.childAppExternas.getAplicaciones();
+  }
+
 
   constructor(private usuarioService: UsuarioService) {}
 }
