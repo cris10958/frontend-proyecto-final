@@ -94,6 +94,7 @@ export class CardProductosServiciosComponent implements OnInit {
 
   @Input() producto_servicio!: ProductoServicioLista;
   @Input() usuario!: boolean;
+  @Input() filtro_actual!:string;
 
   formatoValores() {
     const formatoPesos = new Intl.NumberFormat('es-CO', {
@@ -131,13 +132,19 @@ export class CardProductosServiciosComponent implements OnInit {
     }else{
       linkDetalle += '/socio'
     }
+    this.guardarFiltro();
     this.router.navigate([linkDetalle ]
   );
+  }
+
+  guardarFiltro(){
+    const result = this.productosServiciosService.guardarFiltro(this.filtro_actual);
+    console.log(result);
   }
 
   ngOnInit(): void {
     this.formatoValores();
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private productosServiciosService: ProductosServiciosService) {}
 }

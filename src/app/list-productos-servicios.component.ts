@@ -128,6 +128,7 @@ import { CommonModule } from '@angular/common';
         *ngFor="let datos of listaProductosServicios"
         [producto_servicio]="datos"
         [usuario]="false"
+        [filtro_actual]="filtro_actual"
       ></app-card-productos-servicios>
       <div class="row-col-12 text-center pt-5" *ngIf="sinProductoServicios">
         <span class="color-letra-gray-900 small">{{
@@ -166,6 +167,7 @@ export class ListProductosServiciosComponent implements OnInit {
   tipoSelected: string = 'todo';
   deporteSelected: string = '';
   filtroVista: string = 'Sin filtro';
+  filtro_actual:string ="";
 
   openRegistrar() {
     if (this.sociosService.loggedIn()) {
@@ -211,6 +213,7 @@ export class ListProductosServiciosComponent implements OnInit {
       this.deporteSelected = '';
       this.getProductosServicios('');
       this.filtroVista = 'Sin filtro';
+      this.filtro_actual = '';
       return;
     }
 
@@ -239,11 +242,46 @@ export class ListProductosServiciosComponent implements OnInit {
     if (tag != '') {
       this.getProductosServicios(tag);
     }
+    this.filtro_actual = tag;
+  }
+
+  marcarTag() {
+    if (this.filtro_actual == "") {
+      this.tipoSelected = "todo";
+      this.filtroVista = 'Sin filtro';
+      return
+    }
+
+    if (this.filtro_actual.indexOf("Atletismo") >= 0) {
+      this.deporteSelected = "Atletismo";
+    }
+    if (this.filtro_actual.indexOf("Ciclismo") >= 0) {
+      this.deporteSelected = "Ciclismo";
+    }
+    if (this.filtro_actual.indexOf("producto") >= 0 && this.filtro_actual.indexOf("servicio") < 0) {
+      this.tipoSelected = "producto";
+    }
+    if (this.filtro_actual.indexOf("servicio") >= 0 && this.filtro_actual.indexOf("producto") < 0) {
+      this.tipoSelected = "servicio";
+    }
+
+    this.filtroVista = this.filtro_actual
+    .replaceAll('producto|servicio|', '')
+    .replaceAll('servicio|producto|', '')
+    .replaceAll('|', ', ')
+    .replaceAll('producto', 'Productos')
+    .replaceAll('propio', 'Mis pedidos')
+    .replaceAll('todo,', '')
+    .replaceAll('servicio', 'Servicios');
   }
 
   ngOnInit(): void {
-    this.getProductosServicios('');
+    this.filtro_actual = this.productosServiciosService.getFiltro() ?? '';
+    this.getProductosServicios(this.filtro_actual);
+    this.marcarTag();
   }
+
+  
 
   constructor(
     private router: Router,

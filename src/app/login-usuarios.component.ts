@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login-usuarios',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="row justify-content-center p-5 mt-5">
       <div class="col-4 fd-color p-4 shadow rounded">

@@ -3,7 +3,10 @@ import { NavUsuarioComponent } from './nav-usuario.component';
 import { FooterComponent } from './footer.component';
 import { ListProductosServiciosComponent } from './list-productos-servicios.component';
 import { SociosService } from './socios.service';
-import { ProductoServicioLista, ProductosServiciosService } from './productos-servicios.service';
+import {
+  ProductoServicioLista,
+  ProductosServiciosService,
+} from './productos-servicios.service';
 import { Router } from '@angular/router';
 import { CardProductosServiciosComponent } from './card-productos-servicios.component';
 import { CommonModule } from '@angular/common';
@@ -11,7 +14,12 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-productos-servicios-usuario',
   standalone: true,
-  imports: [NavUsuarioComponent, FooterComponent, CardProductosServiciosComponent, CommonModule],
+  imports: [
+    NavUsuarioComponent,
+    FooterComponent,
+    CardProductosServiciosComponent,
+    CommonModule,
+  ],
   template: `
     <div class="container-fluid p-0 brand-hover">
       <app-nav-usuario [selected]="'produc-service'"></app-nav-usuario>
@@ -19,19 +27,23 @@ import { CommonModule } from '@angular/common';
     <div id="id-base-socio" class="container-fluit"></div>
     <div class="pe-4 pt-3">
       <div class="row text-start">
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 ps-4 text-end">
+        <div
+          class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 ps-4 text-end"
+        >
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'todo'; filtro('clear')"
             [class]="{
-              active: tipoSelected == 'todo' && deporteSelected == ''
+              active: tipoSelected == 'todo' && deporteSelected == '' && !propio
             }"
           >
             Todo
           </button>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-center">
+        <div
+          class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-center"
+        >
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
@@ -41,7 +53,9 @@ import { CommonModule } from '@angular/common';
             Productos
           </button>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start">
+        <div
+          class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start"
+        >
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
@@ -51,17 +65,22 @@ import { CommonModule } from '@angular/common';
             Servicios
           </button>
         </div>
-        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start">
+        <div
+          class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start"
+        >
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
-            (click)="tipoSelected = 'servicio'; filtro('')"
-            [class]="{ active: tipoSelected == 'servicio' }"
+            (click)="propio = !propio; filtro('')"
+            [class]="{ active: propio }"
           >
             Mis pedidos
           </button>
         </div>
-        <div class="dropdown col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-start" *ngIf="deporteSelected == ''">
+        <div
+          class="dropdown col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-start"
+          *ngIf="deporteSelected == ''"
+        >
           <a
             class="btn btn-sm btn-outline-primary dropdown-toggle fondo-btn-fild w-100"
             role="button"
@@ -89,7 +108,10 @@ import { CommonModule } from '@angular/common';
             </li>
           </ul>
         </div>
-        <div class="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2 text-start m-1" *ngIf="deporteSelected != ''">
+        <div
+          class="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2 text-start m-1"
+          *ngIf="deporteSelected != ''"
+        >
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild"
@@ -121,17 +143,17 @@ import { CommonModule } from '@angular/common';
         *ngFor="let datos of listaProductosServicios"
         [producto_servicio]="datos"
         [usuario]="true"
+        [filtro_actual]="filtro_actual"
       ></app-card-productos-servicios>
       <div class="row-col-12 text-center pt-5" *ngIf="sinProductoServicios">
         <span class="color-letra-gray-900 small">{{
           sinProductoServiciosMsg
         }}</span>
       </div>
-      
     </div>
     <app-footer></app-footer>
   `,
-  styles:  [
+  styles: [
     `
       .cuerpo {
         background-color: transparent;
@@ -159,6 +181,8 @@ export class ProductosServiciosUsuarioComponent {
   tipoSelected: string = 'todo';
   deporteSelected: string = '';
   filtroVista: string = 'Sin filtro';
+  propio: boolean = false;
+  filtro_actual: string = '';
 
   openRegistrar() {
     if (this.sociosService.loggedIn()) {
@@ -168,35 +192,37 @@ export class ProductosServiciosUsuarioComponent {
 
   getProductosServicios(filtro: string) {
     this.sinProductoServicios = false;
-    this.productosServiciosService.getListaProductosServicios(filtro).subscribe(
-      (info) => {
-        this.listaProductosServicios = info;
+    this.productosServiciosService
+      .getListaProductosServiciosUsuario(filtro)
+      .subscribe(
+        (info) => {
+          this.listaProductosServicios = info;
 
-        if (this.listaProductosServicios.length == 0) {
-          this.sinProductoServicios = true;
-          this.sinProductoServiciosMsg =
-            'Sin productos y servicios registrados';
-          if (filtro != '') {
+          if (this.listaProductosServicios.length == 0) {
+            this.sinProductoServicios = true;
             this.sinProductoServiciosMsg =
-              'Sin productos y servicios registrados con el filtro seleccionado.';
+              'Sin productos y servicios registrados';
+            if (filtro != '') {
+              this.sinProductoServiciosMsg =
+                'Sin productos y servicios registrados con el filtro seleccionado.';
+            }
+          }
+        },
+        (err) => {
+          if (err.code != 400) {
+            this.isError = true;
+            this.error = err.message;
+          } else {
+            this.sinProductoServicios = true;
+            this.sinProductoServiciosMsg =
+              'Sin productos y servicios registrados';
+            if (filtro != '') {
+              this.sinProductoServiciosMsg =
+                'Sin productos y servicios registrados con el filtro seleccionado.';
+            }
           }
         }
-      },
-      (err) => {
-        if (err.code != 400) {
-          this.isError = true;
-          this.error = err.message;
-        } else {
-          this.sinProductoServicios = true;
-          this.sinProductoServiciosMsg =
-            'Sin productos y servicios registrados';
-          if (filtro != '') {
-            this.sinProductoServiciosMsg =
-              'Sin productos y servicios registrados con el filtro seleccionado.';
-          }
-        }
-      }
-    );
+      );
   }
 
   filtro(tipo: string) {
@@ -204,6 +230,9 @@ export class ProductosServiciosUsuarioComponent {
       this.deporteSelected = '';
       this.getProductosServicios('');
       this.filtroVista = 'Sin filtro';
+      this.propio = false;
+      this.filtro_actual = '';
+
       return;
     }
 
@@ -216,6 +245,13 @@ export class ProductosServiciosUsuarioComponent {
       tag += '|' + this.deporteSelected;
     }
 
+    if (this.propio) {
+      if (tag != '' && tag[tag.length - 1] != '|') {
+        tag += '|';
+      }
+      tag += 'propio';
+    }
+
     if (tag[0] == '|') {
       tag = tag.substring(1, tag.length);
     }
@@ -225,17 +261,56 @@ export class ProductosServiciosUsuarioComponent {
 
     this.filtroVista = tag
       .replaceAll('producto|servicio|', '')
+      .replaceAll('servicio|producto|', '')
       .replaceAll('|', ', ')
       .replaceAll('producto', 'Productos')
+      .replaceAll('propio', 'Mis pedidos')
+      .replaceAll('todo,', '')
       .replaceAll('servicio', 'Servicios');
 
     if (tag != '') {
       this.getProductosServicios(tag);
     }
+    this.filtro_actual = tag;
+  }
+
+  marcarTag() {
+    if (this.filtro_actual == "") {
+      this.tipoSelected = "todo";
+      this.filtroVista = 'Sin filtro';
+      return
+    }
+
+    if (this.filtro_actual.indexOf("propio") >= 0) {
+      this.propio = true;
+    }
+    if (this.filtro_actual.indexOf("Atletismo") >= 0) {
+      this.deporteSelected = "Atletismo";
+    }
+    if (this.filtro_actual.indexOf("Ciclismo") >= 0) {
+      this.deporteSelected = "Ciclismo";
+    }
+    if (this.filtro_actual.indexOf("producto") >= 0 && this.filtro_actual.indexOf("servicio") < 0) {
+      this.tipoSelected = "producto";
+    }
+    if (this.filtro_actual.indexOf("servicio") >= 0 && this.filtro_actual.indexOf("producto") < 0) {
+      this.tipoSelected = "servicio";
+    }
+
+    this.filtroVista = this.filtro_actual
+    .replaceAll('producto|servicio|', '')
+    .replaceAll('servicio|producto|', '')
+    .replaceAll('|', ', ')
+    .replaceAll('producto', 'Productos')
+    .replaceAll('propio', 'Mis pedidos')
+    .replaceAll('todo,', '')
+    .replaceAll('servicio', 'Servicios');
   }
 
   ngOnInit(): void {
-    this.getProductosServicios('');
+    this.filtro_actual = this.productosServiciosService.getFiltro() ?? '';
+    this.getProductosServicios(this.filtro_actual);
+    this.marcarTag();
   }
 
   constructor(
