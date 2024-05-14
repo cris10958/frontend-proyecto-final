@@ -119,7 +119,7 @@ import { Router } from '@angular/router';
                   Por favor ingrese su número de identificación
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-12">
                 <label
                   id="id-lb-email-socio"
                   for="id-email-socio"
@@ -145,7 +145,7 @@ import { Router } from '@angular/router';
                   Por favor ingrese su correo electrónico
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-6">
                 <label
                   id="id-lb-contrasena-socio"
                   for="id-contrasena-socio"
@@ -168,6 +168,30 @@ import { Router } from '@angular/router';
                 <div class="invalid-feedback">
                   Por favor ingrese una contraseña con la que ingresara al
                   sistema
+                </div>
+              </div>
+              <div class="col-6">
+                <label
+                  id="id-lb-contrasena-conf-socio"
+                  for="id-contrasena-conf-socio"
+                  class="form-label"
+                  >Confirmar Contraseña</label
+                >
+                <input
+                  type="password"
+                  class="form-control fd-color white"
+                  id="id-contrasena-conf-socio"
+                  formControlName="confirmar_contrasena"
+                  [class]="{
+                    'is-invalid':
+                      socio.get('confirmar_contrasena')?.invalid &&
+                      (socio.get('confirmar_contrasena')?.dirty ||
+                        socio.get('confirmar_contrasena')?.touched)
+                  }"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese la confirmación de la contraseña ingresada en el campo anterior
                 </div>
               </div>
               <div class="col-md-12 pt-5 pb-2 text-center">
@@ -218,10 +242,22 @@ export class RegistroSocioComponent {
       Validators.required,
       Validators.minLength(8),
     ]),
+    confirmar_contrasena: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
   });
 
   registro() {
+    this.isError = false;
+    this.error = '';
     if (this.socio.valid && this.emailValid) {
+      if(this.socio.value.contrasena != this.socio.value.confirmar_contrasena){
+        this.isError = true;
+        this.error = "Las contraseñas ingresadas no coinciden";
+        return
+      }
+
       const socioRegistro: SocioRegistro = this.socio.value;
       socioRegistro.contrasena = btoa(this.socio.value.contrasena!);
       this.socioService.addSocio(socioRegistro).subscribe(

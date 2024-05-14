@@ -185,7 +185,7 @@ import { DetallePagoComponent } from './detalle-pago.component';
                     </div>
                     <div class="col-12">
                       <h6 class="small color-letra-gray-600">
-                        Disponibles: {{ datos_detalle.cantidad_disponible }}
+                        Disponibles: {{ disponibles }}
                       </h6>
                     </div>
                     <div class="col-12" *ngIf="producto_comprado">
@@ -338,6 +338,7 @@ export class DetalleProductosServiciosComponent implements OnInit {
     fotos: this.fotos,
     id: '',
     tipo_servicio_producto: '',
+    servicio_producto_vendidos: 0
   };
   id_producto_servicio: string = '';
   typeConsulta: string = '';
@@ -352,6 +353,7 @@ export class DetalleProductosServiciosComponent implements OnInit {
   sinImagen: boolean = false;
   detalle_pago_open: boolean = false;
   producto_comprado: boolean = false;
+  disponibles: number = 0;
 
   detalle_sesion_deportiva = new FormGroup({
     nombre_sesion: new FormControl(''),
@@ -457,6 +459,9 @@ export class DetalleProductosServiciosComponent implements OnInit {
             this.getSesionPersonalizada();
             this.sesioPersonalizada = true;
           }
+
+          this.disponibles = this.datos_detalle.cantidad_disponible ?? 0  - (this.datos_detalle.servicio_producto_vendidos ?? 0);
+          
         },
         (err) => {
           console.log(err);
@@ -485,7 +490,7 @@ export class DetalleProductosServiciosComponent implements OnInit {
       return
     }
 
-    if (filtro.indexOf("propio") >= 0) {
+    if (filtro.indexOf("propios") >= 0) {
       this.producto_comprado = true;
     }
   }

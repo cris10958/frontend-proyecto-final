@@ -270,7 +270,7 @@ export class ListProductosServiciosComponent implements OnInit {
     .replaceAll('servicio|producto|', '')
     .replaceAll('|', ', ')
     .replaceAll('producto', 'Productos')
-    .replaceAll('propio', 'Mis pedidos')
+    .replaceAll('propios', 'Mis pedidos')
     .replaceAll('todo,', '')
     .replaceAll('servicio', 'Servicios');
   }

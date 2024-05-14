@@ -47,7 +47,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           aria-selected="true"
           (click)="cargarInformacionBasica()"
         >
-          Información basica
+          Información básica
         </button>
         <button
           class="nav-link text-start text-nav ms-2"
@@ -120,7 +120,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           aria-selected="false"
           (click)="cargarAppExternas()"
         >
-          Integració apps externas
+          Integración apps externas
         </button>
       </div>
       <div

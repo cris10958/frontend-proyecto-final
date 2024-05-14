@@ -139,7 +139,6 @@ export class CardProductosServiciosComponent implements OnInit {
 
   guardarFiltro(){
     const result = this.productosServiciosService.guardarFiltro(this.filtro_actual);
-    console.log(result);
   }
 
   ngOnInit(): void {
