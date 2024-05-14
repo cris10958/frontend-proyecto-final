@@ -18,7 +18,6 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     <form
       class="row g-3"
       [formGroup]="informacion_deportistas"
-      (ngSubmit)="registro()"
     >
       <div class="col-6">
         <label for="id-cantidad-dias" class="form-label"

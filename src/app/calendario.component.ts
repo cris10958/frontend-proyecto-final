@@ -167,7 +167,11 @@ export class CalendarioComponent implements OnInit {
       };
     });
     this.fecha_sesion = fecha_sesion;
-    this.obtenerDias(4, 2024);
+
+    const fechaActual = new Date();
+    const añoActual = fechaActual.getFullYear();
+    const mesActual = fechaActual.getMonth() + 1;
+    this.obtenerDias(mesActual, añoActual);
   }
 
   cambiarMes(direccion: any) {

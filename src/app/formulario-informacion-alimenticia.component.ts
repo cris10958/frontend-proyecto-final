@@ -21,7 +21,6 @@ import { ToastrService, ToastNoAnimation } from 'ngx-toastr';
     <form
       class="row g-3"
       [formGroup]="informacion_alimenticia"
-      (ngSubmit)="registro()"
     >
       <div class="col-6 ps-2">
         <label

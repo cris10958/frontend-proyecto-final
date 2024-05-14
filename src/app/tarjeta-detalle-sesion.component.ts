@@ -1,4 +1,4 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, OnInit, input } from '@angular/core';
 import { SesionService } from './sesion.service';
 
 @Component({
@@ -19,7 +19,9 @@ import { SesionService } from './sesion.service';
             </h6>
           </div>
           <div class="col-6">
-          <span class="badge rounded-pill text-bg-primary"> {{datos.estado}}</span>
+          <span class="badge rounded-pill badge-custom"
+            [class]="{'sucess': datos.estado == 'finalizada'}"
+          > {{ estado_ajustado }}</span>
          
           </div>
           <div class="col-12">
@@ -48,9 +50,23 @@ import { SesionService } from './sesion.service';
   `,
   styles: ``
 })
-export class TarjetaDetalleSesionComponent {
-
+export class TarjetaDetalleSesionComponent implements OnInit {
+  estado_ajustado:string='';
   @Input() datos: any;
 
+  ajustar_estado(){
+    if(this.datos.estado == "agendada"){
+      this.estado_ajustado = "Agendada"
+    }else if(this.datos.estado == "finalizada"){
+      this.estado_ajustado = "Finalizada"
+    }else{
+      this.estado_ajustado = this.datos.estado;
+
+    }
+  }
+
+  ngOnInit(): void {
+      this.ajustar_estado();
+  }
   constructor(private sesionService:SesionService){}  
 }
