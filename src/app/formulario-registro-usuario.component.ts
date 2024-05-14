@@ -117,7 +117,7 @@ import { ToastrService } from 'ngx-toastr';
       </div>
       <div class="col-6 ps-2">
         <label id="id-label-genero" for="id-genero-usuario" class="form-label"
-          >Genero</label
+          >Género</label
         >
         <div class="row-col-12">
           <div
@@ -328,6 +328,7 @@ import { ToastrService } from 'ngx-toastr';
             type="checkbox"
             formControlName="atletismo"
             id="id-op-atletismo"
+            [checked]="usuario.value.atletismo == '1'"
           />
           <label class="form-check-label" for="id-op-atletismo">
             Atletismo
@@ -339,6 +340,7 @@ import { ToastrService } from 'ngx-toastr';
             type="checkbox"
             formControlName="ciclismo"
             id="id-op-ciclismo"
+            [checked]="usuario.value.ciclismo == '1'"
           />
           <label class="form-check-label" for="id-op-ciclismo">
             Ciclismo
@@ -384,7 +386,7 @@ import { ToastrService } from 'ngx-toastr';
           anterioremente
         </div>
       </div>
-      <div class="col-6" *ngIf="!actualizacion">
+      <div class="col-12" *ngIf="!actualizacion">
         <label id="id-label-email" for="id-email-usuario" class="form-label"
           >Correo electrónico</label
         >
@@ -429,6 +431,30 @@ import { ToastrService } from 'ngx-toastr';
         />
         <div class="invalid-feedback">
           Por favor ingrese una contraseña con la que ingresara al sistema
+        </div>
+      </div>
+      <div class="col-6" *ngIf="!actualizacion">
+        <label
+          id="id-label-password-conf"
+          for="id-password-conf-usuario"
+          class="form-label"
+          >Confirmar Contraseña</label
+        >
+        <input
+          type="password"
+          class="form-control fd-color white"
+          id="id-password-conf-usuario"
+          formControlName="confirmacion_contrasena"
+          [class]="{
+            'is-invalid':
+              usuario.get('confirmacion_contrasena')?.invalid &&
+              (usuario.get('confirmacion_contrasena')?.dirty ||
+                usuario.get('confirmacion_contrasena')?.touched)
+          }"
+          required
+        />
+        <div class="invalid-feedback">
+          Por favor ingrese la confirmación de la contraseña ingresada en el campo anterior
         </div>
       </div>
       <div class="col-md-12 pt-5 pb-2 text-center">
@@ -517,7 +543,6 @@ export class FormularioRegistroUsuarioComponent {
   deportes: Deporte[] = [{ atletismo: '0' }, { ciclismo: '0' }];
   edicion: boolean = false;
   cancelar : boolean = false;
-  // usuario : any= null;
 
   usuario = new FormGroup({
     nombre: new FormControl('', [
@@ -547,11 +572,18 @@ export class FormularioRegistroUsuarioComponent {
       Validators.required,
       Validators.minLength(8),
     ]),
+    confirmacion_contrasena: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
     atletismo: new FormControl(),
     ciclismo: new FormControl(),
   });
 
   registro() {
+    this.isError = false;
+    this.error = '';
+
     if (
       this.usuario.valid &&
       this.emailValid &&
@@ -567,6 +599,13 @@ export class FormularioRegistroUsuarioComponent {
       (this.usuario.value.atletismo || this.usuario.value.ciclismo)
       || this.cancelar
     ) {
+
+      if(this.usuario.value.contrasena != this.usuario.value.confirmacion_contrasena){
+        this.isError = true;
+        this.error = "Las contraseñas ingresadas no coinciden";
+        return
+      }
+
       this.deportes[0].atletismo = this.usuario.value.atletismo ? '1' : '0';
       this.deportes[1].ciclismo = this.usuario.value.ciclismo ? '1' : '0';
 
@@ -721,7 +760,20 @@ export class FormularioRegistroUsuarioComponent {
     this.usuarioService.getInfoBasicaUsuario().subscribe(
       (info) => {
         let infoBasica = info;
+        let marcarAtletismo : boolean = false;
+        let marcarCiclismo : boolean = false;
         let contrasena =  atob(info.contrasena);
+        if(infoBasica.deportes){
+          for(let i = 0; i < infoBasica.deportes.length; i++){
+            if(infoBasica.deportes[i] == "Atletismo"){
+              marcarAtletismo = true;
+            }
+            else if(infoBasica.deportes[i] == "Ciclismo"){
+              marcarCiclismo = true;
+            }
+          }
+        }
+        
         this.usuario = new FormGroup({
           nombre: new FormControl(infoBasica.nombre, [
             Validators.required,
@@ -769,13 +821,15 @@ export class FormularioRegistroUsuarioComponent {
             [Validators.required]
           ),
           contrasena: new FormControl(contrasena),
-          atletismo: new FormControl(),
-          ciclismo: new FormControl(),
+          confirmacion_contrasena: new FormControl(contrasena),
+          atletismo: new FormControl(marcarAtletismo? '1':null),
+          ciclismo: new FormControl(marcarCiclismo?'1':null),
         });
         this.setGenero(infoBasica.genero);
         this.getCiudadNacimiento();
         this.getCiudadResidencia();
         this.isError = false;
+        // if()
       },
       (err) => {
         if (err.code != 400) {

@@ -35,7 +35,7 @@ import { CommonModule } from '@angular/common';
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'todo'; filtro('clear')"
             [class]="{
-              active: tipoSelected == 'todo' && deporteSelected == '' && !propio
+              active: tipoSelected == 'todo' && deporteSelected == '' && !propios
             }"
           >
             Todo
@@ -71,8 +71,8 @@ import { CommonModule } from '@angular/common';
           <button
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
-            (click)="propio = !propio; filtro('')"
-            [class]="{ active: propio }"
+            (click)="propios = !propios; filtro('')"
+            [class]="{ active: propios }"
           >
             Mis pedidos
           </button>
@@ -181,7 +181,7 @@ export class ProductosServiciosUsuarioComponent {
   tipoSelected: string = 'todo';
   deporteSelected: string = '';
   filtroVista: string = 'Sin filtro';
-  propio: boolean = false;
+  propios: boolean = false;
   filtro_actual: string = '';
 
   openRegistrar() {
@@ -230,7 +230,7 @@ export class ProductosServiciosUsuarioComponent {
       this.deporteSelected = '';
       this.getProductosServicios('');
       this.filtroVista = 'Sin filtro';
-      this.propio = false;
+      this.propios = false;
       this.filtro_actual = '';
 
       return;
@@ -245,11 +245,11 @@ export class ProductosServiciosUsuarioComponent {
       tag += '|' + this.deporteSelected;
     }
 
-    if (this.propio) {
+    if (this.propios) {
       if (tag != '' && tag[tag.length - 1] != '|') {
         tag += '|';
       }
-      tag += 'propio';
+      tag += 'propios';
     }
 
     if (tag[0] == '|') {
@@ -264,7 +264,7 @@ export class ProductosServiciosUsuarioComponent {
       .replaceAll('servicio|producto|', '')
       .replaceAll('|', ', ')
       .replaceAll('producto', 'Productos')
-      .replaceAll('propio', 'Mis pedidos')
+      .replaceAll('propios', 'Mis pedidos')
       .replaceAll('todo,', '')
       .replaceAll('servicio', 'Servicios');
 
@@ -281,8 +281,8 @@ export class ProductosServiciosUsuarioComponent {
       return
     }
 
-    if (this.filtro_actual.indexOf("propio") >= 0) {
-      this.propio = true;
+    if (this.filtro_actual.indexOf("propios") >= 0) {
+      this.propios = true;
     }
     if (this.filtro_actual.indexOf("Atletismo") >= 0) {
       this.deporteSelected = "Atletismo";
@@ -302,7 +302,7 @@ export class ProductosServiciosUsuarioComponent {
     .replaceAll('servicio|producto|', '')
     .replaceAll('|', ', ')
     .replaceAll('producto', 'Productos')
-    .replaceAll('propio', 'Mis pedidos')
+    .replaceAll('propios', 'Mis pedidos')
     .replaceAll('todo,', '')
     .replaceAll('servicio', 'Servicios');
   }

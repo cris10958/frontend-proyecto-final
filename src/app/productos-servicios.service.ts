@@ -45,7 +45,7 @@ export interface ProductoServicioLista {
   fotos: Fotos[],
   id:string | null;
   tipo_servicio_producto: string | null;
-
+  servicio_producto_vendidos:number | null;
 } 
 
 export interface Fotos {

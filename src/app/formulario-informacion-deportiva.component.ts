@@ -85,7 +85,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
       </div>
       <div class="col-6 ps-2">
         <label id="id-label-ftp" for="id-ftp" class="form-label"
-          >¿Cuál es tud FTP actual?</label
+          >¿Cuál es tu FTP actual?</label
         >
         <input
           type="number"
@@ -107,7 +107,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
           id="id-label-intolerancia"
           for="id-intolerancia-usuario"
           class="form-label"
-          >¿Cuenta con alguna lesion, molestia o incapacidad?
+          >¿Cuenta con alguna lesión, molestia o incapacidad?
         </label>
         <div class="row-col-12">
           <div class="form-check form-check-inline">

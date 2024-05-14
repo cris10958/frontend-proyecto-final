@@ -197,7 +197,7 @@ export class DetallePagoComponent {
             'Cada vez más cerda de tus objetivos'
           );
           this.isError = false;
-          this.productosServiciosService.guardarFiltro('propio');
+          this.productosServiciosService.guardarFiltro('propios');
           this.router.navigate(['/productos-servicios-usuario']);
         },
         (err) => {
