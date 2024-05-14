@@ -15,7 +15,7 @@ import { SesionService } from './sesion.service';
           <div class="col-6">
           
             <h6 class="color-letra-gray-800 small">
-              Sesion 1
+              Sesión 1
             </h6>
           </div>
           <div class="col-6">
