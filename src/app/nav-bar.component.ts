@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ListLanguajeService } from './list-languaje.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule, FormsModule],
   template: `
     <div class="container-fluit ps-4 pe-4 pb-4" (mouseenter)="hover = true" (mouseleave)="hover = false" [class]="{'brand-hover':hover}">
       <nav class="navbar navbar-expand-lg bg-body-tertiary row" [class]="{'brand-hover':hover}">
@@ -21,10 +24,10 @@ import { RouterModule } from '@angular/router';
             <div class="container">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
                 <li class="nav-item">
-                  <a i18n class="nav-link" aria-current="page" href="/registro-socios">Quiero ser socio</a>
+                  <a i18n class="nav-link" aria-current="page" href="/registro-socios">{{ "quiero_ser_socio" | translate }}</a>
                 </li>
                 <li class="nav-item">
-                  <a i18n id="id-ingresar-socio" class="nav-link" href="/login-socios">Ingresar como socio</a>
+                  <a i18n id="id-ingresar-socio" class="nav-link" href="/login-socios">{{ "entrar_como_socio" | translate}}</a>
                 </li>
               </ul>
              </div>
@@ -34,15 +37,16 @@ import { RouterModule } from '@angular/router';
                   {{lang_selected}}
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a i18n class="dropdown-item disabled">SELECCIONE UNO</a></li>
-                  <li *ngFor="let lang of listLanguajeService.languaje"><a class="dropdown-item lang-li" [class]="{active:lang_selected == lang.nombre_corto}">{{lang.lenguaje}}</a></li>
+                  <li><a i18n class="dropdown-item disabled"> {{ "seleccion" | translate}} </a></li>
+                  <li (click)="cambiarIdioma('en', 'EN');"><a class="dropdown-item lang-li" [class]="{active:lang_selected == 'EN'}">{{"ingles" | translate}}</a></li>
+                  <li (click)="cambiarIdioma('es', 'ES');"><a class="dropdown-item lang-li" [class]="{active:lang_selected == 'ES'}">{{"espaniol" | translate}}</a></li>
                 </ul>
               </div>
               <button (mouseenter)="img_login='./assets/icon/person_white.png'" (mouseleave)="img_login='./assets/icon/person.png'" class="btn btn-outline-primary col-7" type="submit" routerLink="/login-usuarios">
                 <div class="container-fluit bt-login">
                   <div class="row">
                     <div i18n class="col-6">
-                      Ingresar
+                      {{ "ingresar" | translate }}
                     </div>
                     <div class="col-6">
                       <img i18n-[alt]="persona" [src]="img_login" alt="persona">
@@ -83,8 +87,19 @@ export class NavBarComponent implements OnInit{
   img_ascesibilidad: string = "./assets/icon/ascesibilidad.png"
   hover:boolean = false;
 
+  cambiarIdioma(idioma:string, nombre_corto:string){
+    this.lang_selected = nombre_corto;
+    this.translate.use(idioma);
+  }
 
-  constructor(readonly listLanguajeService: ListLanguajeService){
+  constructor(readonly listLanguajeService: ListLanguajeService,
+    public translate: TranslateService
+  ){
+    translate.addLangs(['es', 'en']);
+    translate.setDefaultLang('es');
+
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang?.match(/en|es/) ? browserLang : 'es');
     
   }
   ngOnInit(): void {
