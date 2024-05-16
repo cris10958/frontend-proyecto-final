@@ -34,7 +34,7 @@ import { TarjetaDetalleSesionComponent } from './tarjeta-detalle-sesion.componen
             </div>
           </div>
           <ol>
-            <li *ngFor="let dia of semana">
+            <li class="color-letra-gray-800" *ngFor="let dia of semana">
               {{ dia | slice : 0 : 3 }}
             </li>
             <li
@@ -43,6 +43,7 @@ import { TarjetaDetalleSesionComponent } from './tarjeta-detalle-sesion.componen
                 agendada: dia.estado == 'agendada',
                 finalizada: dia.estado == 'finalizada'
               }"
+              class="color-letra-gray-800"
               style="cursor:pointer;"
               [style.gridColumnStart]="first ? dia?.indexSemana : 'auto'"
               *ngFor="let dia of mesSeleccionado; let first = first"

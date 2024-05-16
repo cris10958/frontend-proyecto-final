@@ -18,7 +18,7 @@ import { UsuarioService } from './usuario.service';
           <h1>{{ plan.nombre }}</h1>
         </div>
         <div [id]="'id-plan-content-'+plan.id_plan_subscripcion" class="rounded-bottom pb-3 pt-2">
-          <div class="col-12 contenido-tarjeta pe-5 ps-2">
+          <div [tabIndex]="index" class="col-12 contenido-tarjeta pe-5 ps-2">
             <ul>
               <li *ngFor="let beneficio of plan.beneficios" class="tx-justify">
                 {{ beneficio.beneficios }}
@@ -91,6 +91,7 @@ export class CardPlanSubscripcionComponent implements OnInit {
   @Input() plan!: PlanSubscripcion;
   @Output() registrarPlan = new EventEmitter<string>();
   @Input() tipo: string = '';
+  @Input() index: number = 0;
 
   ngOnInit(): void {
   }

@@ -14,6 +14,7 @@ import { FormularioRegistroProductoServicioComponent } from './formulario-regist
 import { CalendarioComponent } from './calendario.component';
 import { DetalleProductosServiciosComponent } from './detalle-productos-servicios.component';
 import { ProductosServiciosUsuarioComponent } from './productos-servicios-usuario.component';
+import { EventosUsuarioComponent } from './eventos-usuario/eventos-usuario.component';
 
 export const routes: Routes = [
     {path:'', pathMatch:'full', redirectTo:'home'},
@@ -29,5 +30,6 @@ export const routes: Routes = [
     {path:'registrar-productos-servicios', component: FormularioRegistroProductoServicioComponent},
     {path:'detalle_producto_servicio/:id/:type', component: DetalleProductosServiciosComponent},
     {path:'productos-servicios-usuario', component: ProductosServiciosUsuarioComponent},
+    {path:'eventos', component: EventosUsuarioComponent},
     
 ];

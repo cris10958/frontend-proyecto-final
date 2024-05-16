@@ -30,7 +30,7 @@ import { UsuarioService } from './usuario.service';
                   <a i18n id="id-nav-prod-ser" class="nav-link" [class]="{'active': selected == 'produc-service'}" href="/productos-servicios-usuario">Productos y servicios</a>
                 </li>
                 <li class="nav-item">
-                  <a i18n id="id-nav-evento" class="nav-link" [class]="{'active': selected == 'eventos'}" >Eventos</a>
+                  <a i18n id="id-nav-evento" class="nav-link" [class]="{'active': selected == 'eventos'}"  href="/eventos" >Eventos</a>
                 </li>
               </ul>
              </div>

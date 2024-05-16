@@ -43,7 +43,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
       <div class="col-6">
         <label
           id="id-label-tiempo-semana"
-          for="d-tiempo-semana"
+          for="id-tiempo-semana"
           class="form-label"
           >Tiempo de practica (horas/semana)</label
         >

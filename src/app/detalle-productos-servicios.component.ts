@@ -157,13 +157,13 @@ import { DetallePagoComponent } from './detalle-pago.component';
                       </h6>
                     </div>
                     <div class="col-12">
-                      <h6 class="small color-letra-gray-600">
+                      <h6 class="small color-letra-gray-800">
                         Lugar disponibilidad:
                         {{ datos_detalle.lugar_entrega_prestacion }}
                       </h6>
                     </div>
                     <div class="col-12">
-                      <h6 class="small color-letra-gray-600">
+                      <h6 class="small color-letra-gray-800">
                         Deporte: {{ datos_detalle.deporte }}
                       </h6>
                     </div>
@@ -173,34 +173,34 @@ import { DetallePagoComponent } from './detalle-pago.component';
                       </h6>
                     </div>
                     <div class="col-12">
-                      <h6 class="small color-letra-gray-600">
+                      <h6 class="small color-letra-gray-800">
                         Tipo de Producto / Servicio:
                         {{ datos_detalle.subtipo_servicio_producto }}
                       </h6>
                     </div>
                     <div class="col-12">
-                      <h6 class="small color-letra-gray-600">
+                      <h6 class="small color-letra-gray-800">
                         Fecha de entrega o prestación: {{ fecha_ajustada }}
                       </h6>
                     </div>
                     <div class="col-12">
-                      <h6 class="small color-letra-gray-600">
+                      <h6 class="small color-letra-gray-800">
                         Disponibles: {{ disponibles }}
                       </h6>
                     </div>
                     <div class="col-12" *ngIf="producto_comprado">
-                      <h6 class="small color-letra-gray-600">
+                      <h6 class="small color-letra-gray-800">
                         Estado: <span class="badge rounded-pill text-bg-primary"> En proceso</span>
                       </h6>
                     </div>
                     <div class="col-12" *ngIf="sesioPersonalizada">
-                      <h6 class="small color-letra-gray-600">
+                      <h6 class="small color-letra-gray-800">
                         Nombre de la sesión:
                         {{ detalle_sesion_deportiva.value.nombre_sesion }}
                       </h6>
                     </div>
                     <div class="col-12" *ngIf="sesioPersonalizada">
-                      <h6 class="small color-letra-gray-600">
+                      <h6 class="small color-letra-gray-800">
                         Número de ejercicios que contiene:
                         {{ detalle_sesion_deportiva.value.numero_ejercicios }}
                       </h6>

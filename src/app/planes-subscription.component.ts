@@ -27,10 +27,11 @@ import { UsuarioService } from './usuario.service';
         </div>
         <div class="row justify-content-center pt-3 pb-3">
           <app-card-plan-subscripcion
-            *ngFor="let plan of listPlanSubscripcion"
+            *ngFor="let plan of listPlanSubscripcion; let i = index;"
             [plan]="plan"
             (registrarPlan)="registrar_subscripcion($event)"
             [tipo]="'inicio'"
+            [index]="i"
             class="col-4"
           >
           </app-card-plan-subscripcion>
