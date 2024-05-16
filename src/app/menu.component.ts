@@ -35,7 +35,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           href="#"
           >Mi cuenta</a
         >
-        <hr class="m-0 ms-2" />
+        <!-- <hr tabindex="0" class="m-0 ms-2" /> -->
         <button
           class="nav-link active text-start text-nav ms-2"
           id="v-pills-inf-bs-tab"
@@ -95,7 +95,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           href="#"
           >Sesión deportiva</a
         >
-        <hr class="m-0 ms-2" />
+        <!-- <hr tabindex="1" class="m-0 ms-2" /> -->
         <button
           class="nav-link text-start text-nav ms-2"
           id="v-pills-calendario-tab"
@@ -162,7 +162,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           id="v-pills-inf-alm"
           role="tabpanel"
           aria-labelledby="v-pills-inf-alm-tab"
-          tabindex="0"
+          tabindex="1"
         >
           <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
@@ -188,7 +188,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           id="v-pills-inf-depor"
           role="tabpanel"
           aria-labelledby="v-pills-inf-depor-tab"
-          tabindex="0"
+          tabindex="2"
         >
           <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
@@ -214,7 +214,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           id="v-pills-settings"
           role="tabpanel"
           aria-labelledby="v-pills-settings-tab"
-          tabindex="0"
+          tabindex="3"
         >
           <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
@@ -237,7 +237,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           id="v-pills-calendario"
           role="tabpanel"
           aria-labelledby="v-pills-calendario-tab"
-          tabindex="0"
+          tabindex="4"
         >
           <div class="row-col-12 ps-5 pt-3">
             <nav aria-label="breadcrumb">
@@ -260,7 +260,7 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
           id="v-pills-apss-ext"
           role="tabpanel"
           aria-labelledby="v-pills-apss-ext-tab"
-          tabindex="0"
+          tabindex="5"
         >
         <div class="row justify-content-center">
             <div class="col-12 pb-5">

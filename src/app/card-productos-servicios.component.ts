@@ -48,23 +48,23 @@ import { CommonModule } from '@angular/common';
             </h5>
           </div>
           <div class="col-12">
-            <h6 class="small color-letra-gray-600">
+            <h6 class="small color-letra-gray-800">
               Lugar disponibilidad: {{ producto_servicio.pais }},
               {{ producto_servicio.ciudad }}
             </h6>
           </div>
           <div class="col-12">
-            <h6 class="small color-letra-gray-600">
+            <h6 class="small color-letra-gray-800">
               Deporte: {{ producto_servicio.deporte }}
             </h6>
           </div>
           <div class="col-12">
-            <h6 class="small color-letra-gray-600">
+            <h6 class="small color-letra-gray-800">
               Tipo: {{ tipo_ajustado }}
             </h6>
           </div>
           <div class="col-12">
-            <h6 class="small color-letra-gray-600">
+            <h6 class="small color-letra-gray-800">
               Tipo de Producto / Servicio:
               {{ producto_servicio.subtipo_servicio_producto }}
             </h6>

@@ -130,6 +130,7 @@ import { ToastrService } from 'ngx-toastr';
               type="radio"
               name="inlineGenero"
               [value]="genero.key"
+              [attr.aria-label]="genero.key"
               [checked]="genero.key == this.generoSelected"
             />
             <label class="form-check-label" for="inlineRadio1">{{

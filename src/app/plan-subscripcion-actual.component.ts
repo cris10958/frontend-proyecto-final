@@ -18,10 +18,11 @@ import { UsuarioService } from './usuario.service';
         </div>
         <div class="row justify-content-center pt-3 pb-3">
           <app-card-plan-subscripcion
-            *ngFor="let plan of PlanActual"
+            *ngFor="let plan of PlanActual; let i = index;"
             [plan]="plan"
             (registrarPlan)="actualizar_subscripcion($event)"
             [tipo] = "'actual'"
+            [index]="i"
             class="col-6"
           >
           </app-card-plan-subscripcion>
@@ -31,19 +32,17 @@ import { UsuarioService } from './usuario.service';
         </div>
         <div class="row justify-content-center pt-3 pb-3">
           <app-card-plan-subscripcion
-            *ngFor="let plan of listPlanSubscripcion"
+            *ngFor="let plan of listPlanSubscripcion; let i = index;"
             [plan]="plan"
             (registrarPlan)="actualizar_subscripcion($event)"
             [tipo] = "'actualizacion'"
+            [index]="i + 1"
             class="col-6"
           >
           </app-card-plan-subscripcion>
         </div>
       </div>
     </div>
-    <h2 class="visually-hidden">Title for screen readers</h2>
-<a class="visually-hidden-focusable" href="#content">Skip to main content</a>
-<div class="visually-hidden-focusable">A container with a <a href="#">focusable element</a>.</div>
   `,
   styles: [
     `

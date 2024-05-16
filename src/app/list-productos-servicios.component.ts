@@ -131,7 +131,7 @@ import { CommonModule } from '@angular/common';
         [filtro_actual]="filtro_actual"
       ></app-card-productos-servicios>
       <div class="row-col-12 text-center pt-5" *ngIf="sinProductoServicios">
-        <span class="color-letra-gray-900 small">{{
+        <span class="color-letra-gray-800 small">{{
           sinProductoServiciosMsg
         }}</span>
       </div>
@@ -148,7 +148,7 @@ import { CommonModule } from '@angular/common';
       .fondo-btn-fild {
         background-color: #ebe5fc;
         border: 0px;
-        color: #7749f8;
+        color: #21005d;
       }
       .fondo-btn-fild:hover,
       .fondo-btn-fild.active {
