@@ -99,6 +99,7 @@ import { CommonModule } from '@angular/common';
       </div>
       <div class="row-col-12 text-end">
         <button
+          id="btn-registrar-nuevo"
           class="btn btn-sm btn-primary"
           (click)="openRegistrar()"
           type="submit"

@@ -31,6 +31,7 @@ import { CommonModule } from '@angular/common';
           class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 ps-4 text-end"
         >
           <button
+            id="todos-productos-usuario"
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'todo'; filtro('clear')"

@@ -42,7 +42,7 @@ import { Console } from 'console';
                   <li (click)="cambiarIdioma('es', 'ES');"><a class="dropdown-item lang-li" [class]="{active:lang_selected == 'ES'}">{{"espaniol" | translate}}</a></li>
                 </ul>
               </div>
-              <button (mouseenter)="img_login='./assets/icon/person_white.png'" (mouseleave)="img_login='./assets/icon/person.png'" class="btn btn-outline-primary col-7" type="submit" routerLink="/login-usuarios">
+              <button id="btn-ingresar" (mouseenter)="img_login='./assets/icon/person_white.png'" (mouseleave)="img_login='./assets/icon/person.png'" class="btn btn-outline-primary col-7" type="submit" routerLink="/login-usuarios">
                 <div class="container-fluit bt-login">
                   <div class="row">
                     <div i18n class="col-6">

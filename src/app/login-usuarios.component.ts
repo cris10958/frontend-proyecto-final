@@ -85,6 +85,7 @@ import { ToastrService } from 'ngx-toastr';
               </div>
               <div class="col-12 text-center">
                 <button
+                  id="btn-iniciar-sesion"
                   class="btn btn-primary w-100"
                   [disabled]="!usuario.valid || !emailValid"
                   routerLink="/home-usuario"
