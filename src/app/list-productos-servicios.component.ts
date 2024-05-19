@@ -285,13 +285,17 @@ export class ListProductosServiciosComponent implements OnInit {
       this.tipoSelected = "servicio";
     }
 
+    if (this.filtro_actual.indexOf("vendidos") >= 0 ) {
+      this.pedidos_seleccionado = true;
+    }
+
     this.filtroVista = this.filtro_actual
     .replaceAll('producto|servicio|', '')
     .replaceAll('servicio|producto|', '')
     .replaceAll('|', ', ')
     .replaceAll('producto', 'Productos')
     .replaceAll('propios', 'Mis pedidos')
-    .replaceAll('todo,', '')
+    .replaceAll('todo,', 'Todo')
     .replaceAll('servicio', 'Servicios');
   }
 
