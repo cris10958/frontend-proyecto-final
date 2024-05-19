@@ -12,5 +12,6 @@ export const environment = {
   baseUrlRegistro,
   baseUrlGestorUsuarios,
   baseUrlGestorSesiones,
-  baseUrlGestionProductosServicios
+  baseUrlGestionProductosServicios,
+  baseUrlGestionEventos
 };
