@@ -170,14 +170,25 @@ export class ProductosServiciosService {
       })
   }
 
-  getSesionDeportiva(id:string){
+  getSesionDeportiva(id:string, type:string){
+    let token: string = '';
+    let url: string = this.url_gestion_productos_servicios;
+    if(type == "socio"){
+      token = this.socioService.getToken()??'';
+      url += '/productos-servicios/listar-sesion-personalizada/'+id;
+    }
+    else if(type == "user"){
+      token = this.usuarioService.getToken()??'';
+      url += '/productos-servicios/listar-sesion-personalizada/'+id;
+    }
+    
     return this.http
-      .get<any>(this.url_gestion_productos_servicios+'/productos-servicios/listar-sesion-personalizada/'+id,{
+      .get<any>(url,{
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
-          'Authorization': `Bearer ${this.socioService.getToken()}`,
+          'Authorization': `Bearer ${token}`,
         }),
       })
   }

@@ -342,7 +342,7 @@ import { DetalleVentaComponent } from './detalle-venta.component';
         *ngIf="typeConsulta == 'socio'"
         class="row ps-5 pt-4 pb-5 justify-content-start"
       >
-        <div class="col-12 pb-3">
+        <div class="col-12 pb-0">
           <label
             for="id-aviso"
             class="form-label color-letra-on-primary-container"
@@ -350,7 +350,15 @@ import { DetalleVentaComponent } from './detalle-venta.component';
           >
         </div>
         <div
-          class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4 pb-5 me-4"
+              class="row-col-12 text-start"
+              *ngIf="lista_vendedores == null || lista_vendedores.length == 0"
+            >
+              <span class="color-letra-gray-800 small">
+                Sin vendedores registrados
+              </span>
+            </div>
+        <div
+          class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4 pb-5 me-4 pt-3"
           *ngFor="let venta of lista_vendedores; let i = index"
         >
           <app-detalle-venta
@@ -434,7 +442,7 @@ export class DetalleProductosServiciosComponent implements OnInit {
 
   getSesionPersonalizada() {
     this.productosServiciosService
-      .getSesionDeportiva(this.id_producto_servicio)
+      .getSesionDeportiva(this.id_producto_servicio, this.typeConsulta)
       .subscribe(
         (info) => {
           const datos_sesion = info;
