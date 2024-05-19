@@ -50,7 +50,7 @@ import { Router } from '@angular/router';
                 <a href="/registro-socios">Registrarme como socio</a>
               </div>
               <div class="col-12 text-center">
-                <button class="btn btn-primary w-100" type="submit" [disabled]="!socio.valid || !emailValid">Iniciar Sesión</button>
+                <button id="btn-login-socio" class="btn btn-primary w-100" type="submit" [disabled]="!socio.valid || !emailValid">Iniciar Sesión</button>
               </div>
             </form>
           </div>

@@ -13,6 +13,9 @@
   --color-lila: #e8def8;
   --color-negro-oscuro: #1d192b;
   --color_fondo: #f8f9fa;
+  --color_negro: #1D1B20;
+  --purpura: #7749F8;
+
 }
 
 .footer {
@@ -29,7 +32,7 @@
   background-color: var(--primary_container);
 }
 .fd-color.on_primary_fixed_variant {
-  background-color: var(--on_primary_fixed_variant);
+  background-color: var(--on_primary_fixed_variant) !important;
 }
 .fd-color.on_primary_fixed_variant > h1 {
   color: var(--text_on_primary_fixed_variant);
@@ -63,6 +66,12 @@ a {
 }
 .color-letra-on-primary-container {
   color: var(--on_primary_container);
+}
+.color-letra-on_primary_fixed_variant {
+  color: var(--text_on_primary_fixed_variant) !important;
+}
+.color-letra-primary_fixed_variant {
+  color: var(--on_primary_fixed_variant) !important;
 }
 .ico-brand-w {
   width: 8rem;
@@ -156,6 +165,24 @@ li {
   border-radius: 30px;
   cursor:pointer;
 }
+
+.evento_calendario {
+  background-color: var(--primary_container) ;
+  color: var(--color_negro);
+  padding: 5px;
+  margin: 5px;
+  border-radius: 30px;
+  border: 1px solid var(--purpura);
+  cursor:pointer;
+}
+
+.evento_calendario_icono {
+  background-color: var(--primary_container) !important;
+  color: var(--primary_container) !important;
+  border: 1px solid var(--purpura) !important;
+  cursor:pointer;
+}
+
 .caja-dropzone{
   border: 1px solid #dee2e6 !important;
   background-image: url(./assets/icon/images.png) !important;
@@ -197,6 +224,9 @@ li {
   color: #58151C;
 }
 
+.link-ul{
+  color: rgba(119, 73, 248, 1) !important;
+}
 
 /* 
 .toast-success {

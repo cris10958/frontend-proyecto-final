@@ -75,7 +75,7 @@ export class PlanesSubscriptionComponent implements OnInit {
 
   registrar_subscripcion(plan: string) {
     if (plan == 'Gratis') {
-      this.router.navigate(['/panel-usuarios']);
+      this.router.navigate(['/panel-usuarios/usuario']);
     } else if (plan == 'Intermedio' || plan == 'Premium') {
       this.actualizarPlan(plan);
       this.router.navigate(['/panel-usuarios']);

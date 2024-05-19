@@ -94,6 +94,7 @@ import { ToastrService } from 'ngx-toastr';
                 </div>
                 <div class="col-12">
                   <ngx-dropzone
+                    id="upd-file"
                     (change)="onSelect($event)"
                     [multiple]="true"
                     accept="image/jpeg, image/jpg, image/png, image/gif"

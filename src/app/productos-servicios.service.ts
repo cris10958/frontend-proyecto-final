@@ -81,6 +81,16 @@ export interface Compra {
   estado_entrega:       string;
 }
 
+export interface DetalleVenta {
+  deportista_nombre:                               string | null;
+  deportista_numero_identificacion:                string | null;
+  servicio_producto_deportista_direccion_servicio: string | null;
+  servicio_producto_deportista_estado_entrega:     string | null;
+  servicio_producto_deportista_fecha_servicio:     string | null;
+  servicio_producto_deportista_metodo_pago:        string | null;
+  servicio_producto_deportista_telefono:           string | null;
+}
+
 
 
 @Injectable({
@@ -160,14 +170,25 @@ export class ProductosServiciosService {
       })
   }
 
-  getSesionDeportiva(id:string){
+  getSesionDeportiva(id:string, type:string){
+    let token: string = '';
+    let url: string = this.url_gestion_productos_servicios;
+    if(type == "socio"){
+      token = this.socioService.getToken()??'';
+      url += '/productos-servicios/listar-sesion-personalizada/'+id;
+    }
+    else if(type == "user"){
+      token = this.usuarioService.getToken()??'';
+      url += '/productos-servicios/listar-sesion-personalizada/'+id;
+    }
+    
     return this.http
-      .get<any>(this.url_gestion_productos_servicios+'/productos-servicios/listar-sesion-personalizada/'+id,{
+      .get<any>(url,{
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
-          'Authorization': `Bearer ${this.socioService.getToken()}`,
+          'Authorization': `Bearer ${token}`,
         }),
       })
   }
@@ -235,6 +256,21 @@ export class ProductosServiciosService {
 
   getFiltro() {
     return this.localStorage?.getItem('filtro');
+  }
+
+  getListaVentas(id:string){
+    let url = this.url_gestion_productos_servicios+'/productos-servicios/listar-compradores/'+id;
+
+    return this.http
+      .get<any>(url, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+          'Authorization': `Bearer ${this.socioService.getToken()}`,
+        }),
+      })
   }
 
     constructor(private http: HttpClient, private socioService: SociosService, private usuarioService: UsuarioService,  @Inject(DOCUMENT) private document: Document) {}

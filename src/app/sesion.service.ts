@@ -11,13 +11,33 @@ import { Router } from '@angular/router';
 import { UsuarioService } from './usuario.service';
 
 export interface DatosSesion {
-  estado: string;
-  fecha_fin: null;
-  fecha_inicio: null;
-  fecha_sesion: string;
-  ftp: null;
-  id_plan_deportista: string;
-  vo2_max: null;
+  estado: string | null;
+  fecha_fin: string | null;
+  fecha_inicio: string | null;
+  fecha_sesion: string | null;
+  ftp: string | null;
+  id_plan_deportista: string | null;
+  vo2_max: string | null;
+}
+
+export interface VistaSesion {
+  estado: string | null;
+  fecha_fin: string | null;
+  fecha_inicio: string | null;
+  fecha_sesion: string | null;
+  ftp: string | null;
+  id_plan_deportista: string | null;
+  vo2_max: string | null;
+  descripcion: string | null;
+  nombre: string | null;
+}
+
+export interface Agenda {
+  tipo: string | null;
+  nombre: string | null;
+  estado: string | null;
+  fecha: string | null;
+  fecha_formato: string | null;
 }
 
 @Injectable({
