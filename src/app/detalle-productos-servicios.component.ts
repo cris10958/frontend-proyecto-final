@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import {
   AdicionalEjercicio,
+  DetalleVenta,
   Ejercicio,
   Fotos,
   ProductoServicioLista,
@@ -19,6 +20,7 @@ import { CommonModule } from '@angular/common';
 import moment from 'moment';
 import { NavUsuarioComponent } from './nav-usuario.component';
 import { DetallePagoComponent } from './detalle-pago.component';
+import { DetalleVentaComponent } from './detalle-venta.component';
 
 @Component({
   selector: 'app-detalle-productos-servicios',
@@ -30,9 +32,12 @@ import { DetallePagoComponent } from './detalle-pago.component';
     ReactiveFormsModule,
     NavUsuarioComponent,
     DetallePagoComponent,
+    DetalleVentaComponent,
   ],
   template: `
-    <div class="fd-color h-total w-100 row-col-12 justify-content-center pb-5">
+    <div
+      class="fd-color h-total w-100 row-col-12 justify-content-center pb-5 pe-5"
+    >
       <div
         *ngIf="typeConsulta == 'socio'"
         class="container-fluid p-0 brand-hover"
@@ -75,16 +80,23 @@ import { DetallePagoComponent } from './detalle-pago.component';
       </div>
       <div class="row p-4 ps-5">
         <div
+          class="col-12 col-sm-12 col-md-12"
           [class]="{
-            'col-8': detalle_pago_open,
-            'col-12': !detalle_pago_open
+            'col-lg-8': detalle_pago_open,
+            'col-xl-8': detalle_pago_open,
+            'col-xxl-8': detalle_pago_open
           }"
         >
           <div class="row">
             <div
+              class="col-12 col-sm-12 col-md-12"
               [class]="{
-                'col-12': detalle_pago_open,
-                'col-10': !detalle_pago_open
+                'col-lg-12': detalle_pago_open,
+                'col-xl-12': detalle_pago_open,
+                'col-xxl-12': detalle_pago_open,
+                'col-lg-10': !detalle_pago_open,
+                'col-xl-10': !detalle_pago_open,
+                'col-xxl-10': !detalle_pago_open
               }"
             >
               <div class="row">
@@ -118,9 +130,13 @@ import { DetallePagoComponent } from './detalle-pago.component';
                   </div>
                 </div>
                 <div
+                  class="col-8"
                   [class]="{
-                    'col-7': detalle_pago_open,
-                    'col-5': !detalle_pago_open
+                    'col-sm-8': !detalle_pago_open,
+                    'col-md-8': !detalle_pago_open,
+                    'col-lg-5': !detalle_pago_open,
+                    'col-xl-5': !detalle_pago_open,
+                    'col-xxl-5': !detalle_pago_open
                   }"
                 >
                   <img
@@ -190,7 +206,10 @@ import { DetallePagoComponent } from './detalle-pago.component';
                     </div>
                     <div class="col-12" *ngIf="producto_comprado">
                       <h6 class="small color-letra-gray-800">
-                        Estado: <span class="badge rounded-pill text-bg-primary"> En proceso</span>
+                        Estado:
+                        <span class="badge rounded-pill text-bg-primary">
+                          En proceso</span
+                        >
                       </h6>
                     </div>
                     <div class="col-12" *ngIf="sesioPersonalizada">
@@ -229,11 +248,11 @@ import { DetallePagoComponent } from './detalle-pago.component';
         </div>
         <div
           *ngIf="detalle_pago_open"
-          class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 col-xxxl-4 p-0 pt-4 pt-sm-4 pt-md-4 pt-lg-0 pt-xl-0 pt-xxl-0"
+          class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4 col-xxxl-4 p-0 pt-4 pt-sm-4 pt-md-4 pt-lg-0 pt-xl-0 pt-xxl-0"
         >
-          <div class="row justify-content-center pe-5">
+          <div class="row justify-content-center">
             <div
-              class="col-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 col-xxl-12 col-xxxl-12 shadow rounded fd-color primary_container"
+              class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-xxxl-12 shadow rounded fd-color primary_container"
             >
               <app-detalle-pago
                 [fecha_formato]="fecha_ajustada"
@@ -260,7 +279,7 @@ import { DetallePagoComponent } from './detalle-pago.component';
           >
         </div>
         <div
-          class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 me-4 mt-3 p-5 shadow-sm border rounded"
+          class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4 me-4 mt-3 p-5 shadow-sm border rounded pe-5"
           *ngFor="let form of lista_ejercicios; let i = index"
         >
           <div class="row g-3">
@@ -318,6 +337,28 @@ import { DetallePagoComponent } from './detalle-pago.component';
           </div>
         </div>
       </div>
+
+      <div
+        *ngIf="typeConsulta == 'socio'"
+        class="row ps-5 pt-4 pb-5 justify-content-start"
+      >
+        <div class="col-12 pb-3">
+          <label
+            for="id-aviso"
+            class="form-label color-letra-on-primary-container"
+            >Información de la venta</label
+          >
+        </div>
+        <div
+          class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4 pb-5 me-4"
+          *ngFor="let venta of lista_vendedores; let i = index"
+        >
+          <app-detalle-venta
+            [datos_venta]="venta"
+            [index]="i"
+          ></app-detalle-venta>
+        </div>
+      </div>
     </div>
   `,
   styles: ``,
@@ -338,7 +379,7 @@ export class DetalleProductosServiciosComponent implements OnInit {
     fotos: this.fotos,
     id: '',
     tipo_servicio_producto: '',
-    servicio_producto_vendidos: 0
+    servicio_producto_vendidos: 0,
   };
   id_producto_servicio: string = '';
   typeConsulta: string = '';
@@ -359,6 +400,8 @@ export class DetalleProductosServiciosComponent implements OnInit {
     nombre_sesion: new FormControl(''),
     numero_ejercicios: new FormControl(1),
   });
+  lista_vendedores: Array<DetalleVenta> = [];
+  sin_vendedores: boolean = false;
 
   irAtras() {
     if (this.typeConsulta == 'user') {
@@ -460,8 +503,13 @@ export class DetalleProductosServiciosComponent implements OnInit {
             this.sesioPersonalizada = true;
           }
 
-          this.disponibles = this.datos_detalle.cantidad_disponible ?? 0  - (this.datos_detalle.servicio_producto_vendidos ?? 0);
-          
+          this.disponibles = 
+            (this.datos_detalle.cantidad_disponible ??
+            0) - (this.datos_detalle.servicio_producto_vendidos ?? 0);
+
+          if (this.typeConsulta == 'socio') {
+            this.getVentas();
+          }
         },
         (err) => {
           console.log(err);
@@ -485,14 +533,32 @@ export class DetalleProductosServiciosComponent implements OnInit {
 
   validarProductoComprado() {
     this.producto_comprado = false;
-    const filtro = this.productosServiciosService.getFiltro() ?? "Sin Filtro"
-    if(filtro == "Sin Filtro"){
-      return
+    const filtro = this.productosServiciosService.getFiltro() ?? 'Sin Filtro';
+    if (filtro == 'Sin Filtro') {
+      return;
     }
 
-    if (filtro.indexOf("propios") >= 0) {
+    if (filtro.indexOf('propios') >= 0) {
       this.producto_comprado = true;
     }
+  }
+
+  getVentas() {
+    this.sin_vendedores = false;
+    this.productosServiciosService
+      .getListaVentas(this.id_producto_servicio)
+      .subscribe(
+        (info) => {
+          if (info) {
+            this.lista_vendedores = info;
+          } else {
+            this.sin_vendedores = true;
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   ngOnInit(): void {

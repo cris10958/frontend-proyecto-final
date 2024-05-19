@@ -2,22 +2,24 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const URL_INGRES = 'http://k8s-ekssport-sportapp-a5d22e537b-1703746054.us-east-1.elb.amazonaws.com'
-const baseUrlRegistro = URL_INGRES+'/registro-usuarios';
-const baseUrlGestorUsuarios = URL_INGRES+'/gestor-usuarios';
-const baseUrlGestorSesiones = URL_INGRES+'/gestor-sesion-deportiva';
-const baseUrlGestionProductosServicios = URL_INGRES+'/gestor-productos-servicios';
-// const baseUrlRegistro = 'http://127.0.0.1:3001/registro-usuarios';
-// const baseUrlGestorUsuarios = 'http://127.0.0.1:3001/gestor-usuarios';
-// const baseUrlGestorSesiones  = 'http://127.0.0.1:3005/gestor-sesion-deportiva';
-// const baseUrlGestionProductosServicios = 'http://127.0.0.1:3006/gestor-productos-servicios';
+// const URL_INGRES = 'http://k8s-ekssport-sportapp-a5d22e537b-1703746054.us-east-1.elb.amazonaws.com'
+// const baseUrlRegistro = URL_INGRES+'/registro-usuarios';
+// const baseUrlGestorUsuarios = URL_INGRES+'/gestor-usuarios';
+// const baseUrlGestorSesiones = URL_INGRES+'/gestor-sesion-deportiva';
+// const baseUrlGestionProductosServicios = URL_INGRES+'/gestor-productos-servicios';
+const baseUrlRegistro = 'http://127.0.0.1:3001/registro-usuarios';
+const baseUrlGestorUsuarios = 'http://127.0.0.2:3001/gestor-usuarios';
+const baseUrlGestorSesiones  = 'http://127.0.0.1:3005/gestor-sesion-deportiva';
+const baseUrlGestionProductosServicios = 'http://127.0.0.1:3006/gestor-productos-servicios';
+const baseUrlGestionEventos = 'http://127.0.0.1:3007/gestor-eventos';
 
 export const environment = {
   production: false,
   baseUrlRegistro,
   baseUrlGestorUsuarios,
   baseUrlGestorSesiones,
-  baseUrlGestionProductosServicios
+  baseUrlGestionProductosServicios,
+  baseUrlGestionEventos
 };
 
 /*

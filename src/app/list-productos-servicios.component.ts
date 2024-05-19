@@ -59,6 +59,16 @@ import { CommonModule } from '@angular/common';
             Servicios
           </button>
         </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start">
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
+            (click)="pedidos_seleccionado = !pedidos_seleccionado; filtro('')"
+            [class]="{ active: pedidos_seleccionado }"
+          >
+            Pedidos
+          </button>
+        </div>
         <div class="dropdown col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-start" *ngIf="deporteSelected == ''">
           <a
             class="btn btn-sm btn-outline-primary dropdown-toggle fondo-btn-fild w-100"
@@ -169,6 +179,7 @@ export class ListProductosServiciosComponent implements OnInit {
   deporteSelected: string = '';
   filtroVista: string = 'Sin filtro';
   filtro_actual:string ="";
+  pedidos_seleccionado:boolean = false;
 
   openRegistrar() {
     if (this.sociosService.loggedIn()) {
@@ -215,6 +226,7 @@ export class ListProductosServiciosComponent implements OnInit {
       this.getProductosServicios('');
       this.filtroVista = 'Sin filtro';
       this.filtro_actual = '';
+      this.pedidos_seleccionado = false;
       return;
     }
 
@@ -227,6 +239,10 @@ export class ListProductosServiciosComponent implements OnInit {
       tag += '|' + this.deporteSelected;
     }
 
+    if(this.pedidos_seleccionado){
+      tag += '|vendidos';
+    }
+
     if (tag[0] == '|') {
       tag = tag.substring(1, tag.length);
     }
@@ -236,9 +252,12 @@ export class ListProductosServiciosComponent implements OnInit {
 
     this.filtroVista = tag
       .replaceAll('producto|servicio|', '')
+      .replaceAll('||', ', ')
       .replaceAll('|', ', ')
       .replaceAll('producto', 'Productos')
-      .replaceAll('servicio', 'Servicios');
+      .replaceAll('servicio', 'Servicios')
+      .replaceAll('todo', 'Sin filtro')
+      .replaceAll('vendidos', 'Pedidos');
 
     if (tag != '') {
       this.getProductosServicios(tag);

@@ -26,7 +26,7 @@ export const routes: Routes = [
     {path:'registro-usuarios', component: RegistroUsuariosComponent},
     {path:'planes-subscripcion', component: PlanesSubscriptionComponent},
     {path:'home-usuario', component: HomeUsuarioComponent},
-    {path:'panel-usuarios', component: PanelUsuarioComponent},
+    {path:'panel-usuarios/:type', component: PanelUsuarioComponent},
     {path:'registrar-productos-servicios', component: FormularioRegistroProductoServicioComponent},
     {path:'detalle_producto_servicio/:id/:type', component: DetalleProductosServiciosComponent},
     {path:'productos-servicios-usuario', component: ProductosServiciosUsuarioComponent},

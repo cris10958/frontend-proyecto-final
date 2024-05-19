@@ -124,7 +124,7 @@ export class LoginUsuariosComponent implements OnInit {
         (resp) => {
           this.clearForm(loginUsuario.email!, undefined);
           this.loginUsuarioServie.registrarToken(resp.token);
-          this.router.navigate(['/panel-usuarios']);
+          this.router.navigate(['/home-usuario']);
           this.toastr.success('Que gusto verte de regreso', 'Bienvenido');
         },
         (err) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, viewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild, viewChild } from '@angular/core';
 import { FormularioRegistroUsuarioComponent } from './formulario-registro-usuario.component';
 import { FormularioInformacionAlimenticiaComponent } from './formulario-informacion-alimenticia.component';
 import { FormularioInformacionDeportivaComponent } from './formulario-informacion-deportiva.component';
@@ -6,6 +6,8 @@ import { UsuarioService } from './usuario.service';
 import { PlanSubscripcionActualComponent } from './plan-subscripcion-actual.component';
 import { CalendarioComponent } from './calendario.component';
 import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicaciones-externas.component';
+import { ActivatedRoute } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
@@ -273,10 +275,8 @@ import { AplicacionesExternasComponent } from './aplicaciones-externas/aplicacio
   `,
   styles: [``],
 })
-export class MenuComponent implements OnInit {
-
-  ngOnInit(): void {}
-
+export class MenuComponent implements  AfterViewInit {
+  typeConsulta:string = "";
 
   @ViewChild(PlanSubscripcionActualComponent)
   childComponent!: PlanSubscripcionActualComponent;
@@ -288,6 +288,7 @@ export class MenuComponent implements OnInit {
   childFormInfBasica!: FormularioRegistroUsuarioComponent;
   @ViewChild(CalendarioComponent) childFormCalendario!: CalendarioComponent;
   @ViewChild(AplicacionesExternasComponent) childAppExternas!: AplicacionesExternasComponent
+
   cargarPlanes() {
     this.childComponent.cargarPlanesActual();
   }
@@ -311,6 +312,19 @@ export class MenuComponent implements OnInit {
     this.childAppExternas.getAplicaciones();
   }
 
+  ngAfterViewInit(): void {
+    const id = this.activateRoute.params.subscribe((params) => {
+      this.typeConsulta = params['type'];
+      if(this.typeConsulta == "calendario"){
+        const contenido = this.document.getElementById("v-pills-calendario-tab") as HTMLInputElement;
+        if(contenido){
+          contenido.click();
+        }
+      }
+    });
+  }
 
-  constructor(private usuarioService: UsuarioService) {}
+  
+
+  constructor(private usuarioService: UsuarioService, private activateRoute: ActivatedRoute, @Inject(DOCUMENT) private document: Document,) {}
 }

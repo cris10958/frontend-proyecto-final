@@ -21,10 +21,10 @@ import { UsuarioService } from './usuario.service';
             <div class="container">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
                 <li class="nav-item" >
-                  <a i18n class="nav-link" id="id-nav-home" [class]="{'active': selected == 'home'}" aria-current="page">Home</a>
+                  <a i18n class="nav-link" id="id-nav-home" [class]="{'active': selected == 'home'}" href="/home-usuario"  aria-current="page">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a i18n id="id-nav-mi-perfil" class="nav-link" [class]="{'active': selected == 'mi-perfil'}"  href="/panel-usuarios">Mi perfil</a>
+                  <a i18n id="id-nav-mi-perfil" class="nav-link" [class]="{'active': selected == 'mi-perfil'}"  href="/panel-usuarios/usuario">Mi perfil</a>
                 </li>
                 <li class="nav-item">
                   <a i18n id="id-nav-prod-ser" class="nav-link" [class]="{'active': selected == 'produc-service'}" href="/productos-servicios-usuario">Productos y servicios</a>
