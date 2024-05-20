@@ -56,19 +56,24 @@ import { Eventos, EventosService } from './eventos-usuario/eventos.service';
         </div>
         <div class="row text-start pt-3">
           <div class="col-1">
-              <span class="badge rounded-pill text-bg-primary fd-color on_primary_fixed_variant color-letra-primary_fixed_variant">.</span>
+            <span
+              class="badge rounded-pill text-bg-primary fd-color on_primary_fixed_variant color-letra-primary_fixed_variant"
+              >.</span
+            >
           </div>
           <div class="col-5">
-              <span>Agenda registrada</span>
+            <span>Agenda registrada</span>
           </div>
           <div class="col-1">
-              <span class="badge rounded-pill text-bg-primary evento_calendario_icono">.</span>
+            <span
+              class="badge rounded-pill text-bg-primary evento_calendario_icono"
+              >.</span
+            >
           </div>
           <div class="col-5">
-              <span>Próximos eventos</span>
+            <span>Próximos eventos</span>
           </div>
         </div>
-
       </div>
       <div class="col-6">
         <div class="row-col-12 text-start pb-2">
@@ -79,10 +84,14 @@ import { Eventos, EventosService } from './eventos-usuario/eventos.service';
             Sin agenda registrada para el día seleccionado
           </span>
         </div>
-        <div class="row-col-12" style="max-height: 50vh; overflow: auto;">
+        <div class="row-col-12" style="max-height: 50vh; overflow: auto;" tabindex="0">
           <div class="row" style="" *ngFor="let item of agendaSeleccionada">
-            <div class="col-12" *ngIf="item !== undefined && item.estado != 'agenda'">
-              <app-tarjeta-detalle-sesion [agendar]="false"
+            <div
+              class="col-12"
+              *ngIf="item !== undefined && item.estado != 'agenda'"
+            >
+              <app-tarjeta-detalle-sesion
+                [agendar]="false"
                 [datos]="item"
               ></app-tarjeta-detalle-sesion>
             </div>
@@ -96,10 +105,20 @@ import { Eventos, EventosService } from './eventos-usuario/eventos.service';
             Sin eventos registrados para el día seleccionado
           </span>
         </div>
-        <div class="row-col-12" style="max-height: 50vh; overflow: auto;" tabindex="0">
-          <div class="row" style="" *ngFor="let item of lista_eventos_seleccionados">
+        <div
+          class="row-col-12"
+          style="max-height: 50vh; overflow: auto;"
+          tabindex="0"
+        >
+          <div
+            class="row"
+            style=""
+            *ngFor="let item of lista_eventos_seleccionados"
+          >
             <div class="col-12" *ngIf="item !== undefined">
-              <app-tarjeta-detalle-sesion (actualizar_listar)="actualizar_listar($event)" [agendar]="true"
+              <app-tarjeta-detalle-sesion
+                (actualizar_listar)="actualizar_listar($event)"
+                [agendar]="true"
                 [datos]="item"
               ></app-tarjeta-detalle-sesion>
             </div>
@@ -179,9 +198,9 @@ export class CalendarioComponent implements OnInit {
   lista_eventos_registrados: Array<Eventos> = [];
   sin_agenda: boolean = true;
   sin_eventos: boolean = true;
-  dia_seleccion:any ={
-    valor:''
-  }
+  dia_seleccion: any = {
+    valor: '',
+  };
 
   obtenerDias(mes: number, anio: number) {
     const fecha_inicio = moment.utc(`${anio}/${mes}/01`);
@@ -206,7 +225,7 @@ export class CalendarioComponent implements OnInit {
         valor: a,
         indexSemana: diaObjeto.isoWeekday(),
         estado: estado,
-        id:''
+        id: '',
       };
     });
 
@@ -226,22 +245,28 @@ export class CalendarioComponent implements OnInit {
       };
     });
 
-    let datos_sesion:any=[];
-    let agregar:boolean = false;
+    let datos_sesion: any = [];
+    let agregar: boolean = false;
 
-    for(let i=0; i < fecha_sesion.length; i++){
+    for (let i = 0; i < fecha_sesion.length; i++) {
       agregar = true;
-      for(let j=0; j < datos_sesion.length; j++){
-        if(fecha_sesion[i].fecha == datos_sesion[j].fecha && fecha_sesion[i].hora == datos_sesion[j].hora){
+      for (let j = 0; j < datos_sesion.length; j++) {
+        if (
+          fecha_sesion[i].fecha == datos_sesion[j].fecha &&
+          fecha_sesion[i].hora == datos_sesion[j].hora
+        ) {
           agregar = false;
-          if((fecha_sesion[i].estado == "agendada" || fecha_sesion[i].estado == "finalizada")){
+          if (
+            fecha_sesion[i].estado == 'agendada' ||
+            fecha_sesion[i].estado == 'finalizada'
+          ) {
             datos_sesion[j].estado = fecha_sesion[i].estado;
             continue;
           }
         }
       }
 
-      if(agregar){
+      if (agregar) {
         datos_sesion.push(fecha_sesion[i]);
       }
     }
@@ -288,7 +313,10 @@ export class CalendarioComponent implements OnInit {
     this.sin_agenda = true;
     this.sin_eventos = true;
     for (let i = 0; i < this.agendaSeleccionada.length; i++) {
-      if (this.agendaSeleccionada[i] != undefined && this.agendaSeleccionada[i].estado != "agenda") {
+      if (
+        this.agendaSeleccionada[i] != undefined &&
+        this.agendaSeleccionada[i].estado != 'agenda'
+      ) {
         this.sin_agenda = false;
         break;
       }
@@ -303,7 +331,7 @@ export class CalendarioComponent implements OnInit {
   ngOnInit(): void {}
 
   getSesionesAgendadas() {
-    this.sesiones_agendadas =[];
+    this.sesiones_agendadas = [];
     this.sesionService.getDatosSesiones().subscribe(
       (info) => {
         this.sesiones_incial = info.result;
@@ -358,26 +386,32 @@ export class CalendarioComponent implements OnInit {
   }
 
   getProximosEventos() {
+    this.lista_eventos = [];
     this.eventosService.getListaEventos().subscribe(
       (info) => {
-        this.lista_eventos = info;
+        if (info) {
+          for (let i = 0; i < info.length; i++) {
+            if (info[i].registrado == 'si') {
+              continue;
+            }
+            this.lista_eventos.push(info[i]);
+          }
+        }
+
         this.lista_eventos_ajustada = this.lista_eventos.map((a: any) => {
           const diaObjeto = moment(`${a.fecha}`);
           return {
             fecha: diaObjeto.format('DD/MM/YYYY'),
             hora: diaObjeto.format('hh:mm:ss'),
             nombre: diaObjeto.format('dddd'),
-            estado: "",
+            estado: '',
             nombre_agenda: a.nombre,
             descripcion: a.descripcion,
-            id:a.id
+            id: a.id,
           };
         });
 
         for (let i = 0; i < this.lista_eventos.length; i++) {
-          if(this.lista_eventos[i].registrado == "si"){
-            continue
-          }
           this.sesiones_agendadas.push({
             estado: 'agenda',
             fecha_fin: '',
@@ -398,11 +432,11 @@ export class CalendarioComponent implements OnInit {
     );
   }
 
-  actualizar_listar(dato:string){
+  actualizar_listar(dato: string) {
     this.getSesionesAgendadas();
-    setTimeout(()=>{
-     this.seleccionarDia(this.dia_seleccion); 
-    },500)
+    setTimeout(() => {
+      this.seleccionarDia(this.dia_seleccion);
+    }, 500);
   }
 
   constructor(
