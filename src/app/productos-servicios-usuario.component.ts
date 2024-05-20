@@ -143,7 +143,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
     <div
       id="contenido-panel"
       class="cuerpo pt-3 h-75 ps-4 pe-4"
-      style="overflow: auto; max-height:75vh;"
+      style="overflow: auto; max-height:63vh;"
       tabindex="0"
     >
       <app-card-productos-servicios
