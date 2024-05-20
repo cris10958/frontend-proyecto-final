@@ -205,8 +205,9 @@ export class ProductosServiciosUsuarioComponent implements OnInit {
       .subscribe(
         (info) => {
           if(info){
+            this.listaProductosServicios =[];
             for(let i = 0; i < info.length; i++){
-              if(info[i].cantidad_disponible > info[i].servicio_producto_vendidos){
+              if(info[i].cantidad_disponible > (info[i].servicio_producto_vendidos ?? 0)){
                 this.listaProductosServicios.push(info[i]);
               }
             }
