@@ -144,6 +144,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
       id="contenido-panel"
       class="cuerpo pt-3 h-75 ps-4 pe-4"
       style="overflow: auto; max-height:75vh;"
+      tabindex="0"
     >
       <app-card-productos-servicios
         *ngFor="let datos of listaProductosServicios"
