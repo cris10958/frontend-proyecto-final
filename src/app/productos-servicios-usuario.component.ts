@@ -204,7 +204,13 @@ export class ProductosServiciosUsuarioComponent implements OnInit {
       .getListaProductosServiciosUsuario(filtro)
       .subscribe(
         (info) => {
-          this.listaProductosServicios = info;
+          if(info){
+            for(let i = 0; i < info.length; i++){
+              if(info[i].cantidad_disponible > info[i].servicio_producto_vendidos){
+                this.listaProductosServicios.push(info[i]);
+              }
+            }
+          }
 
           if (this.listaProductosServicios.length == 0) {
             this.sinProductoServicios = true;
