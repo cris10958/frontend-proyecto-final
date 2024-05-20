@@ -48,7 +48,7 @@ import { Router } from '@angular/router';
           <div class="col-md-12 pt-2">
             <label for="id-telefono" class="form-label">Teléfono</label>
             <input
-              type="text"
+              type="number"
               class="form-control fd-color white"
               id="id-telefono"
               formControlName="telefono"
@@ -136,6 +136,7 @@ import { Router } from '@angular/router';
             </div>
             <div class="col-6 text-start ps-4">
               <button
+                id="btn-pago"
                 class="btn btn-primary"
                 [disabled]="!detalle_pago.valid || !fecha_valida"
                 type="submit"

@@ -96,7 +96,7 @@ import { Eventos, EventosService } from './eventos-usuario/eventos.service';
             Sin eventos registrados para el día seleccionado
           </span>
         </div>
-        <div class="row-col-12" style="max-height: 50vh; overflow: auto;">
+        <div class="row-col-12" style="max-height: 50vh; overflow: auto;" tabindex="0">
           <div class="row" style="" *ngFor="let item of lista_eventos_seleccionados">
             <div class="col-12" *ngIf="item !== undefined">
               <app-tarjeta-detalle-sesion (actualizar_listar)="actualizar_listar($event)" [agendar]="true"
@@ -375,6 +375,9 @@ export class CalendarioComponent implements OnInit {
         });
 
         for (let i = 0; i < this.lista_eventos.length; i++) {
+          if(this.lista_eventos[i].registrado == "si"){
+            continue
+          }
           this.sesiones_agendadas.push({
             estado: 'agenda',
             fecha_fin: '',

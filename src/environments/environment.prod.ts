@@ -5,6 +5,7 @@ const baseUrlRegistro = URL_INGRES+'/registro-usuarios';
 const baseUrlGestorUsuarios = URL_INGRES+'/gestor-usuarios';
 const baseUrlGestorSesiones = URL_INGRES+'/gestor-sesion-deportiva';
 const baseUrlGestionProductosServicios = URL_INGRES+'/gestor-productos-servicios';
+const baseUrlGestionEventos = URL_INGRES + '/gestor-eventos';
 
 
 export const environment = {
@@ -12,5 +13,6 @@ export const environment = {
   baseUrlRegistro,
   baseUrlGestorUsuarios,
   baseUrlGestorSesiones,
-  baseUrlGestionProductosServicios
+  baseUrlGestionProductosServicios,
+  baseUrlGestionEventos
 };

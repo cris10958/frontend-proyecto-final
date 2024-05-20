@@ -93,6 +93,11 @@ import { ToastrService } from 'ngx-toastr';
                   </div>
                 </div>
                 <div class="col-12">
+                <label for="upd-file" class="form-label"
+                    >Fotos</label
+                  >
+                </div>
+                <div class="col-12">
                   <ngx-dropzone
                     id="upd-file"
                     (change)="onSelect($event)"
@@ -536,7 +541,7 @@ import { ToastrService } from 'ngx-toastr';
                       ></textarea>
                       <label
                         for="floatingTextarea"
-                        class="color-letra-gray-600 small"
+                        class="color-letra-gray-800 small"
                         >Descripción del ejercicio</label
                       >
                     </div>
@@ -546,13 +551,13 @@ import { ToastrService } from 'ngx-toastr';
                     </div>
                   </div>
                   <div class="col-12">
-                    <label for="id-name-ejercicio" class="form-label"
+                    <label for="id-repeticiones" class="form-label"
                       >Cantidad de repeticiones</label
                     >
                     <input
                       type="number"
                       class="form-control fd-color white"
-                      id="id-name-ejercicio"
+                      id="id-repeticiones"
                       [(ngModel)]="form.detalle_ejercicio.cantidad_repeticiones"
                       (click)="validarCampoTexto('cantidad_repeticiones', i)"
                       (input)="validarCampoTexto('cantidad_repeticiones', i)"
@@ -567,13 +572,13 @@ import { ToastrService } from 'ngx-toastr';
                     </div>
                   </div>
                   <div class="col-12">
-                    <label for="id-name-ejercicio" class="form-label"
+                    <label for="id-duracion" class="form-label"
                       >Duración (minutos)</label
                     >
                     <input
                       type="number"
                       class="form-control fd-color white"
-                      id="id-name-ejercicio"
+                      id="id-duracion"
                       [(ngModel)]="form.detalle_ejercicio.duracion"
                       (click)="validarCampoTexto('duracion', i)"
                       (input)="validarCampoTexto('duracion', i)"
@@ -646,6 +651,7 @@ export class FormularioRegistroProductoServicioComponent implements OnInit {
   valorFormato: string = '';
   min_fecha_entrega: string = '';
   tipo: string = '';
+  label_false:boolean= false;
 
   detalle_registro = new FormGroup({
     deporte: new FormControl('', [Validators.required]),

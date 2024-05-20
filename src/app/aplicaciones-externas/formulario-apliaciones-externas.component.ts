@@ -71,7 +71,7 @@ import { Router } from '@angular/router';
               ></textarea>
               <label
                 for="id-textare-desc-app-ext"
-                class="color-letra-gray-600 small"
+                class="color-letra-gray-800 small"
                 >Descripción de la aplicación externa</label
               >
               <div class="invalid-feedback">
@@ -106,7 +106,7 @@ import { Router } from '@angular/router';
               <div class="input-group">
                 <input
                   id="id-token"
-                  type="password"
+                  type="input"
                   class="form-control fd-color white"
                   formControlName="token"
                   [class]="{

@@ -21,6 +21,10 @@ import moment from 'moment';
 import { NavUsuarioComponent } from './nav-usuario.component';
 import { DetallePagoComponent } from './detalle-pago.component';
 import { DetalleVentaComponent } from './detalle-venta.component';
+import {
+  PlanSubscripcion,
+  PlanesSubscripcionService,
+} from './planes-subscripcion.service';
 
 @Component({
   selector: 'app-detalle-productos-servicios',
@@ -228,17 +232,39 @@ import { DetalleVentaComponent } from './detalle-venta.component';
                       *ngIf="
                         typeConsulta == 'user' &&
                         !detalle_pago_open &&
-                        !producto_comprado
+                        !producto_comprado &&
+                        !mostrar_subscripcion
                       "
                       class="col-12 text-start pt-3"
                     >
                       <button
+                        id="btn-comprar"
                         class="btn btn-primary ps-4 pe-4"
                         (click)="abrirDetalleCompra()"
                         type="submit"
                       >
                         Comprar
                       </button>
+                    </div>
+                    <div
+                      *ngIf="typeConsulta == 'user' && mostrar_subscripcion"
+                      class="col-12 text-start pt-3"
+                    >
+                      <button
+                        class="btn btn-primary ps-4 pe-4"
+                        (click)="openPlanSubscripcion()"
+                        type="submit"
+                      >
+                        Quiero ser Premium
+                      </button>
+                    </div>
+                    <div
+                      class="row-col-12 text-start pt-2"
+                      *ngIf="typeConsulta == 'user' && mostrar_subscripcion"
+                    >
+                      <span class="color-letra-on-primary-container small">
+                        Nota: Servicio disponible únicamente para suscripción al Plan Premium
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -350,13 +376,13 @@ import { DetalleVentaComponent } from './detalle-venta.component';
           >
         </div>
         <div
-              class="row-col-12 text-start"
-              *ngIf="lista_vendedores == null || lista_vendedores.length == 0"
-            >
-              <span class="color-letra-gray-800 small">
-                Sin vendedores registrados
-              </span>
-            </div>
+          class="row-col-12 text-start"
+          *ngIf="lista_vendedores == null || lista_vendedores.length == 0"
+        >
+          <span class="color-letra-gray-800 small">
+            Sin vendedores registrados
+          </span>
+        </div>
         <div
           class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 col-xxl-4 pb-5 me-4 pt-3"
           *ngFor="let venta of lista_vendedores; let i = index"
@@ -410,6 +436,8 @@ export class DetalleProductosServiciosComponent implements OnInit {
   });
   lista_vendedores: Array<DetalleVenta> = [];
   sin_vendedores: boolean = false;
+  PlanActualUsuario: string = '';
+  mostrar_subscripcion: boolean = false;
 
   irAtras() {
     if (this.typeConsulta == 'user') {
@@ -511,12 +539,16 @@ export class DetalleProductosServiciosComponent implements OnInit {
             this.sesioPersonalizada = true;
           }
 
-          this.disponibles = 
-            (this.datos_detalle.cantidad_disponible ??
-            0) - (this.datos_detalle.servicio_producto_vendidos ?? 0);
+          this.disponibles =
+            (this.datos_detalle.cantidad_disponible ?? 0) -
+            (this.datos_detalle.servicio_producto_vendidos ?? 0);
 
           if (this.typeConsulta == 'socio') {
             this.getVentas();
+          }
+
+          if (this.typeConsulta == 'user') {
+            this.getPlanSubscripcion();
           }
         },
         (err) => {
@@ -569,6 +601,32 @@ export class DetalleProductosServiciosComponent implements OnInit {
       );
   }
 
+  getPlanSubscripcion() {
+    this.mostrar_subscripcion = false;
+    this.planSubscripcionService.getPlanActual().subscribe(
+      (PlanActual) => {
+        if (PlanActual) {
+          this.PlanActualUsuario = PlanActual[0].nombre;
+        }
+        if (
+          this.PlanActualUsuario != 'Premium' &&
+          (this.datos_detalle.subtipo_servicio_producto ?? '')?.indexOf(
+            'Deportologo'
+          ) >= 0
+        ) {
+          this.mostrar_subscripcion = true;
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  openPlanSubscripcion() {
+    this.router.navigate(['/panel-usuarios/plan_subscripcion']);
+  }
+
   ngOnInit(): void {
     const id = this.activateRoute.params.subscribe((params) => {
       this.id_producto_servicio = params['id'];
@@ -583,6 +641,7 @@ export class DetalleProductosServiciosComponent implements OnInit {
   constructor(
     private router: Router,
     private productosServiciosService: ProductosServiciosService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    readonly planSubscripcionService: PlanesSubscripcionService
   ) {}
 }

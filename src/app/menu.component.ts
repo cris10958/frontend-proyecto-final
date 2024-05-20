@@ -320,6 +320,11 @@ export class MenuComponent implements  AfterViewInit {
         if(contenido){
           contenido.click();
         }
+      }else if(this.typeConsulta == "plan_subscripcion"){
+        const contenido = this.document.getElementById("v-pills-settings-tab") as HTMLInputElement;
+        if(contenido){
+          contenido.click();
+        }
       }
     });
   }

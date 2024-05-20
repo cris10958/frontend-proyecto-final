@@ -27,7 +27,7 @@ import { CommonModule } from '@angular/common';
     </div>
     <div class="row pt-2 ps-4 pe-4 pb-5">
       <div *ngFor="let item of lista_eventos" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 pt-4">
-        <app-card-evento [evento]="item"></app-card-evento>
+        <app-card-evento [evento]="item" (actualizar)="getListaEventos()"></app-card-evento>
       </div>
     </div>
   `,
