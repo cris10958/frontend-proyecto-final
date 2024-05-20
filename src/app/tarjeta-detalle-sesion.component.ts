@@ -33,18 +33,18 @@ import { ToastrService } from 'ngx-toastr';
             >
           </div>
           <div class="col-12">
-            <h6 class="small color-letra-gray-600 tx-justify">
+            <h6 class="small color-letra-gray-800 tx-justify">
               {{ datos.descripcion }}
             </h6>
           </div>
           <div class="col-12">
-            <h6 class="small color-letra-gray-600">Fecha: {{ datos.fecha }}</h6>
+            <h6 class="small color-letra-gray-800">Fecha: {{ datos.fecha }}</h6>
           </div>
           <div class="col-12">
-            <h6 class="small color-letra-gray-600">Hora: {{ datos.hora }}</h6>
+            <h6 class="small color-letra-gray-800">Hora: {{ datos.hora }}</h6>
           </div>
           <div class="col-12">
-            <h6 class="small color-letra-gray-600">Lugar: País / Colombia</h6>
+            <h6 class="small color-letra-gray-800">Lugar: País / Colombia</h6>
           </div>
           <div class="col-12" *ngIf="agendar">
             <a class="btn btn-primary" (click)="registro(datos.id??'')" >Agendar</a>

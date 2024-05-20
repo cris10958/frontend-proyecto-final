@@ -179,7 +179,7 @@ export class ProductosServiciosService {
     }
     else if(type == "user"){
       token = this.usuarioService.getToken()??'';
-      url += '/productos-servicios/listar-sesion-personalizada/'+id;
+      url += '/productos-servicios-deportista/listar-sesion-personalizada/'+id;
     }
     
     return this.http

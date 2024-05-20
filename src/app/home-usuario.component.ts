@@ -82,7 +82,7 @@ import { ProductoServicioLista, ProductosServiciosService } from './productos-se
             </div>
             <div class="row text-start">
               <div class="col-5 ps-0 me-5" *ngFor="let item of listaProductosServicios">
-                <div class="card" style="width: 18rem; height: 70vh; overflow: auto;">
+                <div class="card" style="width: 18rem; height: 27.6rem; overflow: auto;">
                   <img [src]="'data:image/png;base64,'+item.foto" class="card-img-top" alt="imagen_producto" />
                   <div class="card-body">
                     <h6 class="color-letra-on-primary-container">{{item.tipo}}</h6>

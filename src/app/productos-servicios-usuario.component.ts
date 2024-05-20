@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 import { NavUsuarioComponent } from './nav-usuario.component';
 import { FooterComponent } from './footer.component';
 import { ListProductosServiciosComponent } from './list-productos-servicios.component';
@@ -9,7 +12,7 @@ import {
 } from './productos-servicios.service';
 import { Router } from '@angular/router';
 import { CardProductosServiciosComponent } from './card-productos-servicios.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-productos-servicios-usuario',
@@ -36,7 +39,8 @@ import { CommonModule } from '@angular/common';
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'todo'; filtro('clear')"
             [class]="{
-              active: tipoSelected == 'todo' && deporteSelected == '' && !propios
+              active:
+                tipoSelected == 'todo' && deporteSelected == '' && !propios
             }"
           >
             Todo
@@ -70,6 +74,7 @@ import { CommonModule } from '@angular/common';
           class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start"
         >
           <button
+            id="btn-mis-pedidos"
             type="button"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="propios = !propios; filtro('')"
@@ -138,7 +143,7 @@ import { CommonModule } from '@angular/common';
     <div
       id="contenido-panel"
       class="cuerpo pt-3 h-75 ps-4 pe-4"
-      style="overflow: auto; max-height:53vh;"
+      style="overflow: auto; max-height:75vh;"
     >
       <app-card-productos-servicios
         *ngFor="let datos of listaProductosServicios"
@@ -170,10 +175,11 @@ import { CommonModule } from '@angular/common';
         background-color: #7749f8;
         color: #fff;
       }
+      
     `,
   ],
 })
-export class ProductosServiciosUsuarioComponent {
+export class ProductosServiciosUsuarioComponent implements OnInit {
   listaProductosServicios: Array<ProductoServicioLista> = [];
   isError: boolean = false;
   error: string = '';
@@ -276,36 +282,42 @@ export class ProductosServiciosUsuarioComponent {
   }
 
   marcarTag() {
-    if (this.filtro_actual == "") {
-      this.tipoSelected = "todo";
+    if (this.filtro_actual == '') {
+      this.tipoSelected = 'todo';
       this.filtroVista = 'Sin filtro';
-      return
+      return;
     }
 
-    if (this.filtro_actual.indexOf("propios") >= 0) {
+    if (this.filtro_actual.indexOf('propios') >= 0) {
       this.propios = true;
     }
-    if (this.filtro_actual.indexOf("Atletismo") >= 0) {
-      this.deporteSelected = "Atletismo";
+    if (this.filtro_actual.indexOf('Atletismo') >= 0) {
+      this.deporteSelected = 'Atletismo';
     }
-    if (this.filtro_actual.indexOf("Ciclismo") >= 0) {
-      this.deporteSelected = "Ciclismo";
+    if (this.filtro_actual.indexOf('Ciclismo') >= 0) {
+      this.deporteSelected = 'Ciclismo';
     }
-    if (this.filtro_actual.indexOf("producto") >= 0 && this.filtro_actual.indexOf("servicio") < 0) {
-      this.tipoSelected = "producto";
+    if (
+      this.filtro_actual.indexOf('producto') >= 0 &&
+      this.filtro_actual.indexOf('servicio') < 0
+    ) {
+      this.tipoSelected = 'producto';
     }
-    if (this.filtro_actual.indexOf("servicio") >= 0 && this.filtro_actual.indexOf("producto") < 0) {
-      this.tipoSelected = "servicio";
+    if (
+      this.filtro_actual.indexOf('servicio') >= 0 &&
+      this.filtro_actual.indexOf('producto') < 0
+    ) {
+      this.tipoSelected = 'servicio';
     }
 
     this.filtroVista = this.filtro_actual
-    .replaceAll('producto|servicio|', '')
-    .replaceAll('servicio|producto|', '')
-    .replaceAll('|', ', ')
-    .replaceAll('producto', 'Productos')
-    .replaceAll('propios', 'Mis pedidos')
-    .replaceAll('todo,', '')
-    .replaceAll('servicio', 'Servicios');
+      .replaceAll('producto|servicio|', '')
+      .replaceAll('servicio|producto|', '')
+      .replaceAll('|', ', ')
+      .replaceAll('producto', 'Productos')
+      .replaceAll('propios', 'Mis pedidos')
+      .replaceAll('todo,', '')
+      .replaceAll('servicio', 'Servicios');
   }
 
   ngOnInit(): void {
@@ -317,6 +329,6 @@ export class ProductosServiciosUsuarioComponent {
   constructor(
     private router: Router,
     private sociosService: SociosService,
-    private productosServiciosService: ProductosServiciosService
+    private productosServiciosService: ProductosServiciosService,
   ) {}
 }

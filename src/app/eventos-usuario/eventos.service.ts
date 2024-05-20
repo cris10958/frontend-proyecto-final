@@ -12,6 +12,7 @@ export interface Eventos {
   lugar:       string | null;
   nombre:      string | null;
   pais:        string | null;
+  registrado:  string | null;
 }
 
 @Injectable({

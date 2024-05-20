@@ -42,6 +42,7 @@ import { CommonModule } from '@angular/common';
         <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 col-xxl-1 p-0 m-1 text-center">
           <button
             type="button"
+            id="filtro-producto-socio"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'producto'; filtro('')"
             [class]="{ active: tipoSelected == 'producto' }"
@@ -52,6 +53,7 @@ import { CommonModule } from '@angular/common';
         <div class="col-2 col-sm-2 col-md-2 col-lg-1 col-xl-1 p-0 m-1 text-start">
           <button
             type="button"
+            id="filtro-servicio-socio"
             class="btn btn-sm btn-outline-primary me-2 fondo-btn-fild w-100"
             (click)="tipoSelected = 'servicio'; filtro('')"
             [class]="{ active: tipoSelected == 'servicio' }"
@@ -75,6 +77,7 @@ import { CommonModule } from '@angular/common';
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
+            id="filtro-deporte-socio"
           >
             Deporte
           </a>
@@ -133,7 +136,8 @@ import { CommonModule } from '@angular/common';
     <div
       id="contenido-panel"
       class="cuerpo pt-3 h-75 ps-4 pe-4"
-      style="overflow: auto; max-height:53vh;"
+      style="overflow: auto; max-height:75vh;"
+      tabindex="0"
     >
       <app-card-productos-servicios
         *ngFor="let datos of listaProductosServicios"

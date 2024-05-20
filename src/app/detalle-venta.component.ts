@@ -14,7 +14,7 @@ import { DetalleVenta } from './productos-servicios.service';
         <h1 class="small">Nombre</h1>
       </div>
       <div class="col-12">
-        <h6 class="small color-letra-gray-600">
+        <h6 class="small color-letra-gray-800">
           {{ datos_venta.deportista_nombre }}
         </h6>
       </div>
@@ -22,7 +22,7 @@ import { DetalleVenta } from './productos-servicios.service';
         <h1 class="small">Identificación</h1>
       </div>
       <div class="col-12">
-        <h6 class="small color-letra-gray-600">
+        <h6 class="small color-letra-gray-800">
           {{ datos_venta.deportista_numero_identificacion }}
         </h6>
       </div>
@@ -30,7 +30,7 @@ import { DetalleVenta } from './productos-servicios.service';
         <h1 class="small">Dirección</h1>
       </div>
       <div class="col-12">
-        <h6 class="small color-letra-gray-600">
+        <h6 class="small color-letra-gray-800">
           {{ datos_venta.servicio_producto_deportista_direccion_servicio }}
         </h6>
       </div>
@@ -38,7 +38,7 @@ import { DetalleVenta } from './productos-servicios.service';
         <h1 class="small">Teléfono</h1>
       </div>
       <div class="col-12">
-        <h6 class="small color-letra-gray-600">
+        <h6 class="small color-letra-gray-800">
           {{ datos_venta.servicio_producto_deportista_telefono }}
         </h6>
       </div>
@@ -46,7 +46,7 @@ import { DetalleVenta } from './productos-servicios.service';
         <h1 class="small">Metódo de pago</h1>
       </div>
       <div class="col-12">
-        <h6 class="small color-letra-gray-600">
+        <h6 class="small color-letra-gray-800">
           {{ datos_venta.servicio_producto_deportista_metodo_pago?.toUpperCase() }}
         </h6>
       </div>
@@ -54,7 +54,7 @@ import { DetalleVenta } from './productos-servicios.service';
         <h1 class="small">Estado de pago</h1>
       </div>
       <div class="col-12">
-        <h6 class="small color-letra-gray-600">
+        <h6 class="small color-letra-gray-800">
           PAGO RECIBIDO
         </h6>
       </div>
@@ -62,7 +62,7 @@ import { DetalleVenta } from './productos-servicios.service';
         <h1 class="small">Estado de entrega / prestación</h1>
       </div>
       <div class="col-12">
-        <h6 class="small color-letra-gray-600">
+        <h6 class="small color-letra-gray-800">
           {{ datos_venta.servicio_producto_deportista_estado_entrega?.toUpperCase() }}
         </h6>
       </div>
